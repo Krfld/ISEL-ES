@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
 
 import './.imports.dart';
@@ -21,8 +19,8 @@ class MyApp extends StatelessWidget {
       },
       home: FutureBuilder(
         future: fb.setup(),
-        builder: (context, snapshot) {
-          return Home();
+        builder: (context, setup) {
+          return setup.connectionState == ConnectionState.done ? Home() : Home();
         },
       ),
     );
