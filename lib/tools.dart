@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 final _App app = _App();
 
@@ -33,5 +34,14 @@ class _App {
         ? print('$_tag[${prefix.toUpperCase()} (${_debugID++})] $msg')
         : print('$_tag{${context.widget} (${_debugID++})} $msg');
     return msg;
+  }
+}
+
+class LoadingScreen extends StatelessWidget {
+  const LoadingScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(body: Center(child: SpinKitChasingDots()));
   }
 }

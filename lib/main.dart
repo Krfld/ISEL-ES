@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       home: FutureBuilder(
         future: fb.setup(),
         builder: (context, setup) {
-          return setup.connectionState == ConnectionState.done ? Home() : Home();
+          return setup.connectionState == ConnectionState.done ? Home() : LoadingScreen();
         },
       ),
     );

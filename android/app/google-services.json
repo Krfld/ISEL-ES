@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "573394415160",
+    "firebase_url": "https://krfld-shopping-list-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "krfld-shopping-list",
     "storage_bucket": "krfld-shopping-list.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "573394415160-gqkjrcs0rgfebrlo2rbilfqu3otcjfl8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.krfld.shopping_list",
+            "certificate_hash": "2b61d9e194700d3e30dcd9e1f9524bd15ee27b8e"
+          }
+        },
         {
           "client_id": "573394415160-nfiijm2ockj3t8ecjtd8fvubpdmq0098.apps.googleusercontent.com",
           "client_type": 3
