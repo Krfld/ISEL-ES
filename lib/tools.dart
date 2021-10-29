@@ -4,6 +4,9 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 final _App app = _App();
 
 class _App {
+  Future delay({int seconds = 0, int milliseconds = 0}) async =>
+      await Future.delayed(Duration(seconds: seconds, milliseconds: milliseconds));
+
   dynamic load(Map source, String path, var defaultValue) {
     path = path.substring(path.startsWith('/') ? 1 : 0, path.endsWith('/') ? path.length - 1 : path.length);
 
@@ -42,6 +45,6 @@ class LoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: SpinKitChasingDots()));
+    return Scaffold(body: Center(child: SpinKitChasingDots(color: Colors.teal, size: 64)));
   }
 }
