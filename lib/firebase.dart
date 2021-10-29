@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 import './.imports.dart';
@@ -11,7 +12,7 @@ class _Firebase {
   }*/
 
   Future setup() async {
-    app.msg('Setup');
+    await Firebase.initializeApp();
 
     FirebaseDatabase.instance.reference().child('').onValue.listen((event) {
       app.msg(event.snapshot.value);
