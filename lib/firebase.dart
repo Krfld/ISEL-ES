@@ -6,6 +6,8 @@ import './.imports.dart';
 _Firebase fb = _Firebase();
 
 class _Firebase {
+  DatabaseReference get dbRef => FirebaseDatabase.instance.reference().child('');
+
   /*Future get now async {
     await write('|timestamps/now', ServerValue.timestamp);
     return app.load(data.timestamps, 'now', 0);
@@ -14,7 +16,7 @@ class _Firebase {
   Future setup() async {
     await Firebase.initializeApp();
 
-    FirebaseDatabase.instance.reference().child('').onValue.listen((event) {
+    dbRef.onValue.listen((event) {
       app.msg(event.snapshot.value);
     });
   }
