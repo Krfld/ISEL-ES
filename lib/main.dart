@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_list/screens/groups.dart';
 
 import './.imports.dart';
 
@@ -11,17 +12,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Shopping List',
-      theme: ThemeData(
-        primarySwatch: Colors.teal,
-      ),
+      theme: ThemeData(primarySwatch: Colors.teal),
       routes: {
         'Home': (context) => Home(),
+        'Groups': (context) => Groups(),
       },
-      home: FutureBuilder(
-        future: fb.setup(),
-        builder: (context, setup) {
-          return setup.connectionState == ConnectionState.done ? Home() : LoadingScreen();
-        },
+      home: SafeArea(
+        child: FutureBuilder(
+          future: fb.setup(),
+          builder: (context, setup) {
+            return setup.connectionState == ConnectionState.done ? Groups() : LoadingScreen();
+          },
+        ),
       ),
     );
   }
