@@ -30,8 +30,18 @@ class Groups extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
-        child: Text('Bruh'),
+      body: Column(
+        children: [
+          Expanded(
+            flex: 2,
+            child: Card(
+              elevation: 8,
+              child: Center(
+                child: Text('Bruh'),
+              ), 
+            ),
+          ),
+        ],
       ),
     );
   }
