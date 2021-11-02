@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
         child: FutureBuilder(
           future: fb.setup(),
           builder: (context, setup) {
+            return Groups();
             return setup.connectionState == ConnectionState.done ? Groups() : LoadingScreen();
           },
         ),
