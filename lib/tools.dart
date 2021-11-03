@@ -31,11 +31,10 @@ class _App {
   }
 
   final String _tag = '+';
-  int _debugID = 0;
-  dynamic msg(var msg, {BuildContext? context, String prefix = 'DEBUG'}) {
-    context == null
-        ? print('$_tag[${prefix.toUpperCase()} (${_debugID++})] $msg')
-        : print('$_tag{${context.widget} (${_debugID++})} $msg');
+  int _debugId = 0;
+  dynamic msg(var msg, {String prefix = 'DEBUG', bool isError = false}) {
+    if (isError) prefix = '{ERROR} ' + prefix;
+    print('$_tag[${prefix.toUpperCase()} (${_debugId++})] $msg');
     return msg;
   }
 }

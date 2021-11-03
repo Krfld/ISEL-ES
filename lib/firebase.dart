@@ -6,20 +6,54 @@ import './.imports.dart';
 _Firebase fb = _Firebase();
 
 class _Firebase {
-  DatabaseReference get dbRef => FirebaseDatabase.instance.reference().child('');
+  final DatabaseReference _dbRef = FirebaseDatabase.instance.reference().child('');
 
-  /*Future get now async {
+  Future<int> get now async {
     await write('|timestamps/now', ServerValue.timestamp);
-    return app.load(data.timestamps, 'now', 0);
-  }*/
+    return (await read('now'))?.toInt() ?? 0;
+  }
 
-  Future setup() async {
+  Future<void> setup() async {
     await Firebase.initializeApp();
 
-    dbRef.onValue.listen((data) {
+    _dbRef.onValue.listen((data) {
       app.msg(data.snapshot.value, prefix: 'Data');
-    }).onError((e) => app.msg(e, prefix: 'Data Error'));
+    }).onError((e) => app.msg(e, prefix: 'Data', isError: true));
 
     await app.delay(seconds: 3);
+  }
+
+  Future<void> write(String path, var value) async {
+    try {
+      await _dbRef.update({path: value});
+    } catch (e) {
+      app.msg(e, prefix: 'Write', isError: true);
+    }
+  }
+
+  Future<String?> push(String path, var value) async {
+    try {
+      DatabaseReference reference = _dbRef.child(path).push();
+      await reference.set(value);
+      return reference.key;
+    } catch (e) {
+      app.msg(e, prefix: 'Push', isError: true);
+    }
+  }
+
+  Future<dynamic> read(String path) async {
+    try {
+      return (await _dbRef.child(path).get()).value;
+    } catch (e) {
+      app.msg(e, prefix: 'Read', isError: true);
+    }
+  }
+
+  Future<void> delete(String path) async {
+    try {
+      await _dbRef.child(path).remove();
+    } catch (e) {
+      app.msg(e, prefix: 'Delete', isError: true);
+    }
   }
 }
