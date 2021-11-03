@@ -22,7 +22,7 @@ linter:
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
   rules:
-    #avoid_print: false  # Uncomment to disable the `avoid_print` rule
+    avoid_print: false  # Uncomment to disable the `avoid_print` rule
     prefer_const_constructors: false
     avoid_returning_null_for_void: false
     curly_braces_in_flow_control_structures: false
