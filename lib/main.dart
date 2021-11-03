@@ -17,14 +17,12 @@ class MyApp extends StatelessWidget {
         'Home': (context) => Home(),
         'Groups': (context) => Groups(),
       },
-      home: SafeArea(
-        child: FutureBuilder(
-          future: fb.setup(),
-          builder: (context, setup) {
-            return Groups();
-            return setup.connectionState == ConnectionState.done ? Groups() : LoadingScreen();
-          },
-        ),
+      home: FutureBuilder(
+        future: fb.setup(),
+        builder: (context, setup) {
+          return Groups();
+          return setup.connectionState == ConnectionState.done ? Groups() : LoadingScreen();
+        },
       ),
     );
   }

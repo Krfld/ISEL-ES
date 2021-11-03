@@ -8,26 +8,27 @@ class Groups extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      /*floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: FloatingActionButton.extended(
-        elevation: 4,
-        icon: Icon(Icons.add),
-        label: Text('Add'),
-        onPressed: () => app.msg('add'),
-      ),*/
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: Padding(
+        padding: EdgeInsets.all(16),
+        child: FloatingActionButton.large(
+          child: Icon(Icons.add_rounded, size: 48),
+          elevation: 4,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(64))),
+          onPressed: () => null,
+        ),
+      ),
       appBar: AppBar(
         elevation: 4,
-        title: Text('Groups'),
+        title: Text('Groups', style: TextStyle(fontSize: 24)),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_rounded),
-          //tooltip: 'Go back',
           onPressed: () => app.msg('back'),
         ),
         actions: [
           IconButton(
             icon: Icon(Icons.settings),
-            //tooltip: 'Settings',
             onPressed: () => app.msg('settings'),
           ),
         ],
@@ -50,24 +51,30 @@ class Groups extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ElevatedButton.icon(
-                  icon: Icon(Icons.arrow_downward_rounded),
-                  label: Text('Join'),
-                  style: ElevatedButton.styleFrom(
-                    elevation: 4,
-                    splashFactory: InkRipple.splashFactory,
-                  ),
-                  onPressed: () => app.msg('Join'),
-                ),
-                ElevatedButton.icon(
+                /*ElevatedButton.icon(
                   icon: Icon(Icons.add_rounded),
                   label: Text('Create'),
                   style: ElevatedButton.styleFrom(
                     elevation: 4,
+                    padding: EdgeInsets.all(16),
+                    textStyle: TextStyle(fontSize: 16),
                     splashFactory: InkRipple.splashFactory,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(32))),
                   ),
-                  onPressed: () => app.msg('Create'),
+                  onPressed: () => app.msg('create'),
                 ),
+                ElevatedButton.icon(
+                  icon: Icon(Icons.arrow_upward_rounded),
+                  label: Text('Join'),
+                  style: ElevatedButton.styleFrom(
+                    elevation: 4,
+                    padding: EdgeInsets.all(16),
+                    textStyle: TextStyle(fontSize: 16),
+                    splashFactory: InkRipple.splashFactory,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(32))),
+                  ),
+                  onPressed: () => app.msg('join'),
+                ),*/
               ],
             ),
           )
