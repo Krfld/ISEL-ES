@@ -1,17 +1,39 @@
 Map db = {
   'groups': {
     'groupId1': {
-      'groupName': String,
-      'listId1': {
-        'listName': String,
-        'product1': {},
+      'created': DateTime,
+      'name': String,
+      'lists': {
+        'listId1': {
+          'created': DateTime,
+          'name': String,
+          'products': {
+            'productId1': {
+              'created': DateTime,
+              'name': String,
+              'details': String,
+              'amount': int,
+              'flag': bool,
+            },
+          },
+          /*'archive': {
+            'productId1': {
+              'created': DateTime,
+              'name': String,
+              'details': String,
+              'amount': int,
+              'flag': bool,
+            },
+          },*/
+        },
       },
     },
   },
   'users': {
-    'id1': {
+    'userId1': {
       'name': String,
       'lastSeen': DateTime,
+      'groups': {'groupId1': true},
     },
   },
 };

@@ -8,10 +8,10 @@ _Firebase fb = _Firebase();
 class _Firebase {
   final DatabaseReference _dbRef = FirebaseDatabase.instance.reference().child('');
 
-  Future<int> get now async {
+  /*Future<int> get now async {
     await write('|timestamps/now', ServerValue.timestamp);
     return (await read('now'))?.toInt() ?? 0;
-  }
+  }*/
 
   Future<void> setup() async {
     await Firebase.initializeApp();
