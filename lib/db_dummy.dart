@@ -11,6 +11,7 @@ Map db = {
             'productId1': {
               'created': DateTime,
               'name': String,
+              'brand': String,
               'details': String,
               'amount': int,
               'flag': bool,
