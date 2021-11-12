@@ -1,4 +1,4 @@
 export './screens/home.dart';
 
-export './tools.dart';
-export './firebase.dart';
+export './modules/tools.dart';
+export './modules/firebase.dart';

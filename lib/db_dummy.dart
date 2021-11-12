@@ -21,7 +21,7 @@ Map db = {
           },
           /*'archive': {
             'productId1': {
-              'created': DateTime,
+              'created': ServerValue.timestamp,
               'name': String,
               'details': String,
               'amount': int,
@@ -35,7 +35,7 @@ Map db = {
   'users': {
     'userId1': {
       'name': String,
-      'lastSeen': DateTime,
+      'lastSeen': ServerValue.timestamp,
       'groups': {'groupId1': true},
     },
   },

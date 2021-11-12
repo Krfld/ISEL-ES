@@ -41,8 +41,8 @@ class Groups extends StatelessWidget {
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
               margin: EdgeInsets.all(16),
               elevation: 8,
-              child: Center(
-                child: Text('Bruh'),
+              child: ListView(
+                children: [],
               ),
             ),
           ),
