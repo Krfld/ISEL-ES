@@ -99,11 +99,14 @@
       loadMainDartJs();
     }
   </script>
-  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+  <script src="main.dart.js" type="application/javascript"></script>
   <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
   <script>
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "firebase/app";
+    import { getAnalytics } from "firebase/analytics";
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -115,11 +118,13 @@
       projectId: "krfld-shopping-list",
       storageBucket: "krfld-shopping-list.appspot.com",
       messagingSenderId: "573394415160",
-      appId: "1:573394415160:web:c98715c0e6c832fb5d80cd"
+      appId: "1:573394415160:web:c98715c0e6c832fb5d80cd",
+      measurementId: "G-ZB30RTCRXF"
     };
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
   </script>
 </body>
 
