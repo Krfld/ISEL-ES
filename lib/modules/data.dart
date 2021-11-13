@@ -2,6 +2,7 @@ import '../.imports.dart';
 
 _Data data = _Data();
 _Users users = _Users();
+_Groups groups = _Groups();
 
 class _Data {
   Map _data = {};
@@ -11,6 +12,7 @@ class _Data {
     app.msg(data, prefix: 'Data');
 
     users.update(app.load(data, 'users', {}));
+    groups.update(app.load(data, 'groups', {}));
   }
 }
 
@@ -19,6 +21,13 @@ class _Users {
 
   void update(Map users) {
     _users = users;
-    app.msg(users, prefix: 'Users');
+  }
+}
+
+class _Groups {
+  Map _groups = {};
+
+  void update(Map groups) {
+    _groups = groups;
   }
 }
