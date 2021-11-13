@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Shopping List',
       theme: ThemeData(
         primarySwatch: Colors.teal,
-        brightness: Brightness.dark,
+        //brightness: Brightness.dark,
       ),
       routes: {
         'Home': (context) => Home(),
