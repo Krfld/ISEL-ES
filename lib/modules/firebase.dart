@@ -14,6 +14,7 @@ _RealtimeDatabase db = _RealtimeDatabase();
 class _Firebase {
   bool _inited = false;
 
+  /// Init firebase
   Future<void> init() async {
     if (_inited) return;
 
@@ -24,6 +25,12 @@ class _Firebase {
     await app.delay(seconds: 3); //! Temp
 
     _inited = true;
+  }
+
+  /// Get firebase timestamp
+  Future<int> get now async {
+    await db.write('|timestamps/now', ServerValue.timestamp);
+    return (await db.read('|timestamps/now'))?.toInt() ?? 0;
   }
 }
 
@@ -45,12 +52,6 @@ class _RealtimeDatabase {
 
   /// Database reference
   final DatabaseReference _dbRef = FirebaseDatabase.instance.reference().child('');
-
-  /// Get firebase timestamp
-  Future<int> get now async {
-    await write('|timestamps/now', ServerValue.timestamp);
-    return (await read('|timestamps/now'))?.toInt() ?? 0;
-  }
 
   /// Write data to firebase
   Future<void> write(String path, var value) async {

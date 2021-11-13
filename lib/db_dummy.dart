@@ -1,17 +1,15 @@
-import 'package:firebase_database/firebase_database.dart';
-
 Map db = {
   'groups': {
     'groupId1': {
-      'created': ServerValue.timestamp,
+      'created': int,
       'name': String,
       'lists': {
         'listId1': {
-          'created': ServerValue.timestamp,
+          'created': int,
           'name': String,
           'products': {
             'productId1': {
-              'created': ServerValue.timestamp,
+              'created': int,
               'name': String,
               'brand': String,
               'details': String,
@@ -21,7 +19,7 @@ Map db = {
           },
           /*'archive': {
             'productId1': {
-              'created': ServerValue.timestamp,
+              'created': int,
               'name': String,
               'details': String,
               'amount': int,
@@ -35,7 +33,7 @@ Map db = {
   'users': {
     'userId1': {
       'name': String,
-      'lastSeen': ServerValue.timestamp,
+      'lastSeen': int,
       'groups': {'groupId1': true},
     },
   },
