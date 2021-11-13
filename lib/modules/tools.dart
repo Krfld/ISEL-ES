@@ -9,19 +9,23 @@ class _App {
       await Future.delayed(Duration(seconds: seconds, milliseconds: milliseconds));
 
   /// Load value from map from path
-  dynamic load(Map source, String path, var defaultValue) {
-    path = path.substring(path.startsWith('/') ? 1 : 0, path.endsWith('/') ? path.length - 1 : path.length);
+  dynamic load(var source, String path, var defaultValue) {
+    path = path != '/'
+        ? path.substring(path.startsWith('/') ? 1 : 0, path.endsWith('/') ? path.length - 1 : path.length)
+        : '';
 
     List paths = path.split('/');
+    paths.removeWhere((element) => element.isEmpty);
 
     dynamic out = source;
 
-    try {
-      for (int i = 0; i < paths.length - 1; i++) out = out[paths[i]] ?? {};
-      out = out[paths.last];
-    } catch (e) {
-      out = defaultValue;
-    }
+    if (paths.isNotEmpty)
+      try {
+        for (int i = 0; i < paths.length - 1; i++) out = out[paths[i]];
+        out = out[paths.last];
+      } catch (e) {
+        out = defaultValue;
+      }
 
     if (out is num != defaultValue is num ||
         out is String != defaultValue is String ||

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_list/screens/groups.dart';
 
 import './.imports.dart';
 

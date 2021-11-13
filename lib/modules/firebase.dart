@@ -1,10 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../.imports.dart';
 
 _Firebase fb = _Firebase();
 _RealtimeDatabase db = _RealtimeDatabase();
+
+///
+/// Firebase
+///
 
 class _Firebase {
   bool _inited = false;
@@ -22,19 +27,21 @@ class _Firebase {
   }
 }
 
+///
+/// Realtime Database
+///
+
 class _RealtimeDatabase {
   ///* Private setup
   Stream<Event> _setup() {
-    Stream<Event> data = _dbRef.onValue;
+    Stream<Event> stream = _dbRef.onValue;
 
-    data.listen((data) {
-      app.msg(data.snapshot.value, prefix: 'Data');
-    }).onError((e) => app.msg(e, prefix: 'Data', isError: true));
+    stream
+        .listen((event) => data.update(app.load(event.snapshot.value, '', {})))
+        .onError((e) => app.msg(e, prefix: 'Data', isError: true));
 
-    return data;
+    return stream;
   }
-
-  Map data = {};
 
   /// Database reference
   final DatabaseReference _dbRef = FirebaseDatabase.instance.reference().child('');
