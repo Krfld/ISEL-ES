@@ -39,7 +39,7 @@ class Groups extends StatelessWidget {
             body: Column(
               children: [
                 Expanded(
-                  flex: 4,
+                  flex: 3,
                   child: Card(
                     elevation: 8,
                     margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
