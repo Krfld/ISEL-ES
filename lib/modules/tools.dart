@@ -41,7 +41,7 @@ class _App {
   int _debugId = 0;
   dynamic msg(var msg, {String prefix = 'DEBUG', bool isError = false}) {
     if (isError) prefix = '{ERROR} ' + prefix;
-    print('$_tag[${prefix.toUpperCase()} (${_debugId++})] $msg');
+    debugPrint('$_tag[${prefix.toUpperCase()} (${_debugId++})] $msg');
     return msg;
   }
 }

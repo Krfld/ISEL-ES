@@ -27,6 +27,8 @@ class _Users {
 class _Groups {
   Map _groups = {};
 
+  List get groups => _groups.keys.toList();
+
   void update(Map groups) {
     _groups = groups;
   }
