@@ -20,12 +20,12 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         'Home': (context) => Home(),
-        'Groups': (context) => Groups(),
+        'Lists': (context) => Lists(),
       },
       home: FutureBuilder(
         future: fb.init(),
         builder: (context, setup) {
-          return setup.connectionState == ConnectionState.done ? Groups() : LoadingScreen();
+          return setup.connectionState == ConnectionState.done ? Lists() : LoadingScreen();
         },
       ),
     );

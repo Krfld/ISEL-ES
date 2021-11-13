@@ -24,7 +24,7 @@ class _Firebase {
 
     stream = db._setup();
 
-    await app.delay(seconds: 3); //! Temp
+    await app.delay(seconds: 2); //! Temp
 
     _inited = true;
   }
