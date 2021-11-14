@@ -34,7 +34,7 @@ Map db = {
     'userId1': {
       'name': String,
       'lastSeen': int,
-      'groups': {'groupId1': true},
+      'groups': ['groupId1'],
     },
   },
 };

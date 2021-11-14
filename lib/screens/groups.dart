@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../.imports.dart';
 
-class Lists extends StatelessWidget {
-  const Lists({Key? key}) : super(key: key);
+class Groups extends StatelessWidget {
+  const Groups({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,19 +11,41 @@ class Lists extends StatelessWidget {
         stream: fb.stream,
         builder: (context, snapshot) {
           return Scaffold(
+            drawerEdgeDragWidth: 32,
+            drawer: Drawer(
+              child: ListView(
+                children: [
+                  DrawerHeader(child: Text('Drawer Header')),
+                  ListTile(
+                    title: Text('Item 1'),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Item 2'),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
+            ),
+            /*floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+          floatingActionButton: Padding(
+            padding: EdgeInsets.all(16),
+            child: FloatingActionButton(
+              child: Icon(Icons.add_rounded, size: 32),
+              elevation: 8,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(64))),
+              onPressed: () => null,
+            ),
+          ),*/
             appBar: AppBar(
               elevation: 4,
-              title: Text('Group Name', style: TextStyle(fontSize: 24)),
-              //centerTitle: false,
-              leading: IconButton(
-                icon: Icon(MdiIcons.arrowLeft),
-                onPressed: () => Navigator.pop(context),
-              ),
+              title: Text('Shopping List', style: TextStyle(fontSize: 24)),
+              centerTitle: true,
               actions: [
-                IconButton(
-                  icon: Icon(MdiIcons.trashCan),
-                  onPressed: () => app.msg('trash'),
-                ),
                 IconButton(
                   icon: Icon(MdiIcons.cog),
                   onPressed: () => app.msg('settings'),
@@ -56,43 +78,28 @@ class Lists extends StatelessWidget {
                             onPressed: () => null,
                           ),
                           onTap: () => null,
-                          //onLongPress: () => null,
+                          onLongPress: () => null,
                         );
                       },
-                    ), /*ListView(
-                      physics: BouncingScrollPhysics(),
-                      padding: EdgeInsets.all(16),
-                      children: [
-                        for (var id in groups.groups)
-                          ListTile(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                            leading: null,
-                            title: Text(id),
-                            subtitle: Text(id),
-                            trailing: IconButton(
-                              icon: Icon(MdiIcons.dotsHorizontal),
-                              onPressed: () => null,
-                            ),
-                            onTap: () => null,
-                            //elevation: 4,
-                            //margin: EdgeInsets.symmetric(vertical: 8),
-                            /*child: Padding(
-                              padding: EdgeInsets.all(16),
-                              child: Text(id, style: TextStyle(fontSize: 16)),
-                            ),*/
-                          ),
-                      ],
-                    ),*/
+                    ),
                   ),
                 ),
                 Expanded(
                   flex: 1,
-                  child: Center(
-                    child: Button(
-                      'Create\nList',
-                      icon: MdiIcons.playlistPlus,
-                      onPressed: () => app.msg('create list'),
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Button(
+                        'Create\nGroup',
+                        icon: MdiIcons.accountMultiplePlus,
+                        onPressed: () => app.msg('create'),
+                      ),
+                      Button(
+                        'Join\nGroup',
+                        icon: MdiIcons.accountMultiplePlus,
+                        onPressed: () => Navigator.pushNamed(context, 'Lists'),
+                      ),
+                    ],
                   ),
                 ),
               ],
