@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../.imports.dart';
 
@@ -88,7 +89,6 @@ class Groups extends StatelessWidget {
                           elevation: 4,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                           child: ListTile(
-                            minLeadingWidth: 32,
                             contentPadding: EdgeInsets.all(16),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                             title: Text(id, style: TextStyle(fontSize: 24)),
