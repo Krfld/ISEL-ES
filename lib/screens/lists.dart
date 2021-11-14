@@ -13,7 +13,7 @@ class Lists extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               elevation: 4,
-              title: Text('Group Name', style: TextStyle(fontSize: 24)),
+              title: Text('Group Name', style: TextStyle(fontSize: 20)),
               //centerTitle: false,
               leading: IconButton(
                 icon: Icon(MdiIcons.arrowLeft),
@@ -38,25 +38,29 @@ class Lists extends StatelessWidget {
                     elevation: 4,
                     margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                    child: ListView.separated(
+                    child: ListView.builder(
                       padding: EdgeInsets.all(16),
                       physics: BouncingScrollPhysics(),
-                      separatorBuilder: (context, index) => Divider(thickness: 1),
+                      //separatorBuilder: (context, index) => Divider(thickness: 1),
                       itemCount: groups.groups.length,
                       itemBuilder: (context, index) {
                         String id = groups.groups.elementAt(index);
-                        return ListTile(
-                          minLeadingWidth: 32,
+                        return Card(
+                          elevation: 4,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                          leading: null,
-                          title: Text(id),
-                          subtitle: Text(id),
-                          trailing: IconButton(
-                            icon: Icon(MdiIcons.dotsHorizontal),
-                            onPressed: () => null,
+                          child: ListTile(
+                            minLeadingWidth: 32,
+                            //contentPadding: EdgeInsets.all(16),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+                            title: Text(id, style: TextStyle(fontSize: 14)),
+                            subtitle: Text(id, style: TextStyle(fontSize: 14)),
+                            trailing: IconButton(
+                              icon: Icon(MdiIcons.dotsHorizontal),
+                              onPressed: () => null,
+                            ),
+                            onTap: () => null,
+                            //onLongPress: () => null,
                           ),
-                          onTap: () => null,
-                          //onLongPress: () => null,
                         );
                       },
                     ), /*ListView(
@@ -90,7 +94,7 @@ class Lists extends StatelessWidget {
                   child: Center(
                     child: Button(
                       'Create\nList',
-                      icon: MdiIcons.playlistPlus,
+                      icon: MdiIcons.textBoxPlusOutline,
                       onPressed: () => app.msg('create list'),
                     ),
                   ),

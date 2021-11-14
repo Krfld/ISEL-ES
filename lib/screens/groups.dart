@@ -11,7 +11,7 @@ class Groups extends StatelessWidget {
         stream: fb.stream,
         builder: (context, snapshot) {
           return Scaffold(
-            drawerEdgeDragWidth: 32,
+            drawerEdgeDragWidth: 64,
             drawer: Drawer(
               child: ListView(
                 children: [
@@ -43,12 +43,29 @@ class Groups extends StatelessWidget {
           ),*/
             appBar: AppBar(
               elevation: 4,
-              title: Text('Shopping List', style: TextStyle(fontSize: 24)),
               centerTitle: true,
+              title: Text('Shopping List', style: TextStyle(fontSize: 24)),
               actions: [
                 IconButton(
                   icon: Icon(MdiIcons.cog),
-                  onPressed: () => app.msg('settings'),
+                  onPressed: () => showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: Text('Settings'),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ListBody(
+                            children: [
+                              Text('Settings'),
+                              Text('Settings'),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -60,25 +77,29 @@ class Groups extends StatelessWidget {
                     elevation: 4,
                     margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                    child: ListView.separated(
+                    child: ListView.builder(
                       padding: EdgeInsets.all(16),
                       physics: BouncingScrollPhysics(),
-                      separatorBuilder: (context, index) => Divider(thickness: 1),
+                      //separatorBuilder: (context, index) => Divider(thickness: 1),
                       itemCount: groups.groups.length,
                       itemBuilder: (context, index) {
                         String id = groups.groups.elementAt(index);
-                        return ListTile(
-                          minLeadingWidth: 32,
+                        return Card(
+                          elevation: 4,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                          leading: null,
-                          title: Text(id),
-                          subtitle: Text(id),
-                          trailing: IconButton(
-                            icon: Icon(MdiIcons.dotsHorizontal),
-                            onPressed: () => null,
+                          child: ListTile(
+                            minLeadingWidth: 32,
+                            contentPadding: EdgeInsets.all(16),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+                            title: Text(id, style: TextStyle(fontSize: 24)),
+                            //subtitle: Text(id),
+                            trailing: IconButton(
+                              icon: Icon(MdiIcons.dotsHorizontal),
+                              onPressed: () => null,
+                            ),
+                            onTap: () => Navigator.pushNamed(context, 'Lists'),
+                            //onLongPress: () => null,
                           ),
-                          onTap: () => null,
-                          onLongPress: () => null,
                         );
                       },
                     ),
@@ -96,8 +117,8 @@ class Groups extends StatelessWidget {
                       ),
                       Button(
                         'Join\nGroup',
-                        icon: MdiIcons.accountMultiplePlus,
-                        onPressed: () => Navigator.pushNamed(context, 'Lists'),
+                        icon: MdiIcons.accountGroup,
+                        onPressed: () => app.msg('join'),
                       ),
                     ],
                   ),
