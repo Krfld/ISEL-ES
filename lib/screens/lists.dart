@@ -49,43 +49,28 @@ class Lists extends StatelessWidget {
                           elevation: 4,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                           child: ListTile(
-                            //contentPadding: EdgeInsets.all(16),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                            title: Text(id, style: TextStyle(fontSize: 14)),
+                            title: Text(id, style: TextStyle(fontSize: 16)),
                             subtitle: Text(id, style: TextStyle(fontSize: 14)),
                             trailing: IconButton(
                               icon: Icon(MdiIcons.dotsHorizontal),
-                              onPressed: () => null,
+                              onPressed: () => showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+                                    title: Text('List name'),
+                                  );
+                                },
+                              ),
                             ),
                             onTap: () => null,
                             //onLongPress: () => null,
                           ),
                         );
                       },
-                    ), /*ListView(
-                      physics: BouncingScrollPhysics(),
-                      padding: EdgeInsets.all(16),
-                      children: [
-                        for (var id in groups.groups)
-                          ListTile(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                            leading: null,
-                            title: Text(id),
-                            subtitle: Text(id),
-                            trailing: IconButton(
-                              icon: Icon(MdiIcons.dotsHorizontal),
-                              onPressed: () => null,
-                            ),
-                            onTap: () => null,
-                            //elevation: 4,
-                            //margin: EdgeInsets.symmetric(vertical: 8),
-                            /*child: Padding(
-                              padding: EdgeInsets.all(16),
-                              child: Text(id, style: TextStyle(fontSize: 16)),
-                            ),*/
-                          ),
-                      ],
-                    ),*/
+                    ),
                   ),
                 ),
                 Expanded(
@@ -93,7 +78,7 @@ class Lists extends StatelessWidget {
                   child: Center(
                     child: Button(
                       'Create\nList',
-                      icon: MdiIcons.textBoxPlusOutline,
+                      icon: MdiIcons.playlistPlus,
                       onPressed: () => app.msg('create list'),
                     ),
                   ),

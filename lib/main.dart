@@ -14,10 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Shopping List',
-      theme: ThemeData(
-        primarySwatch: Colors.teal,
-        //brightness: Brightness.dark,
-      ),
+      theme: ThemeData(primarySwatch: Colors.teal),
       routes: {
         'Home': (context) => Home(),
         'Groups': (context) => Groups(),

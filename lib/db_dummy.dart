@@ -1,15 +1,13 @@
 Map db = {
   'groups': {
     'groupId1': {
-      'created': int,
       'name': String,
       'lists': {
         'listId1': {
-          'created': int,
           'name': String,
           'products': {
             'productId1': {
-              'created': int,
+              'added': int,
               'name': String,
               'brand': String,
               'details': String,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../.imports.dart';
 
@@ -8,31 +7,28 @@ class Groups extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-        stream: fb.stream,
-        builder: (context, snapshot) {
-          return Scaffold(
-            drawerEdgeDragWidth: 64,
-            drawer: Drawer(
-              child: ListView(
-                children: [
-                  DrawerHeader(child: Text('Drawer Header')),
-                  ListTile(
-                    title: Text('Item 1'),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  ListTile(
-                    title: Text('Item 2'),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
-              ),
+    return Scaffold(
+      /*drawerEdgeDragWidth: 64,
+      drawer: rawer(
+        child: ListView(
+          children: [
+            DrawerHeader(child: Text('Drawer Header')),
+            ListTile(
+              title: Text('Item 1'),
+              onTap: () {
+                Navigator.pop(context);
+              },
             ),
-            /*floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+            ListTile(
+              title: Text('Item 2'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      ),*/
+      /*floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           floatingActionButton: Padding(
             padding: EdgeInsets.all(16),
             child: FloatingActionButton(
@@ -42,90 +38,103 @@ class Groups extends StatelessWidget {
               onPressed: () => null,
             ),
           ),*/
-            appBar: AppBar(
+      appBar: AppBar(
+        elevation: 4,
+        centerTitle: false,
+        title: Text('Shopping List', style: TextStyle(fontSize: 24)),
+        actions: [
+          IconButton(
+            icon: Icon(MdiIcons.cog),
+            onPressed: () => showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+                title: Text('Settings'),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ListBody(
+                      children: [
+                        Text('Settings 1'),
+                        Text('Settings 2'),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            flex: 3,
+            child: Card(
               elevation: 4,
-              centerTitle: true,
-              title: Text('Shopping List', style: TextStyle(fontSize: 24)),
-              actions: [
-                IconButton(
-                  icon: Icon(MdiIcons.cog),
-                  onPressed: () => showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: Text('Settings'),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                      content: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          ListBody(
-                            children: [
-                              Text('Settings'),
-                              Text('Settings'),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            body: Column(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: Card(
-                    elevation: 4,
-                    margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                    child: ListView.builder(
-                      padding: EdgeInsets.all(16),
-                      physics: BouncingScrollPhysics(),
-                      //separatorBuilder: (context, index) => Divider(thickness: 1),
-                      itemCount: groups.groups.length,
-                      itemBuilder: (context, index) {
-                        String id = groups.groups.elementAt(index);
-                        return Card(
-                          elevation: 4,
+              margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+              child: StreamBuilder(
+                stream: fb.stream,
+                builder: (context, snapshot) {
+                  return ListView.builder(
+                    padding: EdgeInsets.all(16),
+                    physics: BouncingScrollPhysics(),
+                    //separatorBuilder: (context, index) => Divider(thickness: 1),
+                    itemCount: groups.groups.length,
+                    itemBuilder: (context, index) {
+                      String id = groups.groups.elementAt(index);
+                      return Card(
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+                        child: ListTile(
+                          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                          child: ListTile(
-                            contentPadding: EdgeInsets.all(16),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                            title: Text(id, style: TextStyle(fontSize: 24)),
-                            //subtitle: Text(id),
-                            trailing: IconButton(
-                              icon: Icon(MdiIcons.dotsHorizontal),
-                              onPressed: () => null,
+                          title: Text(id, style: TextStyle(fontSize: 20)),
+                          //subtitle: Text(id),
+                          trailing: IconButton(
+                            icon: Icon(MdiIcons.dotsHorizontal),
+                            //splashRadius: 28,
+                            onPressed: () => showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+                                  title: Text('Group name'),
+                                );
+                              },
                             ),
-                            onTap: () => Navigator.pushNamed(context, 'Lists'),
-                            //onLongPress: () => null,
                           ),
-                        );
-                      },
-                    ),
-                  ),
+                          onTap: () => Navigator.pushNamed(context, 'Lists'),
+                          //onLongPress: () => null,
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Button(
+                  'Create\nGroup',
+                  icon: MdiIcons.accountMultiplePlus,
+                  onPressed: () => app.msg('create'),
                 ),
-                Expanded(
-                  flex: 1,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Button(
-                        'Create\nGroup',
-                        icon: MdiIcons.accountMultiplePlus,
-                        onPressed: () => app.msg('create'),
-                      ),
-                      Button(
-                        'Join\nGroup',
-                        icon: MdiIcons.accountGroup,
-                        onPressed: () => app.msg('join'),
-                      ),
-                    ],
-                  ),
+                Button(
+                  'Join\nGroup',
+                  icon: MdiIcons.accountGroup,
+                  onPressed: () => app.msg('join'),
                 ),
               ],
             ),
-          );
-        });
+          ),
+        ],
+      ),
+    );
   }
 }
