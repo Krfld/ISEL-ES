@@ -4,29 +4,31 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../.imports.dart';
 
-_Firebase fb = _Firebase();
-_RealtimeDatabase db = _RealtimeDatabase();
+_FirebaseCore fb = _FirebaseCore();
+_FirebaseDatabase db = _FirebaseDatabase();
 
 ///
 /// Firebase
 ///
 
-class _Firebase {
+class _FirebaseCore {
   bool _inited = false;
 
-  Stream<Event>? stream;
+  Stream<Event>? _stream;
+  Stream<Event>? get stream => _stream;
 
   /// Init firebase
-  Future<void> init() async {
-    if (_inited) return;
+  Future<bool> init() async {
+    if (_inited) return !_inited;
 
     await Firebase.initializeApp();
 
-    stream = db._setup();
+    _stream = db._setup();
 
     await app.delay(seconds: 2); //! Temp
 
     _inited = true;
+    return _inited;
   }
 }
 
@@ -34,25 +36,24 @@ class _Firebase {
 /// Realtime Database
 ///
 
-class _RealtimeDatabase {
+class _FirebaseDatabase {
   /// Database reference
   final DatabaseReference _dbRef = FirebaseDatabase.instance.reference().child('');
-
-  /// Set timestamp
-  Future<void> setTimestamp(String path) async {
-    await db.write(path, ServerValue.timestamp);
-    //return (await db.read(path))?.toInt() ?? 0;
-  }
 
   /// Private setup
   Stream<Event> _setup() {
     Stream<Event> stream = _dbRef.onValue;
-
     stream
         .listen((event) => data.update(app.load(event.snapshot.value, '', {})))
         .onError((e) => app.msg(e, prefix: 'Data', isError: true));
 
     return stream;
+  }
+
+  /// Set timestamp
+  Future<void> setTimestamp(String path) async {
+    await write(path, ServerValue.timestamp);
+    //return (await db.read(path))?.toInt() ?? 0;
   }
 
   /// Write data to firebase
@@ -93,3 +94,5 @@ class _RealtimeDatabase {
     }
   }
 }
+
+class _FirebaseAuth {}
