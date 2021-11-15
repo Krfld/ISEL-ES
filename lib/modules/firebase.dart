@@ -28,12 +28,6 @@ class _Firebase {
 
     _inited = true;
   }
-
-  /// Get timestamp
-  Future<int> get now async {
-    await db.write('|timestamps/now', ServerValue.timestamp);
-    return (await db.read('|timestamps/now'))?.toInt() ?? 0;
-  }
 }
 
 ///
@@ -44,7 +38,13 @@ class _RealtimeDatabase {
   /// Database reference
   final DatabaseReference _dbRef = FirebaseDatabase.instance.reference().child('');
 
-  ///* Private setup
+  /// Set timestamp
+  Future<void> setTimestamp(String path) async {
+    await db.write(path, ServerValue.timestamp);
+    //return (await db.read(path))?.toInt() ?? 0;
+  }
+
+  /// Private setup
   Stream<Event> _setup() {
     Stream<Event> stream = _dbRef.onValue;
 
