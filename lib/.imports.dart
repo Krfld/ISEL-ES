@@ -6,6 +6,7 @@ export './screens/lists.dart';
 /// Modules
 export './modules/data.dart';
 export './modules/firebase.dart';
+export './modules/costum_widgets.dart';
 export './modules/tools.dart';
 
 /// Packages

@@ -121,12 +121,12 @@ class Groups extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Button(
-                  'Create\nGroup',
+                  'Create',
                   icon: MdiIcons.accountMultiplePlus,
                   onPressed: () => app.msg('create'),
                 ),
                 Button(
-                  'Join\nGroup',
+                  'Join',
                   icon: MdiIcons.accountGroup,
                   onPressed: () => app.msg('join'),
                 ),

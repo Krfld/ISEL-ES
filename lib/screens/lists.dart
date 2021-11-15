@@ -77,7 +77,7 @@ class Lists extends StatelessWidget {
                   flex: 1,
                   child: Center(
                     child: Button(
-                      'Create\nList',
+                      'Create',
                       icon: MdiIcons.playlistPlus,
                       onPressed: () => app.msg('create list'),
                     ),
