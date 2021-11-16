@@ -22,6 +22,8 @@ class _Users {
   void update(Map users) {
     _users = users;
   }
+
+  String name(String id) => app.load(_users, 'users/$id/name', '');
 }
 
 class _Groups {
