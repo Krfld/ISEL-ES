@@ -75,7 +75,7 @@ class Groups extends StatelessWidget {
               margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
               child: StreamBuilder(
-                stream: FB.stream,
+                stream: Data.stream,
                 builder: (context, snapshot) {
                   return ListView.builder(
                     padding: EdgeInsets.all(16),

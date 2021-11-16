@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import '../.imports.dart';
 
 class Data {
   static Map _data = {};
+
+  static final StreamController _streamController = StreamController.broadcast();
+  static Stream get stream => _streamController.stream;
 
   static void update(Map data) {
     _data = Tools.print(data, prefix: 'Data');

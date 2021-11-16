@@ -11,16 +11,13 @@ import '../.imports.dart';
 class FB {
   static bool _inited = false;
 
-  static Stream<Event>? _stream;
-  static Stream<Event>? get stream => _stream;
-
   /// Init firebase
   static Future<bool> init() async {
     if (_inited) return !_inited;
 
     await Firebase.initializeApp();
 
-    _stream = DB._setup();
+    DB._setup();
 
     await Tools.delay(seconds: 2); //! Temp
 
@@ -40,19 +37,10 @@ class DB {
   static String get token => _dbRef.push().key;
 
   /// Private setup
-  static Stream<Event> _setup() {
-    Stream<Event> stream = _dbRef.onValue;
-    stream
+  static void _setup() {
+    _dbRef.onValue
         .listen((event) => Data.update(event.snapshot.value is Map ? event.snapshot.value : {}))
         .onError((e) => Tools.print(e, prefix: 'OnValue', isError: true));
-
-    return stream;
-  }
-
-  /// Set timestamp
-  static Future<void> setTimestamp(String path) async {
-    await write(path, ServerValue.timestamp);
-    //return (await db.read(path))?.toInt() ?? 0;
   }
 
   /// Write data
@@ -81,6 +69,12 @@ class DB {
       Tools.print(e, prefix: 'Read', isError: true);
     }
   }
+
+  /*/// Set timestamp
+  static Future<void> setTimestamp(String path) async {
+    await write(path, ServerValue.timestamp);
+    //return (await db.read(path))?.toInt() ?? 0;
+  }*/
 
   /*/// Push data and get token
   static Future<String?> push(String path, var value) async {
