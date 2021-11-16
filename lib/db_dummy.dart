@@ -1,4 +1,44 @@
-Map db = {
+Map db_v2 = {
+  'users': {
+    'userId1': {
+      'name': String,
+      'groups': ['groupId1', 'groupId2'],
+    },
+    'userId2': {
+      'name': String,
+      'groups': ['groupId3', 'groupId4'],
+    },
+  },
+  'groups': {
+    'groupId1': {'name': String},
+    'groupId2': {'name': String},
+  },
+  'lists': {
+    'groupId1': {
+      'listId1': {'name': String},
+      'listId2': {'name': String},
+    },
+    'groupId2': {
+      'listId3': {'name': String},
+      'listId4': {'name': String},
+    },
+  },
+  'products': {
+    'listId1': {'productId1': productMap, 'productId2': productMap},
+    'listId2': {'productId3': productMap, 'productId4': productMap},
+  },
+};
+
+Map productMap = {
+  'added': int,
+  'name': String,
+  'brand': String,
+  'details': String,
+  'amount': int,
+  'flag': bool,
+};
+
+Map db_v1 = {
   'groups': {
     'groupId1': {
       'name': String,
@@ -15,15 +55,6 @@ Map db = {
               'flag': bool,
             },
           },
-          /*'archive': {
-            'productId1': {
-              'created': int,
-              'name': String,
-              'details': String,
-              'amount': int,
-              'flag': bool,
-            },
-          },*/
         },
       },
     },

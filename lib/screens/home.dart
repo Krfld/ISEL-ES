@@ -10,7 +10,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: OutlinedButton(
-          onPressed: () => app.msg('Click'),
+          onPressed: () => Tools.msg('Click'),
           child: Text('Click'),
         ),
       ),

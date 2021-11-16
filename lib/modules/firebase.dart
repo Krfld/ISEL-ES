@@ -4,28 +4,25 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../.imports.dart';
 
-_FirebaseCore fb = _FirebaseCore();
-_FirebaseDatabase db = _FirebaseDatabase();
-
 ///
 /// Firebase
 ///
 
-class _FirebaseCore {
-  bool _inited = false;
+class FB {
+  static bool _inited = false;
 
-  Stream<Event>? _stream;
-  Stream<Event>? get stream => _stream;
+  static Stream<Event>? _stream;
+  static Stream<Event>? get stream => _stream;
 
   /// Init firebase
-  Future<bool> init() async {
+  static Future<bool> init() async {
     if (_inited) return !_inited;
 
     await Firebase.initializeApp();
 
-    _stream = db._setup();
+    _stream = DB._setup();
 
-    await app.delay(seconds: 2); //! Temp
+    await Tools.delay(seconds: 2); //! Temp
 
     return _inited = true;
   }
@@ -35,63 +32,72 @@ class _FirebaseCore {
 /// Realtime Database
 ///
 
-class _FirebaseDatabase {
+class DB {
   /// Database reference
-  final DatabaseReference _dbRef = FirebaseDatabase.instance.reference().child('');
+  static final DatabaseReference _dbRef = FirebaseDatabase.instance.reference().child('');
 
   /// Private setup
-  Stream<Event> _setup() {
+  static Stream<Event> _setup() {
     Stream<Event> stream = _dbRef.onValue;
     stream
         .listen((event) => Data.update(event.snapshot.value is Map ? event.snapshot.value : {}))
-        .onError((e) => app.msg(e, prefix: 'Data', isError: true));
+        .onError((e) => Tools.msg(e, prefix: 'Data', isError: true));
 
     return stream;
   }
 
   /// Set timestamp
-  Future<void> setTimestamp(String path) async {
+  static Future<void> setTimestamp(String path) async {
     await write(path, ServerValue.timestamp);
     //return (await db.read(path))?.toInt() ?? 0;
   }
 
-  /// Write data to firebase
-  Future<void> write(String path, var value) async {
+  /// Write data
+  static Future<void> write(String path, var value) async {
     try {
       await _dbRef.update({path: value});
     } catch (e) {
-      app.msg(e, prefix: 'Write', isError: true);
+      Tools.msg(e, prefix: 'Write', isError: true);
     }
   }
 
-  /// Push data from firebase
-  Future<String?> push(String path, var value) async {
+  /// Push data and get token
+  static Future<String?> push(String path, var value) async {
     try {
       DatabaseReference reference = _dbRef.child(path).push();
       await reference.set(value);
       return reference.key;
     } catch (e) {
-      app.msg(e, prefix: 'Push', isError: true);
+      Tools.msg(e, prefix: 'Push', isError: true);
     }
   }
 
-  /// Read data from firebase
-  Future<dynamic> read(String path) async {
+  /// Replace data
+  static Future<void> replace(String path, var value) async {
+    try {
+      await _dbRef.set({path: value});
+    } catch (e) {
+      Tools.msg(e, prefix: 'Write', isError: true);
+    }
+  }
+
+  /// Read data
+  static Future<dynamic> read(String path) async {
     try {
       return (await _dbRef.child(path).get()).value;
     } catch (e) {
-      app.msg(e, prefix: 'Read', isError: true);
+      Tools.msg(e, prefix: 'Read', isError: true);
     }
   }
 
-  /// Delete data from firebase
-  Future<void> delete(String path) async {
+  /// Delete data
+  static Future<void> delete(String path) async {
     try {
       await _dbRef.child(path).remove();
     } catch (e) {
-      app.msg(e, prefix: 'Delete', isError: true);
+      Tools.msg(e, prefix: 'Delete', isError: true);
     }
   }
 }
 
-class _FirebaseAuth {}
+class FA {}

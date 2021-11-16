@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../.imports.dart';
 
-final _App app = _App();
-
-class _App {
+class Tools {
   /// Delay function
-  Future delay({int seconds = 0, int milliseconds = 0}) async =>
+  static Future delay({int seconds = 0, int milliseconds = 0}) async =>
       await Future.delayed(Duration(seconds: seconds, milliseconds: milliseconds));
 
   /// Load map value from path
-  dynamic _load(Map source, String path, var defaultValue) {
+  static dynamic _load(Map source, String path, var defaultValue) {
     path = path != '/'
         ? path.substring(path.startsWith('/') ? 1 : 0, path.endsWith('/') ? path.length - 1 : path.length)
         : '';
@@ -37,40 +35,40 @@ class _App {
     return out;
   }
 
-  int loadInt(Map source, String path, int defaultValue) {
+  static int loadInt(Map source, String path, int defaultValue) {
     var out = _load(source, path, defaultValue);
     return out is int ? out : defaultValue;
   }
 
-  double loadDouble(Map source, String path, double defaultValue) {
+  static double loadDouble(Map source, String path, double defaultValue) {
     var out = _load(source, path, defaultValue);
     return out is double ? out : defaultValue;
   }
 
-  String loadString(Map source, String path, String defaultValue) {
+  static String loadString(Map source, String path, String defaultValue) {
     var out = _load(source, path, defaultValue);
     return out is String ? out : defaultValue;
   }
 
-  bool loadBool(Map source, String path, bool defaultValue) {
+  static bool loadBool(Map source, String path, bool defaultValue) {
     var out = _load(source, path, defaultValue);
     return out is bool ? out : defaultValue;
   }
 
-  List loadList(Map source, String path, List defaultValue) {
+  static List loadList(Map source, String path, List defaultValue) {
     var out = _load(source, path, defaultValue);
     return out is List ? out : defaultValue;
   }
 
-  Map loadMap(Map source, String path, Map defaultValue) {
+  static Map loadMap(Map source, String path, Map defaultValue) {
     var out = _load(source, path, defaultValue);
     return out is Map ? out : defaultValue;
   }
 
   /// Debug
-  final String _tag = '+';
-  int _debugId = 0;
-  dynamic msg(var msg, {String prefix = 'DEBUG', bool isError = false}) {
+  static const String _tag = '+';
+  static int _debugId = 0;
+  static dynamic msg(var msg, {String prefix = 'DEBUG', bool isError = false}) {
     if (isError) prefix = '{ERROR} ' + prefix;
     debugPrint('$_tag[${prefix.toUpperCase()} (${_debugId++})] $msg'); // Explore 'log'
     return msg;

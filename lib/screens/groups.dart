@@ -75,15 +75,15 @@ class Groups extends StatelessWidget {
               margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
               child: StreamBuilder(
-                stream: fb.stream,
+                stream: FB.stream,
                 builder: (context, snapshot) {
                   return ListView.builder(
                     padding: EdgeInsets.all(16),
                     physics: BouncingScrollPhysics(),
                     //separatorBuilder: (context, index) => Divider(thickness: 1),
-                    itemCount: groups.groups.length,
+                    itemCount: 2,
                     itemBuilder: (context, index) {
-                      String id = groups.groups.elementAt(index);
+                      String id = 2.toString();
                       return Card(
                         elevation: 4,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
@@ -123,12 +123,12 @@ class Groups extends StatelessWidget {
                 Button(
                   'Create',
                   icon: MdiIcons.accountMultiplePlus,
-                  onPressed: () => app.msg('create'),
+                  onPressed: () => Tools.msg('create'),
                 ),
                 Button(
                   'Join',
                   icon: MdiIcons.accountGroup,
-                  onPressed: () => app.msg('join'),
+                  onPressed: () => Tools.msg('join'),
                 ),
               ],
             ),

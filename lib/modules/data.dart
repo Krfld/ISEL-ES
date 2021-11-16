@@ -5,13 +5,11 @@ class Data {
 
   static void update(Map data) {
     _data = data;
-    app.msg(data, prefix: 'Data');
+    Tools.msg(data, prefix: 'Data');
 
     //Users._update(app.loadMap(data, 'users', {}));
     //groups._update(app.loadMap(data, 'groups', {}));
   }
-
-  static getUser(String id) => User.fromMap(id, app.loadMap(_data, 'users/$id', {}));
 }
 
 class User {
@@ -30,6 +28,6 @@ class User {
 
 class Group {}
 
-class List {}
+class GroupList {}
 
-class Product {}
+class ListProduct {}
