@@ -27,8 +27,7 @@ class _FirebaseCore {
 
     await app.delay(seconds: 2); //! Temp
 
-    _inited = true;
-    return _inited;
+    return _inited = true;
   }
 }
 

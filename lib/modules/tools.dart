@@ -9,7 +9,7 @@ class _App {
   Future delay({int seconds = 0, int milliseconds = 0}) async =>
       await Future.delayed(Duration(seconds: seconds, milliseconds: milliseconds));
 
-  /// Load value from map from path
+  /// Load map value from path
   dynamic load(var source, String path, var defaultValue) {
     path = path != '/'
         ? path.substring(path.startsWith('/') ? 1 : 0, path.endsWith('/') ? path.length - 1 : path.length)
