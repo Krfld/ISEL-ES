@@ -4,29 +4,46 @@ class Data {
   static Map _data = {};
 
   static void update(Map data) {
-    _data = data;
-    Tools.msg(data, prefix: 'Data');
+    _data = Tools.print(data, prefix: 'Data');
 
     //Users._update(app.loadMap(data, 'users', {}));
     //groups._update(app.loadMap(data, 'groups', {}));
   }
+
+  static User getUser(String id) => User.fromMap(id, Tools.loadMap(_data, 'users/$id', {}));
 }
 
 class User {
-  final String _id;
-  String get id => _id;
+  final String id;
+  final String name;
+  final List groups;
 
-  final String _name;
-  String get name => _name;
+  User({required this.id, required this.name, required this.groups});
 
-  User(this._id, this._name);
-
-  static fromMap(String id, Map userData) {
-    return User(id, '');
+  factory User.fromMap(String id, Map user) {
+    return User(
+      id: id,
+      name: Tools.loadString(user, 'name', ''),
+      groups: Tools.loadList(user, 'groups', []),
+    );
   }
 }
 
-class Group {}
+class Group {
+  final String id;
+  final String name;
+  final List lists;
+
+  Group({required this.id, required this.name, required this.lists});
+
+  factory Group.fromMap(String id, Map group) {
+    return Group(
+      id: id,
+      name: Tools.loadString(group, 'name', ''),
+      lists: [],
+    );
+  }
+}
 
 class GroupList {}
 

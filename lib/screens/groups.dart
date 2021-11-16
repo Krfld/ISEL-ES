@@ -123,12 +123,12 @@ class Groups extends StatelessWidget {
                 Button(
                   'Create',
                   icon: MdiIcons.accountMultiplePlus,
-                  onPressed: () => Tools.msg('create'),
+                  onPressed: () => Tools.print('create'),
                 ),
                 Button(
                   'Join',
                   icon: MdiIcons.accountGroup,
-                  onPressed: () => Tools.msg('join'),
+                  onPressed: () => Tools.print('join'),
                 ),
               ],
             ),

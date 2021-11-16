@@ -36,12 +36,15 @@ class DB {
   /// Database reference
   static final DatabaseReference _dbRef = FirebaseDatabase.instance.reference().child('');
 
+  /// Get token
+  static String get token => _dbRef.push().key;
+
   /// Private setup
   static Stream<Event> _setup() {
     Stream<Event> stream = _dbRef.onValue;
     stream
         .listen((event) => Data.update(event.snapshot.value is Map ? event.snapshot.value : {}))
-        .onError((e) => Tools.msg(e, prefix: 'Data', isError: true));
+        .onError((e) => Tools.print(e, prefix: 'OnValue', isError: true));
 
     return stream;
   }
@@ -57,18 +60,7 @@ class DB {
     try {
       await _dbRef.update({path: value});
     } catch (e) {
-      Tools.msg(e, prefix: 'Write', isError: true);
-    }
-  }
-
-  /// Push data and get token
-  static Future<String?> push(String path, var value) async {
-    try {
-      DatabaseReference reference = _dbRef.child(path).push();
-      await reference.set(value);
-      return reference.key;
-    } catch (e) {
-      Tools.msg(e, prefix: 'Push', isError: true);
+      Tools.print(e, prefix: 'Write', isError: true);
     }
   }
 
@@ -77,7 +69,7 @@ class DB {
     try {
       await _dbRef.set({path: value});
     } catch (e) {
-      Tools.msg(e, prefix: 'Write', isError: true);
+      Tools.print(e, prefix: 'Write', isError: true);
     }
   }
 
@@ -86,7 +78,18 @@ class DB {
     try {
       return (await _dbRef.child(path).get()).value;
     } catch (e) {
-      Tools.msg(e, prefix: 'Read', isError: true);
+      Tools.print(e, prefix: 'Read', isError: true);
+    }
+  }
+
+  /*/// Push data and get token
+  static Future<String?> push(String path, var value) async {
+    try {
+      DatabaseReference reference = _dbRef.child(path).push();
+      await reference.set(value);
+      return reference.key;
+    } catch (e) {
+      Tools.print(e, prefix: 'Push', isError: true);
     }
   }
 
@@ -95,9 +98,9 @@ class DB {
     try {
       await _dbRef.child(path).remove();
     } catch (e) {
-      Tools.msg(e, prefix: 'Delete', isError: true);
+      Tools.print(e, prefix: 'Delete', isError: true);
     }
-  }
+  }*/
 }
 
 class FA {}

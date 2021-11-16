@@ -16,10 +16,10 @@ class LoadingScreen extends StatelessWidget {
 /// Button widget
 class Button extends StatelessWidget {
   final String text;
-  final IconData? icon;
+  final IconData icon;
   final Function? onPressed;
 
-  const Button(this.text, {@required this.icon, @required this.onPressed, Key? key}) : super(key: key);
+  const Button(this.text, {required this.icon, @required this.onPressed, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

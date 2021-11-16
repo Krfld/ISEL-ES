@@ -19,11 +19,11 @@ class Lists extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(MdiIcons.trashCan),
-            onPressed: () => Tools.msg('trash'),
+            onPressed: () => Tools.print('trash'),
           ),
           IconButton(
             icon: Icon(MdiIcons.cog),
-            onPressed: () => Tools.msg('settings'),
+            onPressed: () => Tools.print('settings'),
           ),
         ],
       ),
@@ -81,7 +81,7 @@ class Lists extends StatelessWidget {
               child: Button(
                 'Create',
                 icon: MdiIcons.playlistPlus,
-                onPressed: () => Tools.msg('create list'),
+                onPressed: () => Tools.print('create list'),
               ),
             ),
           ),

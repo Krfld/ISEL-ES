@@ -68,7 +68,7 @@ class Tools {
   /// Debug
   static const String _tag = '+';
   static int _debugId = 0;
-  static dynamic msg(var msg, {String prefix = 'DEBUG', bool isError = false}) {
+  static dynamic print(var msg, {String prefix = 'DEBUG', bool isError = false}) {
     if (isError) prefix = '{ERROR} ' + prefix;
     debugPrint('$_tag[${prefix.toUpperCase()} (${_debugId++})] $msg'); // Explore 'log'
     return msg;
