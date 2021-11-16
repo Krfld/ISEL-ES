@@ -3,6 +3,7 @@ import '../.imports.dart';
 _Data data = _Data();
 _Users users = _Users();
 _Groups groups = _Groups();
+_Lists lists = _Lists();
 
 class _Data {
   Map _data = {};
@@ -11,27 +12,35 @@ class _Data {
     _data = data;
     app.msg(data, prefix: 'Data');
 
-    users.update(app.load(data, 'users', {}));
-    groups.update(app.load(data, 'groups', {}));
+    users._update(app.loadMap(data, 'users', {}));
+    groups._update(app.loadMap(data, 'groups', {}));
   }
 }
 
 class _Users {
   Map _users = {};
 
-  void update(Map users) {
+  void _update(Map users) {
     _users = users;
   }
 
-  String name(String id) => app.load(_users, 'users/$id/name', '');
+  String name(String id) => app.loadString(_users, 'users/$id/name', '');
 }
 
 class _Groups {
   Map _groups = {};
 
-  List get groups => _groups.keys.toList();
-
-  void update(Map groups) {
+  void _update(Map groups) {
     _groups = groups;
   }
+
+  List get groups => _groups.keys.toList();
+
+  String groupName(String id) => app.loadString(_groups, 'groups/$id/name', '');
+}
+
+class _Lists {
+  Map _lists = {};
+
+  List get lists => _lists.keys.toList();
 }

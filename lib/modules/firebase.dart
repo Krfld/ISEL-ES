@@ -43,7 +43,7 @@ class _FirebaseDatabase {
   Stream<Event> _setup() {
     Stream<Event> stream = _dbRef.onValue;
     stream
-        .listen((event) => data.update(app.load(event.snapshot.value, '', {})))
+        .listen((event) => data.update(event.snapshot.value is Map ? event.snapshot.value : {}))
         .onError((e) => app.msg(e, prefix: 'Data', isError: true));
 
     return stream;

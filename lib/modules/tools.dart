@@ -10,7 +10,7 @@ class _App {
       await Future.delayed(Duration(seconds: seconds, milliseconds: milliseconds));
 
   /// Load map value from path
-  dynamic load(var source, String path, var defaultValue) {
+  dynamic _load(Map source, String path, var defaultValue) {
     path = path != '/'
         ? path.substring(path.startsWith('/') ? 1 : 0, path.endsWith('/') ? path.length - 1 : path.length)
         : '';
@@ -28,13 +28,43 @@ class _App {
         out = defaultValue;
       }
 
-    if (out is num != defaultValue is num ||
+    /*if (out is num != defaultValue is num ||
         out is String != defaultValue is String ||
         out is bool != defaultValue is bool ||
         out is List != defaultValue is List ||
-        out is Map != defaultValue is Map) out = defaultValue;
+        out is Map != defaultValue is Map) out = defaultValue;*/
 
     return out;
+  }
+
+  int loadInt(Map source, String path, int defaultValue) {
+    var out = _load(source, path, defaultValue);
+    return out is int ? out : defaultValue;
+  }
+
+  double loadDouble(Map source, String path, double defaultValue) {
+    var out = _load(source, path, defaultValue);
+    return out is double ? out : defaultValue;
+  }
+
+  String loadString(Map source, String path, String defaultValue) {
+    var out = _load(source, path, defaultValue);
+    return out is String ? out : defaultValue;
+  }
+
+  bool loadBool(Map source, String path, bool defaultValue) {
+    var out = _load(source, path, defaultValue);
+    return out is bool ? out : defaultValue;
+  }
+
+  List loadList(Map source, String path, List defaultValue) {
+    var out = _load(source, path, defaultValue);
+    return out is List ? out : defaultValue;
+  }
+
+  Map loadMap(Map source, String path, Map defaultValue) {
+    var out = _load(source, path, defaultValue);
+    return out is Map ? out : defaultValue;
   }
 
   /// Debug

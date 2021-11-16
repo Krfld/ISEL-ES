@@ -29,7 +29,6 @@ class Button extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         elevation: 4,
         minimumSize: Size(112, 0),
-        maximumSize: Size(112, 0),
         padding: EdgeInsets.all(16),
         textStyle: TextStyle(fontSize: 14),
         //splashFactory: InkRipple.splashFactory,
