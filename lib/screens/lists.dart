@@ -65,7 +65,7 @@ class Lists extends StatelessWidget {
                               },
                             ),
                           ),
-                          onTap: () => null,
+                          onTap: () {},
                           //onLongPress: () => null,
                         ),
                       );

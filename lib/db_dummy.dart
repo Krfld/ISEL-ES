@@ -1,4 +1,4 @@
-Map db_v2 = {
+Map dbV2 = {
   'users': {
     'userId1': {
       'name': String,
@@ -24,12 +24,18 @@ Map db_v2 = {
     },
   },
   'products': {
-    'listId1': {'productId1': productMap, 'productId2': productMap},
-    'listId2': {'productId3': productMap, 'productId4': productMap},
+    'listId1': {
+      'productId1': product,
+      'productId2': product,
+    },
+    'listId2': {
+      'productId3': product,
+      'productId4': product,
+    },
   },
 };
 
-Map productMap = {
+Map product = {
   'added': int,
   'name': String,
   'brand': String,
@@ -38,7 +44,7 @@ Map productMap = {
   'flag': bool,
 };
 
-Map db_v1 = {
+Map dbV1 = {
   'groups': {
     'groupId1': {
       'name': String,
