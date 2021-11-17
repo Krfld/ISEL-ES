@@ -18,7 +18,7 @@ class FB {
     await Firebase.initializeApp();
 
     Data.setup();
-    FA._signInAnonymously();
+    await FA._signInAnonymously();
 
     await Tools.delay(seconds: 2); //! Temp
 
@@ -105,7 +105,5 @@ class FA {
   /// Authentication instance
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  static Future<void> _signInAnonymously() async {
-    Log.print(await _auth.signInAnonymously());
-  }
+  static Future<String> _signInAnonymously() async => (await _auth.signInAnonymously()).user?.uid ?? '';
 }

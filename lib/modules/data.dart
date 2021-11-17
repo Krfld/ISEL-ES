@@ -6,18 +6,21 @@ class Data {
   static Map _users = {};
   static Map _data = {};
 
-  static String? currentGroup;
-  static String? currentList;
+  static String? _userId;
+  static String? _currentGroup;
+  static String? _currentList;
 
-  static Stream<Map> usersStream() => DB.stream('users');
+  static Stream<Map> get usersStream => DB.stream('users');
 
-  static Stream<Map> groupsStream() => DB.stream('groups').map((event) {
+  static Stream<Map> get dataStream => DB.stream('groups').map((event) {
         event.removeWhere((key, value) => !['a', 'c'].contains(key));
         return event;
       }).distinct((p, n) => mapEquals(p, n));
 
   static void setup() {
-    groupsStream().listen((event) => Log.print(event.toString(), prefix: 'groups'));
+    usersStream.listen((event) => Log.print(event, prefix: 'Users'));
+    dataStream.listen((event) => Log.print(event, prefix: 'Groups'));
+
     /*usersStream().listen((value) {
       _users = Tools.print(value is Map ? value : {}, prefix: 'Users');
     });
