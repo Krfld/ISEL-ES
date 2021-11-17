@@ -10,15 +10,20 @@ class Data {
 
   static String? currentGroup;
   static String? currentList;
-  static String? currentProduct;
+
+  //! Have to create stream for each group
 
   static Stream usersStream() => DB.stream('users').map((event) => event.snapshot.value);
-  static Stream groupsStream() => DB.stream('groups').map((event) => event.snapshot.value);
-  static Stream listsStream(String groupId) => DB.stream('lists/$groupId').map((event) => event.snapshot.value);
-  static Stream productsStream(String listId) => DB.stream('products/$listId').map((event) => event.snapshot.value);
+  static Stream groupsStream() => DB.stream('groups').map((event) => (event.snapshot.value as Map).keys);
+  static Stream listsStream(String groupId) => DB.stream('groups/$groupId/lists').map((event) => event.snapshot.value);
+  static Stream productsStream(String groupId, String listId) =>
+      DB.stream('groups/$groupId/lists/$listId/products').map((event) => event.snapshot.value);
 
   static void setup() {
-    usersStream().listen((value) {
+    groupsStream().listen((event) {
+      Tools.print(event);
+    });
+    /*usersStream().listen((value) {
       _users = Tools.print(value is Map ? value : {}, prefix: 'Users');
     });
 
@@ -32,7 +37,7 @@ class Data {
 
     productsStream('').listen((value) {
       _products = Tools.print(value is Map ? value : {}, prefix: 'Products');
-    });
+    });*/
   }
 
   static User getUser(String userId) => User.fromMap(userId, _users[userId] ?? {});
@@ -73,7 +78,13 @@ class Group {
 }
 
 class GroupList {
-  //factory GroupList.fromMap(String id, Group group) {}
+  final String id;
+  final String name;
+  final List<ListProduct> products;
+
+  GroupList({required this.id, required this.name, required this.products});
+
+  //factory GroupList.fromMap(String id, Map list) {}
 }
 
 class ListProduct {}

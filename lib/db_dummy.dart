@@ -18,34 +18,6 @@ Map product = {
   'flag': bool,
 };
 
-Map dbV2 = {
-  'users': users,
-  'groups': {
-    'groupId1': {'name': String},
-    'groupId2': {'name': String},
-  },
-  'lists': {
-    'groupId1': {
-      'listId1': {'name': String},
-      'listId2': {'name': String},
-    },
-    'groupId2': {
-      'listId3': {'name': String},
-      'listId4': {'name': String},
-    },
-  },
-  'products': {
-    'listId1': {
-      'productId1': product,
-      'productId2': product,
-    },
-    'listId2': {
-      'productId3': product,
-      'productId4': product,
-    },
-  },
-};
-
 Map dbV1 = {
   'users': users,
   'groups': {
@@ -86,6 +58,34 @@ Map dbV1 = {
           },
         },
       },
+    },
+  },
+};
+
+Map dbV2 = {
+  'users': users,
+  'groups': {
+    'groupId1': {'name': String},
+    'groupId2': {'name': String},
+  },
+  'lists': {
+    'groupId1': {
+      'listId1': {'name': String},
+      'listId2': {'name': String},
+    },
+    'groupId2': {
+      'listId3': {'name': String},
+      'listId4': {'name': String},
+    },
+  },
+  'products': {
+    'listId1': {
+      'productId1': product,
+      'productId2': product,
+    },
+    'listId2': {
+      'productId3': product,
+      'productId4': product,
     },
   },
 };
