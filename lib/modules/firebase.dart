@@ -17,7 +17,7 @@ class FB {
 
     await Firebase.initializeApp();
 
-    DB._setup();
+    Data.setup();
 
     await Tools.delay(seconds: 2); //! Temp
 
@@ -36,12 +36,14 @@ class DB {
   /// Get token
   static String get token => _dbRef.push().key;
 
-  /// Private setup
+  static Stream<Event> stream(String path) => _dbRef.child(path).onValue;
+
+  /*/// Private setup
   static void _setup() {
     _dbRef.onValue
         .listen((event) => Data.update(event.snapshot.value is Map ? event.snapshot.value : {}))
         .onError((e) => Tools.print(e, prefix: 'OnValue', isError: true));
-  }
+  }*/
 
   /// Write data
   static Future<void> write(String path, var value) async {

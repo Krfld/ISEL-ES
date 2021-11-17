@@ -35,7 +35,7 @@ class Tools {
     return out;
   }
 
-  static int loadInt(Map source, String path, int defaultValue) {
+  /*static int loadInt(Map source, String path, int defaultValue) {
     var out = _load(source, path, defaultValue);
     return out is int ? out : defaultValue;
   }
@@ -63,7 +63,7 @@ class Tools {
   static Map loadMap(Map source, String path, Map defaultValue) {
     var out = _load(source, path, defaultValue);
     return out is Map ? out : defaultValue;
-  }
+  }*/
 
   /// Debug
   static const String _tag = '+';
