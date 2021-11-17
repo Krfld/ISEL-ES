@@ -11,10 +11,12 @@ class Data {
   static String? currentGroup;
   static String? currentList;
 
-  //! Have to create stream for each group
-
   static Stream usersStream() => DB.stream('users').map((event) => event.snapshot.value);
-  static Stream groupsStream() => DB.stream('groups').map((event) => event.snapshot.value);
+  static Stream groupsStream() => DB.stream('groups').map((event) => event.snapshot.value).distinct((p, n) {
+        Tools.print(p);
+        Tools.print(n);
+        return true;
+      }); // ! Testing
   static Stream listsStream(String groupId) => DB.stream('groups/$groupId/lists').map((event) => event.snapshot.value);
   static Stream productsStream(String groupId, String listId) =>
       DB.stream('groups/$groupId/lists/$listId/products').map((event) => event.snapshot.value);
