@@ -19,11 +19,11 @@ class Lists extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(MdiIcons.trashCan),
-            onPressed: () => Tools.print('trash'),
+            onPressed: () => Log.print('trash'),
           ),
           IconButton(
             icon: Icon(MdiIcons.cog),
-            onPressed: () => Tools.print('settings'),
+            onPressed: () => Log.print('settings'),
           ),
         ],
       ),
@@ -36,7 +36,7 @@ class Lists extends StatelessWidget {
               margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
               child: StreamBuilder(
-                stream: Data.listsStream(''),
+                stream: null,
                 builder: (context, snapshot) {
                   return ListView.builder(
                     padding: EdgeInsets.all(16),
@@ -81,7 +81,7 @@ class Lists extends StatelessWidget {
               child: Button(
                 'Create',
                 icon: MdiIcons.playlistPlus,
-                onPressed: () => Tools.print('create list'),
+                onPressed: () => Log.print('create list'),
               ),
             ),
           ),

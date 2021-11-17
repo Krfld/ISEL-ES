@@ -18,6 +18,7 @@ class FB {
     await Firebase.initializeApp();
 
     Data.setup();
+    FA._signInAnonymously();
 
     await Tools.delay(seconds: 2); //! Temp
 
@@ -36,7 +37,8 @@ class DB {
   /// Get token
   static String get token => _dbRef.push().key;
 
-  static Stream<Event> stream(String path) => _dbRef.child(path).onValue;
+  static Stream<Map> stream(String path) =>
+      _dbRef.child(path).onValue.map((event) => event.snapshot.value is Map ? event.snapshot.value : {});
 
   /*/// Private setup
   static void _setup() {
@@ -50,7 +52,7 @@ class DB {
     try {
       await _dbRef.update({path: value});
     } catch (e) {
-      Tools.print(e, prefix: 'Write', isError: true);
+      Log.print(e, prefix: 'Write', isError: true);
     }
   }
 
@@ -59,7 +61,7 @@ class DB {
     try {
       await _dbRef.set({path: value});
     } catch (e) {
-      Tools.print(e, prefix: 'Write', isError: true);
+      Log.print(e, prefix: 'Write', isError: true);
     }
   }
 
@@ -68,7 +70,7 @@ class DB {
     try {
       return (await _dbRef.child(path).get()).value;
     } catch (e) {
-      Tools.print(e, prefix: 'Read', isError: true);
+      Log.print(e, prefix: 'Read', isError: true);
     }
   }
 
@@ -99,4 +101,11 @@ class DB {
   }*/
 }
 
-class FA {}
+class FA {
+  /// Authentication instance
+  static final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  static Future<void> _signInAnonymously() async {
+    Log.print(await _auth.signInAnonymously());
+  }
+}

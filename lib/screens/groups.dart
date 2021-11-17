@@ -75,7 +75,7 @@ class Groups extends StatelessWidget {
               margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
               child: StreamBuilder(
-                stream: Data.groupsStream(),
+                stream: null,
                 builder: (context, snapshot) {
                   return ListView.builder(
                     padding: EdgeInsets.all(16),
@@ -123,12 +123,12 @@ class Groups extends StatelessWidget {
                 Button(
                   'Create',
                   icon: MdiIcons.accountMultiplePlus,
-                  onPressed: () => Tools.print('create'),
+                  onPressed: () => Log.print('create'),
                 ),
                 Button(
                   'Join',
                   icon: MdiIcons.accountGroup,
-                  onPressed: () => Tools.print('join'),
+                  onPressed: () => Log.print('join'),
                 ),
               ],
             ),

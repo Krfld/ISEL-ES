@@ -1,30 +1,23 @@
-import 'dart:async';
+import 'package:flutter/foundation.dart';
 
 import '../.imports.dart';
 
 class Data {
   static Map _users = {};
-  static Map _groups = {};
-  static Map _lists = {};
-  static Map _products = {};
+  static Map _data = {};
 
   static String? currentGroup;
   static String? currentList;
 
-  static Stream usersStream() => DB.stream('users').map((event) => event.snapshot.value);
-  static Stream groupsStream() => DB.stream('groups').map((event) => event.snapshot.value).distinct((p, n) {
-        Tools.print(p);
-        Tools.print(n);
-        return true;
-      }); // ! Testing
-  static Stream listsStream(String groupId) => DB.stream('groups/$groupId/lists').map((event) => event.snapshot.value);
-  static Stream productsStream(String groupId, String listId) =>
-      DB.stream('groups/$groupId/lists/$listId/products').map((event) => event.snapshot.value);
+  static Stream<Map> usersStream() => DB.stream('users');
+
+  static Stream<Map> groupsStream() => DB.stream('groups').map((event) {
+        event.removeWhere((key, value) => !['a', 'c'].contains(key));
+        return event;
+      }).distinct((p, n) => mapEquals(p, n));
 
   static void setup() {
-    groupsStream().listen((event) {
-      Tools.print(event);
-    });
+    groupsStream().listen((event) => Log.print(event.toString(), prefix: 'groups'));
     /*usersStream().listen((value) {
       _users = Tools.print(value is Map ? value : {}, prefix: 'Users');
     });
@@ -42,8 +35,8 @@ class Data {
     });*/
   }
 
-  static User getUser(String userId) => User.fromMap(userId, _users[userId] ?? {});
-  static Group getGroup(String groupId) => Group.fromMap(groupId, _groups[groupId] ?? {});
+  //static User getUser(String userId) => User.fromMap(userId, _users[userId] ?? {});
+  //static Group getGroup(String groupId) => Group.fromMap(groupId, _groups[groupId] ?? {});
   //static GroupList getList(Group group, String listId) => GroupList.fromMap(listId, _lists[listId] ?? {});
 }
 

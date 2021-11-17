@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:developer';
 
 import '../.imports.dart';
 
@@ -35,7 +36,7 @@ class Tools {
     return out;
   }
 
-  /*static int loadInt(Map source, String path, int defaultValue) {
+  static int loadInt(Map source, String path, int defaultValue) {
     var out = _load(source, path, defaultValue);
     return out is int ? out : defaultValue;
   }
@@ -63,14 +64,17 @@ class Tools {
   static Map loadMap(Map source, String path, Map defaultValue) {
     var out = _load(source, path, defaultValue);
     return out is Map ? out : defaultValue;
-  }*/
+  }
+}
 
-  /// Debug
+class Log {
   static const String _tag = '+';
   static int _debugId = 0;
+
   static dynamic print(var msg, {String prefix = 'DEBUG', bool isError = false}) {
     if (isError) prefix = '{ERROR} ' + prefix;
-    debugPrint('$_tag[${prefix.toUpperCase()} (${_debugId++})] $msg'); // Explore 'log'
+    //debugPrint('$_tag[${prefix.toUpperCase()} (${_debugId++})] $msg');
+    log('$msg', name: '$_tag ${prefix.toUpperCase()} (${_debugId++})');
     return msg;
   }
 }
