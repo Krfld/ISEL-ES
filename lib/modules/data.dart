@@ -31,7 +31,7 @@ class Data {
 
     for (String groupId in user.groups) _groupStreams.addAll({groupId: DB.stream('groups/$groupId')});
 
-    for (String groupId in user.groups) //! Listen new stream when creating group
+    for (String groupId in user.groups) //! Listen new stream when creating group and stop when leaving
       groupStream(groupId).listen(
           (event) => Log.print(_data.update(groupId, (value) => event, ifAbsent: () => event), prefix: groupId));
   }
