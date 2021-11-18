@@ -31,12 +31,6 @@ class Tools {
         out = null;
       }
 
-    /*if (out is num != defaultValue is num ||
-        out is String != defaultValue is String ||
-        out is bool != defaultValue is bool ||
-        out is List != defaultValue is List ||
-        out is Map != defaultValue is Map) out = defaultValue;*/
-
     return out;
   }
 

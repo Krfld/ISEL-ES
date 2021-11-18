@@ -11,14 +11,24 @@ class Data {
 
   static Stream<Map> get usersStream => DB.stream('users');
 
-  static Stream<Map> get dataStream => DB.stream('groups').map((event) {
-        event.removeWhere((key, value) => !User.fromMap(FA.userId, _users).groups.contains(key));
+  /*static Stream<Map> get dataStream => DB.stream('groups').map((event) {
+        event.removeWhere((key, value) => !User.fromMap(FA.userId, _users[FA.userId]).groups.contains(key));
         return event;
-      }).distinct((p, n) => mapEquals(p, n));
+      }).distinct((p, n) => mapEquals(p, n));*/
 
-  static void setup() {
-    usersStream.listen((event) => Log.print(event, prefix: 'Users'));
-    dataStream.listen((event) => Log.print(event, prefix: 'Groups'));
+  static Future<void> setup() async {
+    var users = await DB.read('users');
+    _users = users is Map ? users : {};
+
+    User me = User.fromMap(FA.userId);
+
+    usersStream.listen((event) => _users = Log.print(event, prefix: 'Users'));
+
+    for (String element in me.groups) {
+      DB.stream(element).listen((event) {});
+    }
+
+    //dataStream.listen((event) => Log.print(event, prefix: 'Groups'));
 
     /*usersStream().listen((value) {
       _users = Tools.print(value is Map ? value : {}, prefix: 'Users');
@@ -45,15 +55,15 @@ class Data {
 class User {
   final String id;
   final String name;
-  final List<String> groups;
+  final List groups;
 
   User({required this.id, required this.name, required this.groups});
 
-  factory User.fromMap(String id, Map user) {
+  factory User.fromMap(String id) {
     return User(
       id: id,
-      name: user['name'],
-      groups: user['groups'],
+      name: '',
+      groups: Tools.loadList(Data._users, '$id/groups', []),
     );
   }
 }

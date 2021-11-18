@@ -17,12 +17,12 @@ class FB {
 
     await Firebase.initializeApp();
 
-    Data.setup();
-    await FA._signInAnonymously();
+    bool signedIn = await FA._signInAnonymously();
+    if (signedIn) await Data.setup();
 
-    await Tools.delay(seconds: 2); //! Temp
+    await Tools.delay(seconds: 2);
 
-    return _inited = true;
+    return Log.print(_inited = true && signedIn, prefix: 'Init');
   }
 }
 
@@ -104,16 +104,18 @@ class DB {
 
 class FA {
   static late String _userId;
-  static String get userId => _userId;
+  static String get userId => 'a'; //_userId;
 
   /// Authentication instance
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  static Future<void> _signInAnonymously() async {
+  static Future<bool> _signInAnonymously() async {
     try {
       _userId = (await _auth.signInAnonymously()).user!.uid;
+      return true;
     } catch (e) {
       Log.print(e, prefix: 'SignInAnonymously', isError: true);
+      return false;
     }
   }
 }
