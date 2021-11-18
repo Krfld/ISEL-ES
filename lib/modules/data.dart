@@ -6,14 +6,13 @@ class Data {
   static Map _users = {};
   static Map _data = {};
 
-  static String? _userId;
   static String? _currentGroup;
   static String? _currentList;
 
   static Stream<Map> get usersStream => DB.stream('users');
 
   static Stream<Map> get dataStream => DB.stream('groups').map((event) {
-        event.removeWhere((key, value) => !['a', 'c'].contains(key));
+        event.removeWhere((key, value) => !User.fromMap(FA.userId, _users).groups.contains(key));
         return event;
       }).distinct((p, n) => mapEquals(p, n));
 

@@ -8,8 +8,12 @@ class Tools {
   static Future delay({int seconds = 0, int milliseconds = 0}) async =>
       await Future.delayed(Duration(seconds: seconds, milliseconds: milliseconds));
 
+  ///
+  ///
+  ///
+
   /// Load map value from path
-  static dynamic _load(Map source, String path, var defaultValue) {
+  static dynamic load(Map source, String path) {
     path = path != '/'
         ? path.substring(path.startsWith('/') ? 1 : 0, path.endsWith('/') ? path.length - 1 : path.length)
         : '';
@@ -24,7 +28,7 @@ class Tools {
         for (int i = 0; i < paths.length - 1; i++) out = out[paths[i]];
         out = out[paths.last];
       } catch (e) {
-        out = defaultValue;
+        out = null;
       }
 
     /*if (out is num != defaultValue is num ||
@@ -37,32 +41,32 @@ class Tools {
   }
 
   static int loadInt(Map source, String path, int defaultValue) {
-    var out = _load(source, path, defaultValue);
+    var out = load(source, path);
     return out is int ? out : defaultValue;
   }
 
   static double loadDouble(Map source, String path, double defaultValue) {
-    var out = _load(source, path, defaultValue);
+    var out = load(source, path);
     return out is double ? out : defaultValue;
   }
 
   static String loadString(Map source, String path, String defaultValue) {
-    var out = _load(source, path, defaultValue);
+    var out = load(source, path);
     return out is String ? out : defaultValue;
   }
 
   static bool loadBool(Map source, String path, bool defaultValue) {
-    var out = _load(source, path, defaultValue);
+    var out = load(source, path);
     return out is bool ? out : defaultValue;
   }
 
   static List loadList(Map source, String path, List defaultValue) {
-    var out = _load(source, path, defaultValue);
+    var out = load(source, path);
     return out is List ? out : defaultValue;
   }
 
   static Map loadMap(Map source, String path, Map defaultValue) {
-    var out = _load(source, path, defaultValue);
+    var out = load(source, path);
     return out is Map ? out : defaultValue;
   }
 }

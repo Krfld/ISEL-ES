@@ -34,9 +34,10 @@ class DB {
   /// Database reference
   static final DatabaseReference _dbRef = FirebaseDatabase.instance.reference().child('');
 
-  /// Get token
+  /// Generate token
   static String get token => _dbRef.push().key;
 
+  /// Stream at 'path'
   static Stream<Map> stream(String path) =>
       _dbRef.child(path).onValue.map((event) => event.snapshot.value is Map ? event.snapshot.value : {});
 
@@ -102,8 +103,17 @@ class DB {
 }
 
 class FA {
+  static late String _userId;
+  static String get userId => _userId;
+
   /// Authentication instance
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  static Future<String> _signInAnonymously() async => (await _auth.signInAnonymously()).user?.uid ?? '';
+  static Future<void> _signInAnonymously() async {
+    try {
+      _userId = (await _auth.signInAnonymously()).user!.uid;
+    } catch (e) {
+      Log.print(e, prefix: 'SignInAnonymously', isError: true);
+    }
+  }
 }
