@@ -25,7 +25,7 @@ class FB {
 
     await Tools.delay(seconds: 2);
 
-    return Log.print(_inited = true && signedIn, prefix: 'Init');
+    return _inited = true && signedIn;
   }
 }
 

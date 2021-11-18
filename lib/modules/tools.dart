@@ -13,7 +13,7 @@ class Tools {
   ///
 
   /// Load map value from path
-  static dynamic load(Map source, String path) {
+  static dynamic load(Map source, String path, {var defaultValue}) {
     path = path != '/'
         ? path.substring(path.startsWith('/') ? 1 : 0, path.endsWith('/') ? path.length - 1 : path.length)
         : '';
@@ -28,7 +28,7 @@ class Tools {
         for (int i = 0; i < paths.length - 1; i++) out = out[paths[i]];
         out = out[paths.last];
       } catch (e) {
-        out = null;
+        out = defaultValue;
       }
 
     return out;
