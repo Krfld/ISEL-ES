@@ -13,7 +13,8 @@ Map product = {
   'added': int,
   'name': String,
   'brand': String,
-  'details': String,
+  'store': String,
+  'info': String,
   'amount': int,
   'flag': bool,
 };

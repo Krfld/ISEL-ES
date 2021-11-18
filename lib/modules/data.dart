@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 export '../modules/firebase.dart';
 
 import '../.imports.dart';
@@ -9,11 +8,15 @@ class Data {
 
   static Map<String, Stream<Map>> _groupStreams = {};
 
-  static String? _currentGroup; // Try Group
-  static String? _currentList; // Try GroupList
+  static Group? currentGroup; // Try Group
+  static GroupList? currentList; // Try GroupList
 
   static Stream<Map> usersStream() => DB.stream('users');
   static Stream<Map> groupsStream(String groupId) => Tools.load(_groupStreams, groupId);
+
+  ///
+  ///
+  ///
 
   static Future<void> setup() async {
     if (_users.isNotEmpty) return;
@@ -21,9 +24,9 @@ class Data {
     var users = await DB.read('users');
     _users = users is Map ? users : {};
 
-    User user = User.getUser(FA.userId);
+    User user = User._getUser(FA.userId);
 
-    usersStream().listen((event) => _users = Log.print(event, prefix: 'Users'));
+    usersStream().listen((event) => _users = event);
 
     for (String groupId in user.groups) _groupStreams.addAll({groupId: DB.stream('groups/$groupId')});
 
@@ -31,33 +34,47 @@ class Data {
       groupsStream(groupId).listen((event) => _data.update(groupId, (value) => event, ifAbsent: () => event));
   }
 
-  static User getUser(String userId) => User.getUser(userId);
-  static Group getGroup(String groupId) => Group.getGroupFromMap(groupId, _data);
-  static GroupList getGroupList(String groupId, String listId) => Tools.load(getGroup(groupId).lists, 'listId');
+  ///
+  ///
+  ///
+
+  /// Objects
+
+  static User getUser(String userId) => User._getUser(userId);
+
+  static Group getGroup(String groupId) => Group._fromId(groupId);
+
+  static GroupList getGroupList(String groupId, String listId) => GroupList._fromId(groupId, listId);
+
   static ListProduct getListProduct(String groupId, String listId, String productId) =>
-      Tools.load(getGroupList(groupId, listId).products, 'productId');
+      ListProduct._fromId(groupId, listId, productId);
+
+  /// Lists
 
   static List<User> getUsers() => List.generate(
         _users.keys.length,
         (index) => getUser(_users.keys.elementAt(index)),
-        growable: false,
       );
+
   static List<Group> getGroups() => List.generate(
         _data.keys.length,
         (index) => getGroup(_data.keys.elementAt(index)),
-        growable: false,
       );
-  static List<GroupList> getGroupLists(String groupId) => List.generate(
-        getGroup(groupId).lists.keys.length,
-        (index) => getGroup(groupId).lists.values.elementAt(index),
-        growable: false,
+
+  static List<GroupList> getGroupLists(Group group) => List.generate(
+        group.lists.length,
+        (index) => getGroupList(group.id, group.lists.elementAt(index)),
       );
-  static List<ListProduct> getListProducts(String groupId, String listId) => List.generate(
-        getGroupList(groupId, listId).products.keys.length,
-        (index) => getGroupList(groupId, listId).products.values.elementAt(index),
-        growable: false,
+
+  static List<ListProduct> getListProducts(Group group, GroupList list) => List.generate(
+        list.products.length,
+        (index) => getListProduct(group.id, list.id, list.products.elementAt(index)),
       );
 }
+
+///
+///
+///
 
 class User {
   final String id;
@@ -70,14 +87,7 @@ class User {
     required this.groups,
   });
 
-  User.empty()
-      : this(
-          id: '',
-          name: '',
-          groups: [],
-        );
-
-  factory User.getUser(String userId) {
+  factory User._getUser(String userId) {
     return User(
       id: userId,
       name: '',
@@ -86,10 +96,14 @@ class User {
   }
 }
 
+///
+///
+///
+
 class Group {
   final String id;
   final String name;
-  final Map<String, GroupList> lists;
+  final List lists;
 
   Group({
     required this.id,
@@ -97,31 +111,28 @@ class Group {
     required this.lists,
   });
 
-  Group.empty()
-      : this(
-          id: '',
-          name: '',
-          lists: {},
-        );
+  factory Group._fromId(String groupId) {
+    Map group = Tools.load(Data._data, groupId);
 
-  factory Group.getGroupFromMap(String groupId, Map groups) {
-    Map<String, GroupList> groupLists = {};
-    Map lists = Tools.loadMap(groups, '$groupId/lists', {});
-
-    for (var listId in lists.keys) groupLists.addAll({listId: GroupList.getGroupListFromMap(groupId, listId, lists)});
+    Iterable lists = Tools.loadMap(group, 'lists', {}).keys;
+    List groupLists = List.generate(lists.length, (index) => lists.elementAt(index));
 
     return Group(
       id: groupId,
-      name: Tools.loadString(groups, '$groupId/name', ''),
+      name: Tools.loadString(group, 'name', ''),
       lists: groupLists,
     );
   }
 }
 
+///
+///
+///
+
 class GroupList {
   final String id;
   final String name;
-  final Map<String, ListProduct> products;
+  final List products;
 
   GroupList({
     required this.id,
@@ -129,35 +140,32 @@ class GroupList {
     required this.products,
   });
 
-  GroupList.empty()
-      : this(
-          id: '',
-          name: '',
-          products: {},
-        );
+  factory GroupList._fromId(String groupId, String listId) {
+    Map list = Tools.loadMap(Data._data, '$groupId/lists/$listId', {});
 
-  factory GroupList.getGroupListFromMap(String groupId, String listId, Map lists) {
-    Map<String, ListProduct> listProducts = {};
-    Map products = Tools.loadMap(lists, '$listId/products', {});
-
-    for (var productId in products.keys)
-      listProducts.addAll({productId: ListProduct.fromMap(groupId, listId, productId, products)});
+    Iterable products = Tools.loadMap(list, 'products', {}).keys;
+    List listProducts = List.generate(products.length, (index) => products.elementAt(index));
 
     return GroupList(
       id: listId,
-      name: Tools.loadString(lists, '$listId/name', ''),
+      name: Tools.loadString(list, 'name', ''),
       products: listProducts,
     );
   }
 }
 
+///
+///
+///
+
 class ListProduct {
   final String id;
   final String name;
   final DateTime added;
-  final String brand;
-  final String details;
-  final int amount;
+  final String? brand;
+  final String? store;
+  final String? info;
+  final int? amount;
   final bool flag;
 
   ListProduct({
@@ -165,31 +173,24 @@ class ListProduct {
     required this.name,
     required this.added,
     required this.brand,
-    required this.details,
+    required this.store,
+    required this.info,
     required this.amount,
     required this.flag,
   });
 
-  ListProduct.empty()
-      : this(
-          id: '',
-          name: '',
-          added: DateTime.fromMillisecondsSinceEpoch(0),
-          brand: '',
-          details: '',
-          amount: 0,
-          flag: false,
-        );
+  factory ListProduct._fromId(String groupId, String listId, String productId) {
+    Map product = Tools.loadMap(Data._data, '$groupId/lists/$listId/products/$productId', {});
 
-  factory ListProduct.fromMap(String groupId, String listId, String productId, Map products) {
     return ListProduct(
       id: productId,
-      name: Tools.loadString(products, '$productId/name', ''),
-      added: DateTime.fromMillisecondsSinceEpoch(Tools.loadInt(products, '$productId/added', 0)),
-      brand: Tools.loadString(products, '$productId/brand', ''),
-      details: Tools.loadString(products, '$productId/details', ''),
-      amount: Tools.loadInt(products, '$productId/amount', 1),
-      flag: Tools.loadBool(products, '$productId/flag', false),
+      name: Tools.loadString(product, 'name', ''),
+      added: DateTime.fromMillisecondsSinceEpoch(Tools.loadInt(product, 'added', 0)),
+      brand: Tools.load(product, 'brand'),
+      store: Tools.load(product, 'store'),
+      info: Tools.load(product, 'info'),
+      amount: Tools.load(product, 'amount'),
+      flag: Tools.loadBool(product, 'flag', false),
     );
   }
 }

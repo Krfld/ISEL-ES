@@ -106,8 +106,8 @@ class DB {
 }
 
 class FA {
-  static late String _userId;
-  static String get userId => 'a'; //_userId;
+  static String? _userId;
+  static String get userId => 'a'; //_userId!;
 
   /// Authentication instance
   static final FirebaseAuth _auth = FirebaseAuth.instance;
