@@ -5,16 +5,21 @@ import '../.imports.dart';
 class Lists extends StatelessWidget {
   const Lists({Key? key}) : super(key: key);
 
-  void _pop(BuildContext context) {
+  Future<void> _push(BuildContext context, GroupList list) async {
+    Data.currentList = list;
+    await Navigator.pushNamed(context, 'Lists');
+  }
+
+  void _back(BuildContext context, {bool pop = false}) {
     Data.currentGroup = null;
-    Navigator.pop(context);
+    if (pop) Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        _pop(context);
+        _back(context);
         return true;
       },
       child: Scaffold(
@@ -24,7 +29,7 @@ class Lists extends StatelessWidget {
           //centerTitle: false,
           leading: IconButton(
             icon: Icon(MdiIcons.arrowLeft),
-            onPressed: () => _pop(context),
+            onPressed: () => _back(context, pop: true),
           ),
           actions: [
             IconButton(
@@ -46,7 +51,7 @@ class Lists extends StatelessWidget {
                 margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                 child: StreamBuilder(
-                  stream: Data.groupsStream(Data.currentGroup!.id),
+                  stream: Data.groupStream(Data.currentGroup!.id),
                   builder: (context, snapshot) {
                     return ListView.builder(
                       padding: EdgeInsets.all(16),

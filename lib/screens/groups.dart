@@ -7,14 +7,17 @@ class Groups extends StatelessWidget {
 
   Future<void> _push(BuildContext context, Group group) async {
     Data.currentGroup = group;
-    Navigator.pushNamed(context, 'Lists');
+    await Navigator.pushNamed(context, 'Lists');
+  }
+
+  void _back(BuildContext context, {bool pop = false}) {
+    if (pop) Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pop(context);
         return true;
       },
       child: Scaffold(
@@ -85,7 +88,7 @@ class Groups extends StatelessWidget {
                 margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                 child: StreamBuilder(
-                  stream: null,
+                  stream: Data.dataStream(),
                   builder: (context, snapshot) {
                     return ListView.builder(
                       padding: EdgeInsets.all(16),

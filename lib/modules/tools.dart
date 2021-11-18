@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
 import 'dart:developer';
-
-import '../.imports.dart';
 
 class Tools {
   /// Delay function
@@ -56,7 +53,7 @@ class Tools {
 
   static List loadList(Map source, String path, List defaultValue) {
     var out = load(source, path);
-    return out is List ? out : defaultValue;
+    return List.from(out is List ? out : defaultValue);
   }
 
   static Map loadMap(Map source, String path, Map defaultValue) {

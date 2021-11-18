@@ -1,4 +1,5 @@
-export '../modules/firebase.dart';
+import 'package:async/async.dart';
+import '../modules/firebase.dart';
 
 import '../.imports.dart';
 
@@ -6,13 +7,13 @@ class Data {
   static Map _users = {};
   static Map _data = {};
 
-  static Map<String, Stream<Map>> _groupStreams = {};
-
   static Group? currentGroup; // Try Group
   static GroupList? currentList; // Try GroupList
 
+  static Map<String, Stream<Map>> _groupStreams = {};
   static Stream<Map> usersStream() => DB.stream('users');
-  static Stream<Map> groupsStream(String groupId) => Tools.load(_groupStreams, groupId);
+  static Stream<Map> groupStream(String groupId) => Tools.load(_groupStreams, groupId);
+  static Stream<Map> dataStream() => StreamGroup.mergeBroadcast(_groupStreams.values);
 
   ///
   ///
@@ -26,12 +27,13 @@ class Data {
 
     User user = User._getUser(FA.userId);
 
-    usersStream().listen((event) => _users = event);
+    usersStream().listen((event) => Log.print(_users = event, prefix: 'Users'));
 
     for (String groupId in user.groups) _groupStreams.addAll({groupId: DB.stream('groups/$groupId')});
 
-    for (String groupId in user.groups)
-      groupsStream(groupId).listen((event) => _data.update(groupId, (value) => event, ifAbsent: () => event));
+    for (String groupId in user.groups) //! Listen new stream when creating group
+      groupStream(groupId).listen(
+          (event) => Log.print(_data.update(groupId, (value) => event, ifAbsent: () => event), prefix: groupId));
   }
 
   ///
@@ -88,10 +90,13 @@ class User {
   });
 
   factory User._getUser(String userId) {
+    List groups = Tools.loadList(Data._users, '$userId/groups', []);
+    groups.removeWhere((element) => element == null);
+
     return User(
       id: userId,
       name: '',
-      groups: Tools.loadList(Data._users, '$userId/groups', []),
+      groups: groups,
     );
   }
 }
@@ -112,7 +117,7 @@ class Group {
   });
 
   factory Group._fromId(String groupId) {
-    Map group = Tools.load(Data._data, groupId);
+    Map group = Tools.loadMap(Data._data, groupId, {});
 
     Iterable lists = Tools.loadMap(group, 'lists', {}).keys;
     List groupLists = List.generate(lists.length, (index) => lists.elementAt(index));
