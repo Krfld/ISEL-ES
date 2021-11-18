@@ -17,8 +17,11 @@ class FB {
 
     await Firebase.initializeApp();
 
-    bool signedIn = await FA._signInAnonymously();
-    if (signedIn) await Data.setup();
+    bool signedIn = await FA.signInAnonymously();
+    if (signedIn)
+      await Data.setup();
+    else
+      Log.print('Didn\'t signIn', prefix: 'SignIn', isError: true);
 
     await Tools.delay(seconds: 2);
 
@@ -109,7 +112,7 @@ class FA {
   /// Authentication instance
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  static Future<bool> _signInAnonymously() async {
+  static Future<bool> signInAnonymously() async {
     try {
       _userId = (await _auth.signInAnonymously()).user!.uid;
       return true;

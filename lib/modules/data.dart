@@ -25,7 +25,9 @@ class Data {
     usersStream.listen((event) => _users = Log.print(event, prefix: 'Users'));
 
     for (String element in me.groups) {
-      DB.stream(element).listen((event) {});
+      DB.stream(element).listen((event) {
+        Log.print(event);
+      });
     }
 
     //dataStream.listen((event) => Log.print(event, prefix: 'Groups'));
