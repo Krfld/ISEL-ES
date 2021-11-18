@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+export '../modules/firebase.dart';
 
 import '../.imports.dart';
 
@@ -6,10 +7,13 @@ class Data {
   static Map _users = {};
   static Map _data = {};
 
-  static String? _currentGroup;
-  static String? _currentList;
+  static Map<String, Stream<Map>> _groupStreams = {};
 
-  static Stream<Map> get usersStream => DB.stream('users');
+  static String? _currentGroup; // Try Group
+  static String? _currentList; // Try GroupList
+
+  static Stream<Map> usersStream() => DB.stream('users');
+  static Stream<Map> groupsStream(String groupId) => Tools.load(_groupStreams, groupId);
 
   /*static Stream<Map> get dataStream => DB.stream('groups').map((event) {
         event.removeWhere((key, value) => !User.fromMap(FA.userId, _users[FA.userId]).groups.contains(key));
@@ -17,20 +21,22 @@ class Data {
       }).distinct((p, n) => mapEquals(p, n));*/
 
   static Future<void> setup() async {
+    if (_users.isNotEmpty) return;
+
     var users = await DB.read('users');
     _users = users is Map ? users : {};
 
     User me = User.fromMap(FA.userId);
+    Log.print(me.groups);
 
-    usersStream.listen((event) => _users = Log.print(event, prefix: 'Users'));
+    usersStream().listen((event) => _users = Log.print(event, prefix: 'Users'));
 
-    for (String element in me.groups) {
-      DB.stream(element).listen((event) {
+    for (String groupId in me.groups) _groupStreams.addAll({groupId: DB.stream('groups/$groupId')});
+
+    for (String groupId in me.groups)
+      groupsStream(groupId).listen((event) {
         Log.print(event);
       });
-    }
-
-    //dataStream.listen((event) => Log.print(event, prefix: 'Groups'));
 
     /*usersStream().listen((value) {
       _users = Tools.print(value is Map ? value : {}, prefix: 'Users');
