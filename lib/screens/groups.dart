@@ -94,7 +94,7 @@ class Groups extends StatelessWidget {
                     if (groups.isEmpty)
                       return Center(
                         child: Text(
-                          'You not in a shopping list group\nCreate or join one',
+                          'You\'re not in a shopping list group\nCreate or join one',
                           style: TextStyle(color: Colors.black38),
                           textAlign: TextAlign.center,
                         ),

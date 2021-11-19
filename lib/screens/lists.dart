@@ -53,13 +53,22 @@ class Lists extends StatelessWidget {
                 child: StreamBuilder(
                   stream: Data.groupStream(Data.currentGroup!.id),
                   builder: (context, snapshot) {
+                    List<GroupList> lists = Data.getGroupLists(Data.currentGroup!);
+                    if (lists.isEmpty)
+                      return Center(
+                        child: Text(
+                          'There are no shopping lists in this group\nCreate one',
+                          style: TextStyle(color: Colors.black38),
+                          textAlign: TextAlign.center,
+                        ),
+                      );
                     return ListView.builder(
                       padding: EdgeInsets.all(16),
                       physics: BouncingScrollPhysics(),
                       //separatorBuilder: (context, index) => Divider(thickness: 1),
-                      itemCount: Data.getGroupLists(Data.currentGroup!).length,
+                      itemCount: lists.length,
                       itemBuilder: (context, index) {
-                        GroupList groupList = Data.getGroupList(Data.currentGroup!.id, Data.currentList!.id);
+                        GroupList groupList = Data.getGroupList(Data.currentGroup!.id, lists.elementAt(index).id);
                         return Card(
                           elevation: 4,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
