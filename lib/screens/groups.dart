@@ -14,6 +14,7 @@ class Groups extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
+        Log.print('Back');
         return true;
       },
       child: Scaffold(

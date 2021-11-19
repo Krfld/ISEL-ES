@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../modules/firebase.dart';
+import './modules/firebase.dart';
 
 import './.imports.dart';
 
@@ -11,6 +11,18 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  Future<bool> init() async {
+    if (!await FB.init()) {
+      Log.print('Authentication failed');
+      return false;
+    }
+
+    Data.init();
+
+    await Tools.delay(seconds: 2);
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,10 +33,10 @@ class MyApp extends StatelessWidget {
         'Groups': (context) => Groups(),
         'Lists': (context) => Lists(),
       },
-      home: FutureBuilder(
-        future: FB.init(),
-        builder: (context, setup) {
-          return setup.connectionState == ConnectionState.done ? Groups() : LoadingScreen();
+      home: FutureBuilder<bool>(
+        future: init(),
+        builder: (context, init) {
+          return init.connectionState == ConnectionState.done && init.data! ? Groups() : LoadingScreen();
         },
       ),
     );

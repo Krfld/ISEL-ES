@@ -15,19 +15,12 @@ class Lists extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async {
         Data.currentGroup = null;
-        Log.print('Back');
         return true;
       },
       child: Scaffold(
         appBar: AppBar(
           elevation: 4,
           title: Text('Group Name', style: TextStyle(fontSize: 20)),
-          //centerTitle: false,
-          /*leading: IconButton(
-            icon: Icon(MdiIcons.arrowLeft),
-            onPressed: () => _back(context),
-          ),*/
-          automaticallyImplyLeading: true,
           actions: [
             IconButton(
               icon: Icon(MdiIcons.trashCan),

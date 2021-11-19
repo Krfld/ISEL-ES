@@ -9,23 +9,15 @@ import '../.imports.dart';
 ///
 
 class FB {
-  static bool _inited = false;
-
   /// Init firebase
   static Future<bool> init() async {
-    if (_inited) return !_inited;
-
     await Firebase.initializeApp();
 
     bool signedIn = await FA.signInAnonymously();
-    if (signedIn)
-      await Data.setup();
-    else
-      Log.print('Didn\'t signIn', prefix: 'SignIn', isError: true);
 
-    await Tools.delay(seconds: 2);
+    if (!signedIn) Log.print('Didn\'t signIn', prefix: 'SignIn', isError: true);
 
-    return _inited = true && signedIn;
+    return signedIn;
   }
 }
 
