@@ -107,12 +107,13 @@ class DB {
 
 class FA {
   static String? _userId;
-  static String get userId => 'a'; //_userId!;
+  static String get userId => _userId!;
 
   /// Authentication instance
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
   static Future<bool> signInAnonymously() async {
+    //! Needs to DB.write info
     try {
       _userId = (await _auth.signInAnonymously()).user!.uid;
       return true;

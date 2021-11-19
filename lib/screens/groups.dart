@@ -90,13 +90,22 @@ class Groups extends StatelessWidget {
                 child: StreamBuilder(
                   stream: Data.dataStream(),
                   builder: (context, snapshot) {
+                    List<Group> groups = Data.getGroups();
+                    if (groups.isEmpty)
+                      return Center(
+                        child: Text(
+                          'You not in a shopping list group\nCreate or join one',
+                          style: TextStyle(color: Colors.black38),
+                          textAlign: TextAlign.center,
+                        ),
+                      );
                     return ListView.builder(
                       padding: EdgeInsets.all(16),
                       physics: BouncingScrollPhysics(),
                       //separatorBuilder: (context, index) => Divider(thickness: 1),
-                      itemCount: Data.getGroups().length,
+                      itemCount: groups.length,
                       itemBuilder: (context, index) {
-                        Group group = Data.getGroups().elementAt(index);
+                        Group group = groups.elementAt(index);
                         return Card(
                           elevation: 4,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
@@ -110,12 +119,10 @@ class Groups extends StatelessWidget {
                               //splashRadius: 28,
                               onPressed: () => showDialog(
                                 context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                                    title: Text(group.name),
-                                  );
-                                },
+                                builder: (context) => AlertDialog(
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+                                  title: Text(group.name),
+                                ),
                               ),
                             ),
                             onTap: () => _push(context, group),
@@ -136,12 +143,24 @@ class Groups extends StatelessWidget {
                   Button(
                     'Create',
                     icon: MdiIcons.accountMultiplePlus,
-                    onPressed: () => Log.print('create'),
+                    onPressed: () => showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+                        title: Text('Create Group'),
+                      ),
+                    ),
                   ),
                   Button(
                     'Join',
                     icon: MdiIcons.accountGroup,
-                    onPressed: () => Log.print('join'),
+                    onPressed: () => showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+                        title: Text('Join Group'),
+                      ),
+                    ),
                   ),
                 ],
               ),

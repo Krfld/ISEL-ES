@@ -13,7 +13,7 @@ class Data {
   static Map<String, Stream<Map>> _groupStreams = {};
   static Stream<Map> usersStream() => DB.stream('users');
   static Stream<Map> groupStream(String groupId) => Tools.load(_groupStreams, groupId);
-  static Stream<Map> dataStream() => StreamGroup.mergeBroadcast(_groupStreams.values);
+  static Stream<Map> dataStream() => StreamGroup.merge(_groupStreams.values);
 
   ///
   ///
