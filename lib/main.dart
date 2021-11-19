@@ -11,7 +11,11 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  static bool _inited = false;
+
   Future<bool> init() async {
+    if (_inited) return true;
+
     if (!await FB.init()) {
       Log.print('Authentication failed');
       return false;
@@ -20,7 +24,7 @@ class MyApp extends StatelessWidget {
     await Data.init();
 
     await Tools.delay(seconds: 2);
-    return true;
+    return _inited = true;
   }
 
   @override
@@ -32,6 +36,7 @@ class MyApp extends StatelessWidget {
         'Home': (context) => Home(),
         'Groups': (context) => Groups(),
         'Lists': (context) => Lists(),
+        'products': (context) => Products(),
       },
       home: FutureBuilder<bool>(
         future: init(),

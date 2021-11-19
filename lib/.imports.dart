@@ -2,6 +2,7 @@
 export './screens/home.dart';
 export './screens/groups.dart';
 export './screens/lists.dart';
+export './screens/products.dart';
 
 /// Modules
 export './modules/data.dart';

@@ -7,7 +7,7 @@ class Lists extends StatelessWidget {
 
   Future<void> _push(BuildContext context, GroupList list) async {
     Data.currentList = list;
-    await Navigator.pushNamed(context, 'Lists');
+    await Navigator.pushNamed(context, 'Products');
   }
 
   @override
@@ -23,10 +23,12 @@ class Lists extends StatelessWidget {
           title: Text('Group Name', style: TextStyle(fontSize: 20)),
           actions: [
             IconButton(
+              tooltip: 'Trash',
               icon: Icon(MdiIcons.trashCan),
               onPressed: () => Log.print('trash'),
             ),
             IconButton(
+              tooltip: 'Settings',
               icon: Icon(MdiIcons.cog),
               onPressed: () => Log.print('settings'),
             ),
@@ -93,9 +95,14 @@ class Lists extends StatelessWidget {
               flex: 1,
               child: Center(
                 child: Button(
-                  'Create',
+                  'Create\nList',
                   icon: MdiIcons.playlistPlus,
-                  onPressed: () => Log.print('create list'),
+                  onPressed: () => showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(title: Text('Create List'));
+                    },
+                  ),
                 ),
               ),
             ),

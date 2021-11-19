@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../.imports.dart';
 
@@ -17,26 +18,6 @@ class Groups extends StatelessWidget {
         return true;
       },
       child: Scaffold(
-        /*drawerEdgeDragWidth: 64,
-        drawer: rawer(
-          child: ListView(
-            children: [
-              DrawerHeader(child: Text('Drawer Header')),
-              ListTile(
-                title: Text('Item 1'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: Text('Item 2'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ),
-        ),*/
         /*floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
             floatingActionButton: Padding(
               padding: EdgeInsets.all(16),
@@ -53,6 +34,12 @@ class Groups extends StatelessWidget {
           title: Text('Shopping List', style: TextStyle(fontSize: 24)),
           actions: [
             IconButton(
+              tooltip: 'Account',
+              icon: Icon(MdiIcons.account),
+              onPressed: () {},
+            ),
+            IconButton(
+              tooltip: 'Settings',
               icon: Icon(MdiIcons.cog),
               onPressed: () => showDialog(
                 context: context,
@@ -65,7 +52,6 @@ class Groups extends StatelessWidget {
                       ListBody(
                         children: [
                           Text('Settings 1'),
-                          Text('Settings 2'),
                         ],
                       ),
                     ],
@@ -137,7 +123,7 @@ class Groups extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Button(
-                    'Create',
+                    'Create\nGroup',
                     icon: MdiIcons.accountMultiplePlus,
                     onPressed: () => showDialog(
                       context: context,
@@ -148,7 +134,7 @@ class Groups extends StatelessWidget {
                     ),
                   ),
                   Button(
-                    'Join',
+                    'Join\nGroup',
                     icon: MdiIcons.accountGroup,
                     onPressed: () => showDialog(
                       context: context,
