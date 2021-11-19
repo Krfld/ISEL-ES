@@ -5,7 +5,7 @@ import '../.imports.dart';
 
 class Data {
   static Map _users = {};
-  static Map _data = {};
+  static final Map data = {};
 
   static Group? currentGroup; // Try Group
   static GroupList? currentList; // Try GroupList
@@ -32,8 +32,8 @@ class Data {
     for (String groupId in user.groups) _groupStreams.addAll({groupId: DB.stream('groups/$groupId')});
 
     for (String groupId in user.groups) //! Listen new stream when creating group and stop when leaving
-      groupStream(groupId).listen(
-          (event) => Log.print(_data.update(groupId, (value) => event, ifAbsent: () => event), prefix: groupId));
+      groupStream(groupId)
+          .listen((event) => Log.print(data.update(groupId, (value) => event, ifAbsent: () => event), prefix: groupId));
   }
 
   ///
@@ -59,8 +59,8 @@ class Data {
       );
 
   static List<Group> getGroups() => List.generate(
-        _data.keys.length,
-        (index) => getGroup(_data.keys.elementAt(index)),
+        data.keys.length,
+        (index) => getGroup(data.keys.elementAt(index)),
       );
 
   static List<GroupList> getGroupLists(Group group) => List.generate(
@@ -117,7 +117,7 @@ class Group {
   });
 
   factory Group._fromId(String groupId) {
-    Map group = Tools.loadMap(Data._data, groupId, {});
+    Map group = Tools.loadMap(Data.data, groupId, {});
 
     Iterable lists = Tools.loadMap(group, 'lists', {}).keys;
     List groupLists = List.generate(lists.length, (index) => lists.elementAt(index));
@@ -146,7 +146,7 @@ class GroupList {
   });
 
   factory GroupList._fromId(String groupId, String listId) {
-    Map list = Tools.loadMap(Data._data, '$groupId/lists/$listId', {});
+    Map list = Tools.loadMap(Data.data, '$groupId/lists/$listId', {});
 
     Iterable products = Tools.loadMap(list, 'products', {}).keys;
     List listProducts = List.generate(products.length, (index) => products.elementAt(index));
@@ -185,7 +185,7 @@ class ListProduct {
   });
 
   factory ListProduct._fromId(String groupId, String listId, String productId) {
-    Map product = Tools.loadMap(Data._data, '$groupId/lists/$listId/products/$productId', {});
+    Map product = Tools.loadMap(Data.data, '$groupId/lists/$listId/products/$productId', {});
 
     return ListProduct(
       id: productId,

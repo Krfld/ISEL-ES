@@ -10,16 +10,12 @@ class Lists extends StatelessWidget {
     await Navigator.pushNamed(context, 'Lists');
   }
 
-  void _back(BuildContext context, {bool pop = false}) {
-    Data.currentGroup = null;
-    if (pop) Navigator.pop(context);
-  }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        _back(context);
+        Data.currentGroup = null;
+        Log.print('Back');
         return true;
       },
       child: Scaffold(
@@ -27,10 +23,11 @@ class Lists extends StatelessWidget {
           elevation: 4,
           title: Text('Group Name', style: TextStyle(fontSize: 20)),
           //centerTitle: false,
-          leading: IconButton(
+          /*leading: IconButton(
             icon: Icon(MdiIcons.arrowLeft),
-            onPressed: () => _back(context, pop: true),
-          ),
+            onPressed: () => _back(context),
+          ),*/
+          automaticallyImplyLeading: true,
           actions: [
             IconButton(
               icon: Icon(MdiIcons.trashCan),

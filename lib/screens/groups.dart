@@ -10,10 +10,6 @@ class Groups extends StatelessWidget {
     await Navigator.pushNamed(context, 'Lists');
   }
 
-  void _back(BuildContext context, {bool pop = false}) {
-    if (pop) Navigator.pop(context);
-  }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
