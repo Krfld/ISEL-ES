@@ -36,7 +36,13 @@ class Groups extends StatelessWidget {
             IconButton(
               tooltip: 'Account',
               icon: Icon(MdiIcons.account),
-              onPressed: () {},
+              onPressed: () => showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+                  title: Text('Account'),
+                ),
+              ),
             ),
             IconButton(
               tooltip: 'Settings',
