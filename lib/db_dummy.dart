@@ -29,35 +29,19 @@ Map dbV1 = {
       'lists': {
         'listId1': {
           'name': String,
+          'deleted': DateTime, //?
           'products': {
-            'productId1': product,
-            'productId2': product,
-          },
-        },
-        'listId2': {
-          'name': String,
-          'products': {
-            'productId3': product,
-            'productId4': product,
-          },
-        },
-      },
-    },
-    'groupId2': {
-      'name': String,
-      'lists': {
-        'listId3': {
-          'name': String,
-          'products': {
-            'productId5': product,
-            'productId6': product,
-          },
-        },
-        'listId4': {
-          'name': String,
-          'products': {
-            'productId7': product,
-            'productId8': product,
+            'productId1': {
+              'added': DateTime,
+              'name': String,
+              'brand': String, //?
+              'store': String, //?
+              'info': String, //?
+              'amount': int, //?
+              'bought': bool,
+              'important': bool,
+              'discount': bool,
+            },
           },
         },
       },
@@ -65,7 +49,7 @@ Map dbV1 = {
   },
 };
 
-Map dbV2 = {
+/*Map dbV2 = {
   'users': users,
   'groups': {
     'groupId1': {'name': String},
@@ -91,4 +75,4 @@ Map dbV2 = {
       'productId4': product,
     },
   },
-};
+};*/

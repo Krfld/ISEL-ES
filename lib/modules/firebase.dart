@@ -70,11 +70,11 @@ class DB {
     }
   }
 
-  /*/// Set timestamp
+  /// Set timestamp
   static Future<void> setTimestamp(String path) async {
     await write(path, ServerValue.timestamp);
     //return (await db.read(path))?.toInt() ?? 0;
-  }*/
+  }
 
   /*/// Push data and get token
   static Future<String?> push(String path, var value) async {
@@ -104,8 +104,8 @@ class FA {
   /// Authentication instance
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  ///! Needs to DB.write info
   static Future<bool> signInAnonymously() async {
-    //! Needs to DB.write info
     try {
       _userId = (await _auth.signInAnonymously()).user!.uid;
       return true;

@@ -31,17 +31,17 @@ class Data {
       });
   }
 
-  static Group? currentGroup;
-  static GroupList? currentList;
+  static String? currentGroupId;
+  static String? currentListId;
 
   ///
   ///
   ///
 
   static Future<void> init() async {
-    ///
+    DB.setTimestamp('bruh');
+
     /// Initial read
-    ///
     var users = await DB.read('users');
     _users = users is Map ? users : {};
 

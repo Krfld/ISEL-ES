@@ -7,7 +7,7 @@ class Groups extends StatelessWidget {
   const Groups({Key? key}) : super(key: key);
 
   Future<void> _push(BuildContext context, Group group) async {
-    Data.currentGroup = group;
+    Data.currentGroupId = group.id;
     await Navigator.pushNamed(context, 'Lists');
   }
 
@@ -38,10 +38,7 @@ class Groups extends StatelessWidget {
               icon: Icon(MdiIcons.account),
               onPressed: () => showDialog(
                 context: context,
-                builder: (context) => AlertDialog(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                  title: Text('Account'),
-                ),
+                builder: (context) => PopUp(title: 'Account'),
               ),
             ),
             IconButton(
@@ -49,9 +46,8 @@ class Groups extends StatelessWidget {
               icon: Icon(MdiIcons.cog),
               onPressed: () => showDialog(
                 context: context,
-                builder: (context) => AlertDialog(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                  title: Text('Settings'),
+                builder: (context) => PopUp(
+                  title: 'Settings',
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -73,83 +69,77 @@ class Groups extends StatelessWidget {
               flex: 3,
               child: Card(
                 elevation: 4,
-                margin: EdgeInsets.fromLTRB(24, 24, 24, 0),
+                margin: EdgeInsets.all(24),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                 child: StreamBuilder(
                   stream: Data.dataStream(),
                   builder: (context, snapshot) {
                     List<Group> groups = Data.getGroups();
-                    if (groups.isEmpty)
-                      return Center(
-                        child: Text(
-                          'You\'re not in a shopping list group\nCreate or join one',
-                          style: TextStyle(color: Colors.black38),
-                          textAlign: TextAlign.center,
-                        ),
-                      );
-                    return ListView.builder(
-                      padding: EdgeInsets.all(24),
-                      physics: BouncingScrollPhysics(),
-                      //separatorBuilder: (context, index) => Divider(thickness: 1),
-                      itemCount: groups.length,
-                      itemBuilder: (context, index) {
-                        Group group = groups.elementAt(index);
-                        return Card(
-                          elevation: 4,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                          child: ListTile(
-                            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                            title: Text(group.name, style: TextStyle(fontSize: 20)),
-                            //subtitle: Text(group.name),
-                            trailing: IconButton(
-                              icon: Icon(MdiIcons.dotsHorizontal),
-                              onPressed: () => showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                                  title: Text(group.name),
-                                ),
-                              ),
+
+                    return groups.isEmpty
+                        ? Center(
+                            child: Text(
+                              'You\'re not in a shopping list group\nCreate or join one',
+                              style: TextStyle(color: Colors.black38),
+                              textAlign: TextAlign.center,
                             ),
-                            onTap: () => _push(context, group),
-                            //onLongPress: () => null,
-                          ),
-                        );
-                      },
-                    );
+                          )
+                        : ListView.builder(
+                            padding: EdgeInsets.all(24),
+                            physics: BouncingScrollPhysics(),
+                            //separatorBuilder: (context, index) => Divider(thickness: 1),
+                            itemCount: groups.length,
+                            itemBuilder: (context, index) {
+                              Group group = groups.elementAt(index);
+                              return Card(
+                                elevation: 4,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+                                child: ListTile(
+                                  contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+                                  title: Text(group.name, style: TextStyle(fontSize: 20)),
+                                  trailing: IconButton(
+                                    icon: Icon(MdiIcons.dotsHorizontal),
+                                    onPressed: () => showDialog(
+                                      context: context,
+                                      builder: (context) => PopUp(title: group.name),
+                                    ),
+                                  ),
+                                  onTap: () => _push(context, group),
+                                  //onLongPress: () => null,
+                                ),
+                              );
+                            },
+                          );
                   },
                 ),
               ),
             ),
             Expanded(
               flex: 1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Button(
-                    'Create\nGroup',
-                    icon: MdiIcons.accountMultiplePlus,
-                    onPressed: () => showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                        title: Text('Create Group'),
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 24),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Button(
+                      'Create\nGroup',
+                      icon: MdiIcons.accountMultiplePlus,
+                      onPressed: () => showDialog(
+                        context: context,
+                        builder: (context) => PopUp(title: 'Create Group'),
                       ),
                     ),
-                  ),
-                  Button(
-                    'Join\nGroup',
-                    icon: MdiIcons.accountGroup,
-                    onPressed: () => showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                        title: Text('Join Group'),
+                    Button(
+                      'Join\nGroup',
+                      icon: MdiIcons.accountGroup,
+                      onPressed: () => showDialog(
+                        context: context,
+                        builder: (context) => PopUp(title: 'Join Group'),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],
