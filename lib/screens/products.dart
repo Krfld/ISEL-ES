@@ -15,7 +15,7 @@ class Products extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           elevation: 4,
-          title: Text('List Name', style: TextStyle(fontSize: 20)),
+          title: Text('List Name', style: TextStyle(fontSize: 24)),
           actions: [
             IconButton(
               tooltip: 'Settings',
@@ -30,7 +30,7 @@ class Products extends StatelessWidget {
               flex: 3,
               child: Card(
                 elevation: 4,
-                margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
+                margin: EdgeInsets.all(24),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
               ),
             ),
@@ -42,9 +42,7 @@ class Products extends StatelessWidget {
                   icon: MdiIcons.playlistPlus,
                   onPressed: () => showDialog(
                     context: context,
-                    builder: (context) {
-                      return AlertDialog(title: Text('Add Product'));
-                    },
+                    builder: (context) => PopUp(title: 'Add Product'),
                   ),
                 ),
               ),

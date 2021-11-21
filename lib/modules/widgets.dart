@@ -29,8 +29,8 @@ class Button extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         elevation: 4,
         minimumSize: Size(128, 0),
-        padding: EdgeInsets.all(20),
-        textStyle: TextStyle(fontSize: 14),
+        padding: EdgeInsets.all(16),
+        textStyle: TextStyle(fontSize: 16),
         //splashFactory: InkRipple.splashFactory,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(64))),
       ),

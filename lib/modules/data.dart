@@ -8,8 +8,8 @@ class Data {
   static Map _users = {};
   static final Map _data = {};
 
-  static Map<String, Stream<Map>> _streams = {};
-  static Map<String, StreamSubscription<Map>> _streamSubscriptions = {};
+  static final Map<String, Stream<Map>> _streams = {};
+  static final Map<String, StreamSubscription<Map>> _streamSubscriptions = {};
 
   //static Stream<Map> usersStream() => DB.stream('users');
   static Stream<Map> groupStream(String groupId) => Tools.load(_streams, groupId);

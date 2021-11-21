@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
 
     await Data.init();
 
-    //await Tools.delay(seconds: 2);
+    await Tools.delay(seconds: 2);
     return _inited = true;
   }
 

@@ -80,7 +80,7 @@ class Groups extends StatelessWidget {
                         ? Center(
                             child: Text(
                               'You\'re not in a shopping list group\nCreate or join one',
-                              style: TextStyle(color: Colors.black38),
+                              style: TextStyle(fontSize: 14, color: Colors.black38),
                               textAlign: TextAlign.center,
                             ),
                           )
@@ -95,9 +95,9 @@ class Groups extends StatelessWidget {
                                 elevation: 4,
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                                 child: ListTile(
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                                  contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                                  title: Text(group.name, style: TextStyle(fontSize: 20)),
+                                  title: Text(group.name, style: TextStyle(fontSize: 24)),
                                   trailing: IconButton(
                                     icon: Icon(MdiIcons.dotsHorizontal),
                                     onPressed: () => showDialog(

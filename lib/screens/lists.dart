@@ -25,8 +25,7 @@ class Lists extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               elevation: 4,
-              title: Text(Data.getGroup(Data.currentGroupId!).name,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              title: Text(Data.getGroup(Data.currentGroupId!).name, style: TextStyle(fontSize: 24)),
               actions: [
                 IconButton(
                   tooltip: 'Deleted',
@@ -52,13 +51,13 @@ class Lists extends StatelessWidget {
                   flex: 3,
                   child: Card(
                     elevation: 4,
-                    margin: EdgeInsets.fromLTRB(24, 24, 24, 0),
+                    margin: EdgeInsets.all(24),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                     child: lists.isEmpty
                         ? Center(
                             child: Text(
                               'There are no shopping lists in this group\nCreate one',
-                              style: TextStyle(color: Colors.black38),
+                              style: TextStyle(fontSize: 14, color: Colors.black38),
                               textAlign: TextAlign.center,
                             ),
                           )
@@ -75,8 +74,8 @@ class Lists extends StatelessWidget {
                                 child: ListTile(
                                   contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                                  title: Text(groupList.name, style: TextStyle(fontSize: 16)),
-                                  subtitle: Text(groupList.id, style: TextStyle(fontSize: 12)),
+                                  title: Text(groupList.name, style: TextStyle(fontSize: 20)),
+                                  subtitle: Text(groupList.id, style: TextStyle(fontSize: 16)),
                                   trailing: IconButton(
                                     icon: Icon(MdiIcons.dotsHorizontal),
                                     onPressed: () => showDialog(
@@ -94,13 +93,16 @@ class Lists extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 1,
-                  child: Center(
-                    child: Button(
-                      'Create\nList',
-                      icon: MdiIcons.playlistPlus,
-                      onPressed: () => showDialog(
-                        context: context,
-                        builder: (context) => PopUp(title: 'Create List'),
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: 24),
+                    child: Center(
+                      child: Button(
+                        'Create\nList',
+                        icon: MdiIcons.playlistPlus,
+                        onPressed: () => showDialog(
+                          context: context,
+                          builder: (context) => PopUp(title: 'Create List'),
+                        ),
                       ),
                     ),
                   ),
