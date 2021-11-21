@@ -8,7 +8,9 @@ class Product {
   final String? store;
   final String? info;
   final int? amount;
-  final bool flag;
+  final bool bought;
+  final bool important;
+  final bool onDiscount;
 
   Product({
     required this.id,
@@ -18,7 +20,9 @@ class Product {
     required this.store,
     required this.info,
     required this.amount,
-    required this.flag,
+    required this.bought,
+    required this.important,
+    required this.onDiscount,
   });
 
   factory Product.fromMap(String groupId, String listId, String productId, Map data) {
@@ -32,7 +36,9 @@ class Product {
       store: Tools.load(product, 'store'),
       info: Tools.load(product, 'info'),
       amount: Tools.load(product, 'amount'),
-      flag: Tools.loadBool(product, 'flag', false),
+      bought: Tools.loadBool(product, 'bought', false),
+      important: Tools.loadBool(product, 'important', false),
+      onDiscount: Tools.loadBool(product, 'onDiscount', false),
     );
   }
 }

@@ -20,12 +20,12 @@ class Lists extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           elevation: 4,
-          title: Text('Group Name', style: TextStyle(fontSize: 20)),
+          title: Text(Data.currentGroup!.name, style: TextStyle(fontSize: 20)),
           actions: [
             IconButton(
-              tooltip: 'Trash',
+              tooltip: 'Deleted',
               icon: Icon(MdiIcons.trashCan),
-              onPressed: () => Log.print('trash'),
+              onPressed: () => Log.print('deleted'),
             ),
             IconButton(
               tooltip: 'Settings',
@@ -40,7 +40,7 @@ class Lists extends StatelessWidget {
               flex: 3,
               child: Card(
                 elevation: 4,
-                margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
+                margin: EdgeInsets.fromLTRB(24, 24, 24, 0),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                 child: StreamBuilder(
                   stream: Data.groupStream(Data.currentGroup!.id),
@@ -55,7 +55,7 @@ class Lists extends StatelessWidget {
                         ),
                       );
                     return ListView.builder(
-                      padding: EdgeInsets.all(16),
+                      padding: EdgeInsets.all(24),
                       physics: BouncingScrollPhysics(),
                       //separatorBuilder: (context, index) => Divider(thickness: 1),
                       itemCount: lists.length,
@@ -65,10 +65,10 @@ class Lists extends StatelessWidget {
                           elevation: 4,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                           child: ListTile(
-                            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                             title: Text(groupList.name, style: TextStyle(fontSize: 16)),
-                            subtitle: Text(groupList.id, style: TextStyle(fontSize: 14)),
+                            subtitle: Text(groupList.id, style: TextStyle(fontSize: 12)),
                             trailing: IconButton(
                               icon: Icon(MdiIcons.dotsHorizontal),
                               onPressed: () => showDialog(
@@ -76,7 +76,7 @@ class Lists extends StatelessWidget {
                                 builder: (context) {
                                   return AlertDialog(
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                                    title: Text('List name'),
+                                    title: Text(groupList.name),
                                   );
                                 },
                               ),

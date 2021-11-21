@@ -16,7 +16,9 @@ Map product = {
   'store': String,
   'info': String,
   'amount': int,
-  'flag': bool,
+  'bought': bool,
+  'important': bool,
+  'onDiscount': bool,
 };
 
 Map dbV1 = {

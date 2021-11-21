@@ -8,7 +8,6 @@ export './screens/products.dart';
 export './modules/data.dart';
 export './modules/tools.dart';
 export './modules/widgets.dart';
-//export './modules/firebase.dart';
 
 /// Classes
 export './classes/user.dart';

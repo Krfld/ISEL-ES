@@ -73,7 +73,7 @@ class Groups extends StatelessWidget {
               flex: 3,
               child: Card(
                 elevation: 4,
-                margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
+                margin: EdgeInsets.fromLTRB(24, 24, 24, 0),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                 child: StreamBuilder(
                   stream: Data.dataStream(),
@@ -88,7 +88,7 @@ class Groups extends StatelessWidget {
                         ),
                       );
                     return ListView.builder(
-                      padding: EdgeInsets.all(16),
+                      padding: EdgeInsets.all(24),
                       physics: BouncingScrollPhysics(),
                       //separatorBuilder: (context, index) => Divider(thickness: 1),
                       itemCount: groups.length,
@@ -104,7 +104,6 @@ class Groups extends StatelessWidget {
                             //subtitle: Text(group.name),
                             trailing: IconButton(
                               icon: Icon(MdiIcons.dotsHorizontal),
-                              //splashRadius: 28,
                               onPressed: () => showDialog(
                                 context: context,
                                 builder: (context) => AlertDialog(

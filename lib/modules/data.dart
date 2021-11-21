@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:async/async.dart';
 import '../modules/firebase.dart';
 
@@ -17,7 +16,7 @@ class Data {
   static Stream<Map> dataStream() => StreamGroup.merge(_streams.values);
 
   static void refreshStreams() {
-    User user = User.fromMap(FA.userId, _users);
+    User user = getUser(FA.userId);
 
     _streams.clear();
     for (StreamSubscription streamSubscription in _streamSubscriptions.values) streamSubscription.cancel();
@@ -40,15 +39,25 @@ class Data {
   ///
 
   static Future<void> init() async {
+    ///
+    /// Initial read
+    ///
     var users = await DB.read('users');
     _users = users is Map ? users : {};
 
     DB.stream('users').listen((event) => Log.print(_users = event, prefix: 'Users'));
 
+    for (String groupId in getUser(FA.userId).groups) {
+      var data = await DB.read('groups/$groupId');
+      _data.update(groupId, (value) => data, ifAbsent: () => data);
+    }
+
     refreshStreams();
   }
 
-  /// Classes
+  ///
+  ///
+  ///
 
   static User getUser(String userId) => User.fromMap(userId, _users);
 
