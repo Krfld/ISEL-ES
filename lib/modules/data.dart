@@ -6,18 +6,18 @@ import '../modules/firebase.dart';
 import '../.imports.dart';
 
 class Data {
-  static Map users = {};
-  static final Map data = {};
+  static Map _users = {};
+  static final Map _data = {};
 
   static Map<String, Stream<Map>> _streams = {};
   static Map<String, StreamSubscription<Map>> _streamSubscriptions = {};
 
-  static Stream<Map> usersStream() => DB.stream('users');
+  //static Stream<Map> usersStream() => DB.stream('users');
   static Stream<Map> groupStream(String groupId) => Tools.load(_streams, groupId);
   static Stream<Map> dataStream() => StreamGroup.merge(_streams.values);
 
   static void refreshStreams() {
-    User user = User.fromId(FA.userId);
+    User user = User.fromMap(FA.userId, _users);
 
     _streams.clear();
     for (StreamSubscription streamSubscription in _streamSubscriptions.values) streamSubscription.cancel();
@@ -28,7 +28,7 @@ class Data {
     for (String groupId in user.groups)
       _streamSubscriptions.addAll({
         groupId: groupStream(groupId).listen(
-            (event) => Log.print(data.update(groupId, (value) => event, ifAbsent: () => event), prefix: groupId))
+            (event) => Log.print(_data.update(groupId, (value) => event, ifAbsent: () => event), prefix: groupId))
       });
   }
 
@@ -40,35 +40,35 @@ class Data {
   ///
 
   static Future<void> init() async {
-    var usersMap = await DB.read('users');
-    users = usersMap is Map ? usersMap : {};
+    var users = await DB.read('users');
+    _users = users is Map ? users : {};
 
-    usersStream().listen((event) => Log.print(users = event, prefix: 'Users'));
+    DB.stream('users').listen((event) => Log.print(_users = event, prefix: 'Users'));
 
     refreshStreams();
   }
 
   /// Classes
 
-  static User getUser(String userId) => User.fromId(userId);
+  static User getUser(String userId) => User.fromMap(userId, _users);
 
-  static Group getGroup(String groupId) => Group.fromId(groupId);
+  static Group getGroup(String groupId) => Group.fromMap(groupId, _data);
 
-  static GroupList getGroupList(String groupId, String listId) => GroupList.fromId(groupId, listId);
+  static GroupList getGroupList(String groupId, String listId) => GroupList.fromMap(groupId, listId, _data);
 
   static Product getListProduct(String groupId, String listId, String productId) =>
-      Product.fromId(groupId, listId, productId);
+      Product.fromMap(groupId, listId, productId, _data);
 
   /// Lists
 
   static List<User> getUsers() => List.generate(
-        users.keys.length,
-        (index) => getUser(users.keys.elementAt(index)),
+        _users.keys.length,
+        (index) => getUser(_users.keys.elementAt(index)),
       );
 
   static List<Group> getGroups() => List.generate(
-        data.keys.length,
-        (index) => getGroup(data.keys.elementAt(index)),
+        _data.keys.length,
+        (index) => getGroup(_data.keys.elementAt(index)),
       );
 
   static List<GroupList> getGroupLists(Group group) => List.generate(

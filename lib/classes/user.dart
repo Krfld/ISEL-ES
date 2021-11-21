@@ -11,8 +11,8 @@ class User {
     required this.groups,
   });
 
-  factory User.fromId(String userId) {
-    List groups = Tools.loadList(Data.users, '$userId/groups', []);
+  factory User.fromMap(String userId, Map users) {
+    List groups = Tools.loadList(users, '$userId/groups', []);
     groups.removeWhere((element) => element == null);
 
     return User(

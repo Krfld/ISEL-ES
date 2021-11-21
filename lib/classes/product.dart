@@ -21,8 +21,8 @@ class Product {
     required this.flag,
   });
 
-  factory Product.fromId(String groupId, String listId, String productId) {
-    Map product = Tools.loadMap(Data.data, '$groupId/lists/$listId/products/$productId', {});
+  factory Product.fromMap(String groupId, String listId, String productId, Map data) {
+    Map product = Tools.loadMap(data, '$groupId/lists/$listId/products/$productId', {});
 
     return Product(
       id: productId,

@@ -11,8 +11,8 @@ class Group {
     required this.lists,
   });
 
-  factory Group.fromId(String groupId) {
-    Map group = Tools.loadMap(Data.data, groupId, {});
+  factory Group.fromMap(String groupId, Map data) {
+    Map group = Tools.loadMap(data, groupId, {});
 
     Iterable lists = Tools.loadMap(group, 'lists', {}).keys;
     List groupLists = List.generate(lists.length, (index) => lists.elementAt(index));
