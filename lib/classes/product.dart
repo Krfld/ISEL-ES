@@ -12,8 +12,7 @@ class Product {
   final String? info;
   final int? amount;
   final DateTime? bought;
-  final bool important;
-  final bool discount;
+  final int flag; // 0 - None | 1 - Important | 2 - Discount
 
   Product({
     required this.id,
@@ -26,8 +25,7 @@ class Product {
     required this.info,
     required this.amount,
     required this.bought,
-    required this.important,
-    required this.discount,
+    required this.flag,
   });
 
   factory Product.fromMap(String groupId, String listId, String productId, Map data) {
@@ -46,8 +44,7 @@ class Product {
       info: Tools.load(product, 'info'),
       amount: Tools.load(product, 'amount'),
       bought: bought != null ? DateTime.fromMillisecondsSinceEpoch(Tools.loadInt(product, 'bought', 0)) : null,
-      important: Tools.loadBool(product, 'important', false),
-      discount: Tools.loadBool(product, 'discount', false),
+      flag: Tools.loadInt(product, 'flag', 0),
     );
   }
 }

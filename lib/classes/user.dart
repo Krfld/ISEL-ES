@@ -2,6 +2,7 @@ import '../../.imports.dart';
 
 class User {
   final String id;
+
   final String name;
   final List groups;
 
