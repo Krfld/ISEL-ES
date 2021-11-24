@@ -38,7 +38,7 @@ Map dbV1 = {
               'store': String, //?
               'info': String, //?
               'amount': int, //?
-              'bought': bool,
+              'bought': DateTime, //?
               'important': bool,
               'discount': bool,
             },

@@ -2,12 +2,15 @@ import '../../.imports.dart';
 
 class GroupList {
   final String id;
+  final String groupId;
+
   final String name;
   final DateTime? deleted;
   final List products;
 
   GroupList({
     required this.id,
+    required this.groupId,
     required this.name,
     required this.deleted,
     required this.products,
@@ -23,6 +26,7 @@ class GroupList {
 
     return GroupList(
       id: listId,
+      groupId: groupId,
       name: Tools.loadString(list, 'name', ''),
       deleted: deleted != null ? DateTime.fromMillisecondsSinceEpoch(deleted) : null,
       products: listProducts,
