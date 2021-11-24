@@ -39,8 +39,6 @@ class Data {
   ///
 
   static Future<void> init() async {
-    DB.setTimestamp('bruh');
-
     /// Initial read
     var users = await DB.read('users');
     _users = users is Map ? users : {};
