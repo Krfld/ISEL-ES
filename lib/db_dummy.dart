@@ -17,8 +17,7 @@ Map product = {
   'info': String,
   'amount': int,
   'bought': bool,
-  'important': bool,
-  'onDiscount': bool,
+  'tag': bool,
 };
 
 Map dbV1 = {
@@ -39,7 +38,7 @@ Map dbV1 = {
               'info': String, //?
               'amount': int, //?
               'bought': DateTime, //?
-              'flag': int, // 0 - None | 1 - Important | 2 - Discount
+              'tag': int, // 0 - None | 1 - Important | 2 - Discount
             },
           },
         },
