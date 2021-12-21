@@ -10,14 +10,17 @@ Map users = {
 };
 
 Map product = {
-  'added': int,
+  'added': DateTime,
   'name': String,
-  'brand': String,
-  'store': String,
-  'info': String,
-  'amount': int,
-  'bought': bool,
-  'tag': bool,
+  'brand': String, //?
+  'store': String, //?
+  'info': String, //?
+  'amount': int, //?
+  'bought': {
+    'user': String,
+    'time': DateTime,
+  }, //?
+  'tag': int, // 0 - None | 1 - Important | 2 - Discount
 };
 
 Map dbV1 = {
@@ -29,18 +32,7 @@ Map dbV1 = {
         'listId1': {
           'name': String,
           'deleted': DateTime, //?
-          'products': {
-            'productId1': {
-              'added': DateTime,
-              'name': String,
-              'brand': String, //?
-              'store': String, //?
-              'info': String, //?
-              'amount': int, //?
-              'bought': DateTime, //?
-              'tag': int, // 0 - None | 1 - Important | 2 - Discount
-            },
-          },
+          'products': {'productId1': product},
         },
       },
     },
