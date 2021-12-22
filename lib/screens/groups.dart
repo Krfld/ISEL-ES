@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../.imports.dart';
 
@@ -72,9 +72,13 @@ class Groups extends StatelessWidget {
                 margin: EdgeInsets.all(24),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                 child: StreamBuilder(
-                  stream: Data.dataStream(),
+                  stream: FirebaseFirestore.instance.collection('users').doc('q0UEKfFnn5JaUviYYfKa').snapshots(),
+                  //Data.dataStream(),
                   builder: (context, snapshot) {
-                    List<Group> groups = Data.getGroups();
+                    Log.print(snapshot);
+
+                    List<Group> groups = [];
+                    //Data.getGroups();
 
                     return groups.isEmpty
                         ? Center(

@@ -16,12 +16,12 @@ class MyApp extends StatelessWidget {
   Future<bool> init() async {
     if (_inited) return true;
 
-    if (!await FB.init()) {
+    if (!await FC.init()) {
       Log.print('Authentication failed');
       return false;
     }
 
-    await Data.init();
+    // await Data.init();
 
     await Tools.delay(seconds: 2);
     return _inited = true;
@@ -41,7 +41,9 @@ class MyApp extends StatelessWidget {
       home: FutureBuilder<bool>(
         future: init(),
         builder: (context, init) {
-          return init.connectionState == ConnectionState.done && init.data! ? Groups() : LoadingScreen();
+          return init.connectionState == ConnectionState.done && init.hasData && init.data!
+              ? Groups()
+              : LoadingScreen();
         },
       ),
     );

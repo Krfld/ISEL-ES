@@ -1,6 +1,6 @@
 # shopping_list
 
-Shopping List
+A new Flutter project.
 
 ## Getting Started
 

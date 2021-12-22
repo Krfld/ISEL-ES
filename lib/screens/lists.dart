@@ -18,14 +18,14 @@ class Lists extends StatelessWidget {
         return true;
       },
       child: StreamBuilder(
-        stream: Data.groupStream(Data.currentGroupId!),
+        stream: null, //Data.groupStream(Data.currentGroupId!),
         builder: (context, snapshot) {
-          List<GroupList> lists = Data.getGroupLists(Data.getGroup(Data.currentGroupId!));
+          List<GroupList> lists = []; //Data.getGroupLists(Data.getGroup(Data.currentGroupId!));
 
           return Scaffold(
             appBar: AppBar(
               elevation: 4,
-              title: Text(Data.getGroup(Data.currentGroupId!).name, style: TextStyle(fontSize: 24)),
+              title: Text('Data.getGroup(Data.currentGroupId!).name', style: TextStyle(fontSize: 24)),
               actions: [
                 IconButton(
                   tooltip: 'Deleted',
@@ -67,7 +67,8 @@ class Lists extends StatelessWidget {
                             //separatorBuilder: (context, index) => Divider(thickness: 1),
                             itemCount: lists.length,
                             itemBuilder: (context, index) {
-                              GroupList groupList = Data.getGroupList(Data.currentGroupId!, lists.elementAt(index).id);
+                              GroupList groupList = GroupList.fromMap(
+                                  '', '', {}); //Data.getGroupList(Data.currentGroupId!, lists.elementAt(index).id);
                               return Card(
                                 elevation: 4,
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),

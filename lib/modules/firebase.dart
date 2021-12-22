@@ -1,14 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../.imports.dart';
 
 ///
-/// Firebase
+/// Firebase Core
 ///
 
-class FB {
+class FC {
   /// Init firebase
   static Future<bool> init() async {
     await Firebase.initializeApp();
@@ -22,10 +22,42 @@ class FB {
 }
 
 ///
+/// Firebase Authentication
+///
+
+class FA {
+  static String? _userId;
+  static String get userId => 'a'; //_userId!;
+
+  /// Authentication instance
+  static final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  //! Needs to DB.write info
+  static Future<bool> signInAnonymously() async {
+    try {
+      _userId = (await _auth.signInAnonymously()).user!.uid;
+      return true;
+    } catch (e) {
+      Log.print(e, prefix: 'SignInAnonymously', isError: true);
+      return false;
+    }
+  }
+}
+
+///
+/// Cloud Firestore
+///
+
+class CF {
+  static FirebaseFirestore firestore = FirebaseFirestore.instance;
+}
+
+/*
+///
 /// Realtime Database
 ///
 
-class DB {
+class RD {
   /// Database reference
   static final DatabaseReference _dbRef = FirebaseDatabase.instance.reference().child('');
 
@@ -96,22 +128,4 @@ class DB {
     }
   }*/
 }
-
-class FA {
-  static String? _userId;
-  static String get userId => 'a'; //_userId!;
-
-  /// Authentication instance
-  static final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  ///! Needs to DB.write info
-  static Future<bool> signInAnonymously() async {
-    try {
-      _userId = (await _auth.signInAnonymously()).user!.uid;
-      return true;
-    } catch (e) {
-      Log.print(e, prefix: 'SignInAnonymously', isError: true);
-      return false;
-    }
-  }
-}
+*/
