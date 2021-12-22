@@ -1,42 +1,33 @@
 {
   "project_info": {
-    "project_number": "573394415160",
-    "firebase_url": "https://krfld-shopping-list-default-rtdb.europe-west1.firebasedatabase.app",
-    "project_id": "krfld-shopping-list",
-    "storage_bucket": "krfld-shopping-list.appspot.com"
+    "project_number": "148856380288",
+    "project_id": "shopping-list-krfld",
+    "storage_bucket": "shopping-list-krfld.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:573394415160:android:a5998822f9b28f915d80cd",
+        "mobilesdk_app_id": "1:148856380288:android:dda53613b0d463076ebf65",
         "android_client_info": {
           "package_name": "com.krfld.shopping_list"
         }
       },
       "oauth_client": [
         {
-          "client_id": "573394415160-gqkjrcs0rgfebrlo2rbilfqu3otcjfl8.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.krfld.shopping_list",
-            "certificate_hash": "2b61d9e194700d3e30dcd9e1f9524bd15ee27b8e"
-          }
-        },
-        {
-          "client_id": "573394415160-nfiijm2ockj3t8ecjtd8fvubpdmq0098.apps.googleusercontent.com",
+          "client_id": "148856380288-glao0o5ngc4o0hlj5rp06v1rk62aua1e.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDDsd11zYKasqdGBRgvUCSbPor8n_m3U9c"
+          "current_key": "AIzaSyC_LW6jDGEFZnmRiZDs5YR5H5zAo1MlXlU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "573394415160-nfiijm2ockj3t8ecjtd8fvubpdmq0098.apps.googleusercontent.com",
+              "client_id": "148856380288-glao0o5ngc4o0hlj5rp06v1rk62aua1e.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
