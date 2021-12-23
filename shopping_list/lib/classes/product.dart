@@ -1,53 +1,56 @@
-import '../../.imports.dart';
+import './signature.dart';
 
-class Product implements Comparable {
+class Product implements Comparable<Product> {
   final String id;
-  //final String listId;
-  //final String groupId;
 
   final String name;
-  final DateTime added; //? Check if needed
   final String? brand;
   final String? store;
   final String? info;
   final int? amount;
-  final DateTime? bought; //! Map
   final int tag; // 0 - None | 1 - Important | 2 - Discount
+  final Signature added;
+  final Signature? bought;
+  final Signature? removed;
 
   Product({
     required this.id,
-    //required this.listId,
-    //required this.groupId,
     required this.name,
-    required this.added,
     required this.brand,
     required this.store,
     required this.info,
     required this.amount,
-    required this.bought,
     required this.tag,
+    required this.added,
+    required this.bought,
+    required this.removed,
   });
 
-  factory Product.fromMap(String productId, Map productData) {
-    int? bought = Tools.load(productData, 'bought');
+  Product.fromMap(String productId, Map productData)
+      : id = productId,
+        name = productData['name'],
+        added = productData['added'],
+        brand = productData['brand'],
+        store = productData['store'],
+        info = productData['info'],
+        amount = productData['amount'],
+        tag = productData['tag'],
+        bought = productData['bought'],
+        removed = productData['removed'];
 
-    return Product(
-      id: productId,
-      //listId: listId,
-      //groupId: groupId,
-      name: Tools.loadString(productData, 'name', ''),
-      added: DateTime.fromMillisecondsSinceEpoch(Tools.loadInt(productData, 'added', 0)),
-      brand: Tools.load(productData, 'brand'),
-      store: Tools.load(productData, 'store'),
-      info: Tools.load(productData, 'info'),
-      amount: Tools.load(productData, 'amount'),
-      bought: bought != null ? DateTime.fromMillisecondsSinceEpoch(Tools.loadInt(productData, 'bought', 0)) : null,
-      tag: Tools.loadInt(productData, 'tag', 0),
-    );
-  }
+  Map toMap() => {
+        'name': name,
+        'brand': brand,
+        'store': store,
+        'info': info,
+        'amount': amount,
+        'tag': tag,
+        'added': added.toMap(),
+        'bought': bought?.toMap(),
+        'removed': removed?.toMap(),
+      };
 
   @override
-  int compareTo(other) {
-    return added.compareTo(other.added); //TODO Check if comparison matches (recent first)
-  }
+  int compareTo(other) => added.compareTo(other.added); //TODO Check if comparison matches (recent first)
+
 }

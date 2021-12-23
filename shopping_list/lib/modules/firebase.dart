@@ -2,7 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../.imports.dart';
+import './../classes/user.dart';
+import './../modules/tools.dart';
 
 ///
 /// Firebase Core
@@ -27,6 +28,7 @@ class FC {
 
 class FA {
   static AppUser? _user;
+  static AppUser get user => _user!;
 
   /// Authentication instance
   static final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -47,11 +49,9 @@ class FA {
           _user = AppUser.fromMap(userId, doc.data()!);
       });
 
-      //! Needs to CF.write info
-
       return true;
-    } catch (e) {
-      Log.print(e, prefix: 'SignInAnonymously', isError: true);
+    } catch (error) {
+      Log.print(error, prefix: 'SignInAnonymously', isError: true);
       return false;
     }
   }

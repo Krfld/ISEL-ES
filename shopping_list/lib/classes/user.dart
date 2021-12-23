@@ -1,6 +1,4 @@
-import '../../.imports.dart';
-
-class AppUser implements Comparable {
+class AppUser implements Comparable<AppUser> {
   final String id;
 
   final String? name;
@@ -12,16 +10,13 @@ class AppUser implements Comparable {
     required this.isGuest,
   });
 
-  factory AppUser.fromMap(String userId, Map userData) {
-    return AppUser(
-      id: userId,
-      name: Tools.load(userData, 'name'),
-      isGuest: Tools.loadBool(userData, 'isGuest', false),
-    );
-  }
+  AppUser.fromMap(String userId, Map userData)
+      : id = userId,
+        name = userData['name'],
+        isGuest = userData['isGuest'];
+
+  Map toMap() => {'name': name, 'isGuest': isGuest};
 
   @override
-  int compareTo(other) {
-    return name!.compareTo((other as AppUser).name!);
-  }
+  int compareTo(other) => name!.compareTo(other.name!);
 }

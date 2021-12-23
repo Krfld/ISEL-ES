@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../.imports.dart';
+import '../imports.dart';
 
 class Products extends StatelessWidget {
   const Products({Key? key}) : super(key: key);
@@ -9,7 +9,7 @@ class Products extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Data.currentListId = null;
+        Data.currentList = null;
         return true;
       },
       child: Scaffold(

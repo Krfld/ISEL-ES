@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../.imports.dart';
+import '../imports.dart';
 
 class Groups extends StatelessWidget {
   const Groups({Key? key}) : super(key: key);
 
   Future<void> _push(BuildContext context, Group group) async {
-    Data.currentGroupId = group.id;
+    Data.currentGroup = group;
     await Navigator.pushNamed(context, 'Lists');
   }
 
@@ -17,6 +14,7 @@ class Groups extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
+        Data.currentGroup = null;
         return true;
       },
       child: Scaffold(
@@ -73,22 +71,17 @@ class Groups extends StatelessWidget {
                 elevation: 4,
                 margin: EdgeInsets.all(24),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                  stream: FirebaseFirestore.instance.collection('groups').snapshots(),
-                  //Data.dataStream(),
+                child: StreamBuilder<List<Group>>(
+                  stream: Data.getGroups(),
                   builder: (context, snapshot) {
-                    Log.print(snapshot);
-
                     if (!snapshot.hasData) return SpinKitChasingDots(color: Colors.teal);
 
-                    List<Group> groups = snapshot.data!.docs.map((doc) => Group.fromMap(doc.id, doc.data())).toList();
-                    groups.sort();
-                    //Data.getGroups();
+                    List<Group> groups = snapshot.data!;
 
                     return groups.isEmpty
                         ? Center(
                             child: Text(
-                              'You\'re not in a shopping list group\nCreate or join one',
+                              'You\'re not in any shopping list group\nCreate or join one',
                               style: TextStyle(fontSize: 14, color: Colors.black38),
                               textAlign: TextAlign.center,
                             ),

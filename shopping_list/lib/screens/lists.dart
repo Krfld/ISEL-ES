@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../.imports.dart';
+import '../imports.dart';
 
 class Lists extends StatelessWidget {
   const Lists({Key? key}) : super(key: key);
 
-  Future<void> _push(BuildContext context, GroupList list) async {
-    Data.currentListId = list.id;
+  Future<void> _push(BuildContext context, ShoppingList list) async {
+    Data.currentList = list;
     await Navigator.pushNamed(context, 'Products');
   }
 
@@ -14,13 +14,15 @@ class Lists extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Data.currentGroupId = null;
+        Data.currentList = null;
         return true;
       },
-      child: StreamBuilder(
-        stream: null, //Data.groupStream(Data.currentGroupId!),
+      child: StreamBuilder<List<ShoppingList>>(
+        stream: Data.getLists(),
         builder: (context, snapshot) {
-          List<GroupList> lists = []; //Data.getGroupLists(Data.getGroup(Data.currentGroupId!));
+          if (!snapshot.hasData) return SpinKitChasingDots(color: Colors.teal);
+
+          List<ShoppingList> lists = snapshot.data!;
 
           return Scaffold(
             appBar: AppBar(
@@ -67,7 +69,7 @@ class Lists extends StatelessWidget {
                             //separatorBuilder: (context, index) => Divider(thickness: 1),
                             itemCount: lists.length,
                             itemBuilder: (context, index) {
-                              GroupList groupList = GroupList.fromMap(
+                              ShoppingList groupList = ShoppingList.fromMap(
                                   '', {}); //Data.getGroupList(Data.currentGroupId!, lists.elementAt(index).id);
                               return Card(
                                 elevation: 4,

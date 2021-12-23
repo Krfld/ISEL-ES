@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart'; // For timestamp
+
 Map user = {
-  // 'name': String,
+  'name': String, //?
   'isGuest': bool,
 };
 
@@ -10,19 +12,17 @@ Map group = {
 
 Map list = {
   'name': String,
-  'deleted': DateTime, //?
+  'deleted': {'user': String, 'timestamp': Timestamp}, //?
 };
 
 Map product = {
-  'added': DateTime,
   'name': String,
   'brand': String, //?
   'store': String, //?
   'info': String, //?
   'amount': int, //?
-  'bought': {
-    'user': String,
-    'time': DateTime,
-  }, //?
   'tag': int, // 0 - None | 1 - Important | 2 - Discount
+  'added': {'user': String, 'timestamp': Timestamp},
+  'bought': {'user': String, 'timestamp': Timestamp}, //?
+  'removed': {'user': String, 'timestamp': Timestamp}, //?
 };
