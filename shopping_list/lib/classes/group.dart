@@ -12,15 +12,13 @@ class Group {
     required this.lists,
   });
 
-  factory Group.fromMap(String groupId, Map data) {
-    Map group = Tools.loadMap(data, groupId, {});
-
-    Iterable lists = Tools.loadMap(group, 'lists', {}).keys;
+  factory Group.fromMap(String groupId, Map groupData) {
+    Iterable lists = Tools.loadMap(groupData, 'lists', {}).keys;
     List groupLists = List.generate(lists.length, (index) => lists.elementAt(index));
 
     return Group(
       id: groupId,
-      name: Tools.loadString(group, 'name', ''),
+      name: Tools.loadString(groupData, 'name', ''),
       lists: groupLists,
     );
   }

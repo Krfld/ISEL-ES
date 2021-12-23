@@ -16,18 +16,16 @@ class GroupList {
     required this.products,
   });
 
-  factory GroupList.fromMap(String groupId, String listId, Map data) {
-    Map list = Tools.loadMap(data, '$groupId/lists/$listId', {});
-
-    Iterable products = Tools.loadMap(list, 'products', {}).keys;
+  factory GroupList.fromMap(String groupId, String listId, Map listData) {
+    Iterable products = Tools.loadMap(listData, 'products', {}).keys;
     List listProducts = List.generate(products.length, (index) => products.elementAt(index));
 
-    int? deleted = Tools.load(list, 'deleted');
+    int? deleted = Tools.load(listData, 'deleted');
 
     return GroupList(
       id: listId,
       groupId: groupId,
-      name: Tools.loadString(list, 'name', ''),
+      name: Tools.loadString(listData, 'name', ''),
       deleted: deleted != null ? DateTime.fromMillisecondsSinceEpoch(deleted) : null,
       products: listProducts,
     );

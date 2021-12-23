@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../.imports.dart';
 
@@ -73,16 +74,14 @@ class Groups extends StatelessWidget {
                 margin: EdgeInsets.all(24),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                 child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                  stream: FirebaseFirestore.instance.collection('users').snapshots(),
+                  stream: FirebaseFirestore.instance.collection('groups').orderBy('name').snapshots(),
                   //Data.dataStream(),
                   builder: (context, snapshot) {
                     Log.print(snapshot);
 
                     if (!snapshot.hasData) return SpinKitChasingDots(color: Colors.teal);
 
-                    Log.print(snapshot.data!.docs.single.data());
-
-                    List<Group> groups = [];
+                    List<Group> groups = snapshot.data!.docs.map((e) => Group.fromMap(e.id, e.data())).toList();
                     //Data.getGroups();
 
                     return groups.isEmpty

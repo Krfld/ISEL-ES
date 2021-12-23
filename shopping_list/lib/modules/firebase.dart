@@ -9,7 +9,7 @@ import '../.imports.dart';
 ///
 
 class FC {
-  /// Init firebase
+  /// Init firebase and sign in
   static Future<bool> init() async {
     await Firebase.initializeApp();
 
@@ -50,6 +50,10 @@ class FA {
 
 class CF {
   static FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  static Stream<QuerySnapshot<Map<String, dynamic>>> col(String path) =>
+      firestore.collection(path).orderBy('name').snapshots();
+  static Stream<DocumentSnapshot<Map<String, dynamic>>> doc(String path) => firestore.doc(path).snapshots();
 }
 
 /*
