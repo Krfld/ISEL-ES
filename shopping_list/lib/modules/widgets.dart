@@ -50,7 +50,7 @@ class PopUp extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-      title: Text(title),
+      title: Text(title, textAlign: TextAlign.center),
       content: content,
       actions: actions,
     );

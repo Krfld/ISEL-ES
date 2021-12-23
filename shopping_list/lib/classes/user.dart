@@ -1,25 +1,27 @@
 import '../../.imports.dart';
 
-class User {
+class AppUser implements Comparable {
   final String id;
 
-  final String name;
-  final List groups;
+  final String? name;
+  final bool isGuest;
 
-  User({
+  AppUser({
     required this.id,
     required this.name,
-    required this.groups,
+    required this.isGuest,
   });
 
-  factory User.fromMap(String userId, Map users) {
-    List groups = Tools.loadList(users, '$userId/groups', []);
-    groups.removeWhere((element) => element == null);
-
-    return User(
+  factory AppUser.fromMap(String userId, Map userData) {
+    return AppUser(
       id: userId,
-      name: '',
-      groups: groups,
+      name: Tools.load(userData, 'name'),
+      isGuest: Tools.loadBool(userData, 'isGuest', false),
     );
+  }
+
+  @override
+  int compareTo(other) {
+    return name!.compareTo((other as AppUser).name!);
   }
 }

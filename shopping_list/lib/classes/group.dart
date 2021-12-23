@@ -1,25 +1,29 @@
 import '../../.imports.dart';
 
-class Group {
+class Group implements Comparable {
   final String id;
-
   final String name;
-  final List lists;
+  // final List lists;
 
   Group({
     required this.id,
     required this.name,
-    required this.lists,
+    // required this.lists,
   });
 
   factory Group.fromMap(String groupId, Map groupData) {
-    Iterable lists = Tools.loadMap(groupData, 'lists', {}).keys;
-    List groupLists = List.generate(lists.length, (index) => lists.elementAt(index));
+    // Iterable lists = Tools.loadMap(groupData, 'lists', {}).keys;
+    // List groupLists = List.generate(lists.length, (index) => lists.elementAt(index));
 
     return Group(
       id: groupId,
       name: Tools.loadString(groupData, 'name', ''),
-      lists: groupLists,
+      // lists: groupLists,
     );
+  }
+
+  @override
+  int compareTo(other) {
+    return name.compareTo(other.name);
   }
 }

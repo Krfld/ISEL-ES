@@ -68,7 +68,7 @@ class Lists extends StatelessWidget {
                             itemCount: lists.length,
                             itemBuilder: (context, index) {
                               GroupList groupList = GroupList.fromMap(
-                                  '', '', {}); //Data.getGroupList(Data.currentGroupId!, lists.elementAt(index).id);
+                                  '', {}); //Data.getGroupList(Data.currentGroupId!, lists.elementAt(index).id);
                               return Card(
                                 elevation: 4,
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),

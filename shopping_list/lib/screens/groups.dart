@@ -74,14 +74,15 @@ class Groups extends StatelessWidget {
                 margin: EdgeInsets.all(24),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                 child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                  stream: FirebaseFirestore.instance.collection('groups').orderBy('name').snapshots(),
+                  stream: FirebaseFirestore.instance.collection('groups').snapshots(),
                   //Data.dataStream(),
                   builder: (context, snapshot) {
                     Log.print(snapshot);
 
                     if (!snapshot.hasData) return SpinKitChasingDots(color: Colors.teal);
 
-                    List<Group> groups = snapshot.data!.docs.map((e) => Group.fromMap(e.id, e.data())).toList();
+                    List<Group> groups = snapshot.data!.docs.map((doc) => Group.fromMap(doc.id, doc.data())).toList();
+                    groups.sort();
                     //Data.getGroups();
 
                     return groups.isEmpty

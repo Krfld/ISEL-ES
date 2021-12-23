@@ -26,16 +26,29 @@ class FC {
 ///
 
 class FA {
-  static String? _userId;
-  static String get userId => 'a'; //_userId!;
+  static AppUser? _user;
 
   /// Authentication instance
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  //! Needs to DB.write info
   static Future<bool> signInAnonymously() async {
     try {
-      _userId = (await _auth.signInAnonymously()).user!.uid;
+      String userId = (await _auth.signInAnonymously()).user!.uid;
+
+      await FirebaseFirestore.instance.collection('users').doc(userId).get().then((doc) async {
+        if (!doc.exists) {
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(userId)
+              .set({'isGuest': true}, SetOptions(merge: true));
+
+          _user = AppUser.fromMap(userId, {'isGuest': true});
+        } else
+          _user = AppUser.fromMap(userId, doc.data()!);
+      });
+
+      //! Needs to CF.write info
+
       return true;
     } catch (e) {
       Log.print(e, prefix: 'SignInAnonymously', isError: true);
@@ -51,9 +64,16 @@ class FA {
 class CF {
   static FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  static Stream<QuerySnapshot<Map<String, dynamic>>> col(String path) =>
-      firestore.collection(path).orderBy('name').snapshots();
-  static Stream<DocumentSnapshot<Map<String, dynamic>>> doc(String path) => firestore.doc(path).snapshots();
+  static Future<DocumentReference<Map<String, dynamic>>> addToCollection(
+          String path, Map<String, dynamic> data) async =>
+      await firestore.collection(path).add(data);
+
+  static Future<void> updateDocument(String path, Map<String, dynamic> data, {bool merge = false}) async =>
+      await firestore.doc(path).set(data, SetOptions(merge: merge));
+
+  // static Stream<QuerySnapshot<Map<String, dynamic>>> col(String path) =>
+  //     firestore.collection(path).orderBy('name').snapshots();
+  // static Stream<DocumentSnapshot<Map<String, dynamic>>> doc(String path) => firestore.doc(path).snapshots();
 }
 
 /*
