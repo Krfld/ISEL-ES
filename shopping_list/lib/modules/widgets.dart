@@ -54,7 +54,7 @@ class PopUp extends StatelessWidget {
       title: Text(title, textAlign: TextAlign.center),
       content: content,
       actions: actions,
-      actionsAlignment: MainAxisAlignment.spaceEvenly,
+      // actionsAlignment: MainAxisAlignment.spaceEvenly,
     );
   }
 }

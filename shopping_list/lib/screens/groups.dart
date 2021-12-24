@@ -140,22 +140,20 @@ class _GroupsState extends State<Groups> {
                                   onSaved: (value) => Log.print('Saved: \'$value\''),
                                   onEditingComplete: () => Log.print('Editing complete'),
                                 ),
+                                ElevatedButton(
+                                  child: Text('Create Group', textAlign: TextAlign.center),
+                                  style: ElevatedButton.styleFrom(
+                                    elevation: 4,
+                                    // padding: EdgeInsets.all(16),
+                                  ),
+                                  onPressed: () {
+                                    // _formKey.currentState!.save();
+                                    _formKey.currentState!.validate();
+                                  },
+                                ),
                               ],
                             ),
                           ),
-                          actions: [
-                            ElevatedButton(
-                              child: Text('Create Group', textAlign: TextAlign.center),
-                              style: ElevatedButton.styleFrom(
-                                elevation: 4,
-                                padding: EdgeInsets.all(16),
-                              ),
-                              onPressed: () {
-                                // _formKey.currentState!.save();
-                                _formKey.currentState!.validate();
-                              },
-                            ),
-                          ],
                         ),
                       ),
                     ),
