@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import './modules/firebase.dart';
+import 'package:firebase_core/firebase_core.dart' show Firebase;
 
+import './modules/firebase.dart';
 import './imports.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(App());
 }
 
@@ -18,7 +20,7 @@ class App extends StatelessWidget {
 
     if (!await FC.init()) return false;
 
-    await Tools.delay(seconds: 2);
+    await Tools.delay(seconds: 1);
     return _inited = true;
   }
 

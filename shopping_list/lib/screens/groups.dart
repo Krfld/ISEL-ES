@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:shopping_list/cf_dummy.dart';
 
 import '../imports.dart';
 
-class Groups extends StatelessWidget {
+class Groups extends StatefulWidget {
   const Groups({Key? key}) : super(key: key);
+
+  @override
+  State<Groups> createState() => _GroupsState();
+}
+
+class _GroupsState extends State<Groups> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Future<void> _push(BuildContext context, Group group) async {
     Data.currentGroup = group;
@@ -28,6 +37,7 @@ class Groups extends StatelessWidget {
                 onPressed: () => null,
               ),
             ),*/
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 4,
           centerTitle: false,
@@ -39,26 +49,6 @@ class Groups extends StatelessWidget {
               onPressed: () => showDialog(
                 context: context,
                 builder: (context) => PopUp(title: 'Account'),
-              ),
-            ),
-            IconButton(
-              tooltip: 'Settings',
-              icon: Icon(MdiIcons.cog),
-              onPressed: () => showDialog(
-                context: context,
-                builder: (context) => PopUp(
-                  title: 'Settings',
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      ListBody(
-                        children: [
-                          Text('Settings 1'),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
               ),
             ),
           ],
@@ -117,6 +107,7 @@ class Groups extends StatelessWidget {
                 ),
               ),
             ),
+            // if(!Data.user.isGuest)
             Expanded(
               flex: 1,
               child: Padding(
@@ -129,17 +120,47 @@ class Groups extends StatelessWidget {
                       icon: MdiIcons.accountMultiplePlus,
                       onPressed: () => showDialog(
                         context: context,
-                        builder: (context) => PopUp(title: 'Create Group'),
+                        builder: (context) => PopUp(
+                          title: 'Create Group',
+                          content: Form(
+                            key: _formKey,
+                            onChanged: () => Log.print('Form changed'),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                TextFormField(
+                                  maxLength: 20,
+                                  validator: (value) =>
+                                      value?.isEmpty ?? true ? 'The group name can\'t be empty' : null,
+                                  decoration: InputDecoration(
+                                    hintText: 'Group name',
+                                    // labelText: 'Group name',
+                                  ),
+                                  onChanged: (value) => Log.print('Changed: \'$value\''),
+                                  onFieldSubmitted: (value) => Log.print('Field submitted: \'$value\''),
+                                  onSaved: (value) => Log.print('Saved: \'$value\''),
+                                  onEditingComplete: () => Log.print('Editing complete'),
+                                ),
+                                ElevatedButton(
+                                  child: Text('Create'),
+                                  onPressed: () {
+                                    // _formKey.currentState!.save();
+                                    _formKey.currentState!.validate();
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                    Button(
-                      'Join\nGroup',
-                      icon: MdiIcons.accountGroup,
-                      onPressed: () => showDialog(
+                    Button('Join\nGroup', icon: MdiIcons.accountGroup, onPressed: () {
+                      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Bruh')));
+                      showDialog(
                         context: context,
                         builder: (context) => PopUp(title: 'Join Group'),
-                      ),
-                    ),
+                      );
+                    }),
                   ],
                 ),
               ),

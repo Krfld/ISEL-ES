@@ -9,7 +9,8 @@ class LoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: SpinKitChasingDots(color: Colors.teal, size: 64)));
+    return Scaffold(
+        resizeToAvoidBottomInset: false, body: Center(child: SpinKitChasingDots(color: Colors.teal, size: 64)));
   }
 }
 

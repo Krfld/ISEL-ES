@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart'; // For timestamp
+import 'package:cloud_firestore/cloud_firestore.dart' show Timestamp;
 
 class Signature implements Comparable<Signature> {
   final String name;

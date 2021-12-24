@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart'; // For timestamp
+import 'package:cloud_firestore/cloud_firestore.dart' show Timestamp;
 
 Map user = {
   'name': String, //?

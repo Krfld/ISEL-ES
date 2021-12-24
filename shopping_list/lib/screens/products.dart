@@ -13,6 +13,7 @@ class Products extends StatelessWidget {
         return true;
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 4,
           title: Text('List Name', style: TextStyle(fontSize: 24)),
