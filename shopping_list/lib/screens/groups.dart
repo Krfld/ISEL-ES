@@ -130,27 +130,32 @@ class _GroupsState extends State<Groups> {
                               children: [
                                 TextFormField(
                                   maxLength: 20,
-                                  validator: (value) =>
-                                      value?.isEmpty ?? true ? 'The group name can\'t be empty' : null,
+                                  validator: (value) => value?.isEmpty ?? true ? 'Invalid group name' : null,
                                   decoration: InputDecoration(
-                                    hintText: 'Group name',
-                                    // labelText: 'Group name',
+                                    // hintText: 'Group name',
+                                    labelText: 'Group name',
                                   ),
                                   onChanged: (value) => Log.print('Changed: \'$value\''),
                                   onFieldSubmitted: (value) => Log.print('Field submitted: \'$value\''),
                                   onSaved: (value) => Log.print('Saved: \'$value\''),
                                   onEditingComplete: () => Log.print('Editing complete'),
                                 ),
-                                ElevatedButton(
-                                  child: Text('Create'),
-                                  onPressed: () {
-                                    // _formKey.currentState!.save();
-                                    _formKey.currentState!.validate();
-                                  },
-                                ),
                               ],
                             ),
                           ),
+                          actions: [
+                            ElevatedButton(
+                              child: Text('Create Group', textAlign: TextAlign.center),
+                              style: ElevatedButton.styleFrom(
+                                elevation: 4,
+                                padding: EdgeInsets.all(16),
+                              ),
+                              onPressed: () {
+                                // _formKey.currentState!.save();
+                                _formKey.currentState!.validate();
+                              },
+                            ),
+                          ],
                         ),
                       ),
                     ),
