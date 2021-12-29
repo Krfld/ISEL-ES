@@ -8,6 +8,7 @@ class Group implements Comparable<Group> {
     required this.name,
     required this.users,
   });
+
   Group.fromMap(String groupId, Map groupData)
       : id = groupId,
         name = groupData['name'],

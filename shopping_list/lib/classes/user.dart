@@ -19,4 +19,6 @@ class AppUser implements Comparable<AppUser> {
 
   @override
   int compareTo(other) => name!.compareTo(other.name!);
+
+  void createGroup() {}
 }
