@@ -12,7 +12,7 @@ import './../modules/tools.dart';
 class FC {
   /// Init firebase and sign in
   static Future<bool> init() async {
-    await Firebase.initializeApp();
+    // await Firebase.initializeApp();
 
     bool signedIn = await FA.signInAnonymously();
 
@@ -62,14 +62,13 @@ class FA {
 ///
 
 class CF {
-  static FirebaseFirestore firestore = FirebaseFirestore.instance;
+  static FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
 
-  static Future<DocumentReference<Map<String, dynamic>>> addToCollection(
-          String path, Map<String, dynamic> data) async =>
-      await firestore.collection(path).add(data);
+  static Future<DocumentReference<Map<String, dynamic>>> addDocument(String path, Map<String, dynamic> data) async =>
+      await firestoreInstance.collection(path).add(data);
 
   static Future<void> updateDocument(String path, Map<String, dynamic> data, {bool merge = false}) async =>
-      await firestore.doc(path).set(data, SetOptions(merge: merge));
+      await firestoreInstance.doc(path).set(data, SetOptions(merge: merge));
 
   // static Stream<QuerySnapshot<Map<String, dynamic>>> col(String path) =>
   //     firestore.collection(path).orderBy('name').snapshots();

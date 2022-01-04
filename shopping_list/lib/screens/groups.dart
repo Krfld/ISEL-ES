@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:shopping_list/cf_dummy.dart';
 
 import '../imports.dart';
 
@@ -119,40 +117,64 @@ class _GroupsState extends State<Groups> {
                       'Create\nGroup',
                       icon: MdiIcons.accountMultiplePlus,
                       onPressed: () => showDialog(
+                        // barrierDismissible: false,
                         context: context,
                         builder: (context) => PopUp(
                           title: 'Create Group',
                           content: Form(
                             key: _formKey,
-                            onChanged: () => Log.print('Form changed'),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                TextFormField(
-                                  maxLength: 20,
-                                  validator: (value) => value?.isEmpty ?? true ? 'Invalid group name' : null,
-                                  decoration: InputDecoration(
-                                    // hintText: 'Group name',
-                                    labelText: 'Group name',
+                            // onChanged: () => Log.print('Form changed'),
+                            child: Builder(builder: (context) {
+                              String groupName = '';
+                              return Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  TextFormField(
+                                    autofocus: true,
+                                    maxLength: 20,
+                                    keyboardType: TextInputType.name,
+                                    validator: (value) => value?.isEmpty ?? true ? 'Invalid group name' : null,
+                                    decoration: InputDecoration(
+                                      // hintText: 'Group name',
+                                      labelText: 'Group name',
+                                    ),
+                                    // onChanged: (value) => Log.print('Changed: \'$value\''),
+                                    // onFieldSubmitted: (value) => Log.print('Field submitted: \'$value\''),
+                                    onSaved: (value) {
+                                      Log.print('Saved: \'$value\'');
+                                      groupName = value!;
+                                    },
+                                    onEditingComplete: () async {
+                                      if (_formKey.currentState!.validate()) {
+                                        _formKey.currentState!.save();
+                                        Navigator.pop(context);
+                                        await Data.createGroup(groupName);
+                                      }
+                                    },
                                   ),
-                                  onChanged: (value) => Log.print('Changed: \'$value\''),
-                                  onFieldSubmitted: (value) => Log.print('Field submitted: \'$value\''),
-                                  onSaved: (value) => Log.print('Saved: \'$value\''),
-                                  onEditingComplete: () => Log.print('Editing complete'),
-                                ),
-                                ElevatedButton(
-                                  child: Text('Create Group', textAlign: TextAlign.center),
-                                  style: ElevatedButton.styleFrom(
-                                    elevation: 4,
-                                    // padding: EdgeInsets.all(16),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      ElevatedButton(
+                                        child: Text('Create Group', textAlign: TextAlign.center),
+                                        style: ElevatedButton.styleFrom(elevation: 4),
+                                        onPressed: () async {
+                                          if (_formKey.currentState!.validate()) {
+                                            _formKey.currentState!.save();
+                                            Navigator.pop(context);
+                                            await Data.createGroup(groupName);
+                                          }
+                                        },
+                                      ),
+                                      ElevatedButton(
+                                        child: Text('Cancel', textAlign: TextAlign.center),
+                                        onPressed: () => Navigator.pop(context),
+                                      ),
+                                    ],
                                   ),
-                                  onPressed: () {
-                                    // _formKey.currentState!.save();
-                                    _formKey.currentState!.validate();
-                                  },
-                                ),
-                              ],
-                            ),
+                                ],
+                              );
+                            }),
                           ),
                         ),
                       ),
