@@ -7,7 +7,7 @@ class Lists extends StatelessWidget {
 
   Future<void> push(BuildContext context, ShoppingList list) async {
     Data.currentList = list;
-    await Navigator.pushNamed(context, 'Products');
+    // await Navigator.pushNamed(context, 'Products');
   }
 
   @override
@@ -141,13 +141,8 @@ class CreateList extends StatelessWidget {
                   onEditingComplete: () => form.currentState!.save(),
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    ElevatedButton(
-                      child: Text('Create', textAlign: TextAlign.center),
-                      style: ElevatedButton.styleFrom(elevation: 4),
-                      onPressed: () => form.currentState!.save(),
-                    ),
                     ElevatedButton(
                       child: Text('Cancel', textAlign: TextAlign.center),
                       style: ElevatedButton.styleFrom(elevation: 4),
@@ -157,6 +152,11 @@ class CreateList extends StatelessWidget {
 
                         Navigator.pop(context);
                       },
+                    ),
+                    ElevatedButton(
+                      child: Text('Create', textAlign: TextAlign.center),
+                      style: ElevatedButton.styleFrom(elevation: 4),
+                      onPressed: () => form.currentState!.save(),
                     ),
                   ],
                 ),

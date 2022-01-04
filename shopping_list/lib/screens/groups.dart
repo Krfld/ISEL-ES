@@ -161,7 +161,7 @@ class CreateGroup extends StatelessWidget {
                   onEditingComplete: () => form.currentState!.save(),
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     ElevatedButton(
                       child: Text('Cancel', textAlign: TextAlign.center),
@@ -232,7 +232,7 @@ class JoinGroup extends StatelessWidget {
                   onEditingComplete: () => form.currentState!.save(),
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     ElevatedButton(
                       child: Text('Cancel', textAlign: TextAlign.center),

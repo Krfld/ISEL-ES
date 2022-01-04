@@ -29,7 +29,7 @@ class App extends StatelessWidget {
         'Home': (context) => Home(),
         'Groups': (context) => Groups(),
         'Lists': (context) => Lists(),
-        'products': (context) => Products(),
+        'Products': (context) => Products(),
       },
       home: FutureBuilder<bool>(
         future: setup(),
