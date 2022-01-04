@@ -13,15 +13,11 @@ void main() async {
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
 
-  static bool _inited = false;
-
   Future<bool> setup() async {
-    if (_inited) return true;
-
     if (!await FC.init()) return false;
 
     await Tools.delay(seconds: 1);
-    return _inited = true;
+    return true;
   }
 
   @override

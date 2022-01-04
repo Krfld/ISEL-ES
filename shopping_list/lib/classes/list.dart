@@ -12,10 +12,15 @@ class ShoppingList implements Comparable<ShoppingList> {
     required this.deleted,
   });
 
-  ShoppingList.fromMap(String listId, Map listData)
-      : id = listId,
-        name = listData['name'],
-        deleted = Signature.fromMap(listData['deleted']);
+  factory ShoppingList.fromMap(String listId, Map listData) {
+    Map? deleted = listData['deleted'];
+
+    return ShoppingList(
+      id: listId,
+      name: listData['name'],
+      deleted: deleted != null ? Signature.fromMap(deleted) : null,
+    );
+  }
 
   Map toMap() => {'name': name, 'deleted': deleted?.toMap()};
 

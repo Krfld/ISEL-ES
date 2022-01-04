@@ -26,17 +26,23 @@ class Product implements Comparable<Product> {
     required this.removed,
   });
 
-  Product.fromMap(String productId, Map productData)
-      : id = productId,
-        name = productData['name'],
-        added = productData['added'],
-        brand = productData['brand'],
-        store = productData['store'],
-        info = productData['info'],
-        amount = productData['amount'],
-        tag = productData['tag'],
-        bought = productData['bought'],
-        removed = productData['removed'];
+  factory Product.fromMap(String productId, Map productData) {
+    Map? bought = productData['bought'];
+    Map? removed = productData['removed'];
+
+    return Product(
+      id: productId,
+      name: productData['name'],
+      added: productData['added'],
+      brand: productData['brand'],
+      store: productData['store'],
+      info: productData['info'],
+      amount: productData['amount'],
+      tag: productData['tag'],
+      bought: bought != null ? Signature.fromMap(bought) : null,
+      removed: removed != null ? Signature.fromMap(removed) : null,
+    );
+  }
 
   Map toMap() => {
         'name': name,

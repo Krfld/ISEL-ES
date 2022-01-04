@@ -4,7 +4,10 @@ class Signature implements Comparable<Signature> {
   final String name;
   final Timestamp timestamp;
 
-  Signature(this.name, this.timestamp);
+  Signature({
+    required this.name,
+    required this.timestamp,
+  });
 
   Map toMap() => {'name': name, 'timestamp': timestamp};
   Signature.fromMap(Map signature)

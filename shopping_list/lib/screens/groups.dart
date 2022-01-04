@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../imports.dart';
 
-class Groups extends StatefulWidget {
+class Groups extends StatelessWidget {
   const Groups({Key? key}) : super(key: key);
 
-  @override
-  State<Groups> createState() => _GroupsState();
-}
-
-class _GroupsState extends State<Groups> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  Future<void> _push(BuildContext context, Group group) async {
+  Future<void> push(BuildContext context, Group group) async {
     Data.currentGroup = group;
     await Navigator.pushNamed(context, 'Lists');
   }
@@ -21,7 +15,6 @@ class _GroupsState extends State<Groups> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Data.currentGroup = null;
         return true;
       },
       child: Scaffold(
@@ -63,7 +56,6 @@ class _GroupsState extends State<Groups> {
                   stream: Data.getGroups(),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) return SpinKitChasingDots(color: Colors.teal);
-
                     List<Group> groups = snapshot.data!;
 
                     return groups.isEmpty
@@ -77,7 +69,6 @@ class _GroupsState extends State<Groups> {
                         : ListView.builder(
                             padding: EdgeInsets.all(24),
                             physics: BouncingScrollPhysics(),
-                            //separatorBuilder: (context, index) => Divider(thickness: 1),
                             itemCount: groups.length,
                             itemBuilder: (context, index) {
                               Group group = groups.elementAt(index);
@@ -95,8 +86,7 @@ class _GroupsState extends State<Groups> {
                                       builder: (context) => PopUp(title: group.name),
                                     ),
                                   ),
-                                  onTap: () => _push(context, group),
-                                  //onLongPress: () => null,
+                                  onTap: () => push(context, group),
                                 ),
                               );
                             },
@@ -116,81 +106,153 @@ class _GroupsState extends State<Groups> {
                     Button(
                       'Create\nGroup',
                       icon: MdiIcons.accountMultiplePlus,
-                      onPressed: () => showDialog(
-                        // barrierDismissible: false,
-                        context: context,
-                        builder: (context) => PopUp(
-                          title: 'Create Group',
-                          content: Form(
-                            key: _formKey,
-                            // onChanged: () => Log.print('Form changed'),
-                            child: Builder(builder: (context) {
-                              String groupName = '';
-                              return Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  TextFormField(
-                                    autofocus: true,
-                                    maxLength: 20,
-                                    keyboardType: TextInputType.name,
-                                    validator: (value) => value?.isEmpty ?? true ? 'Invalid group name' : null,
-                                    decoration: InputDecoration(
-                                      // hintText: 'Group name',
-                                      labelText: 'Group name',
-                                    ),
-                                    // onChanged: (value) => Log.print('Changed: \'$value\''),
-                                    // onFieldSubmitted: (value) => Log.print('Field submitted: \'$value\''),
-                                    onSaved: (value) {
-                                      Log.print('Saved: \'$value\'');
-                                      groupName = value!;
-                                    },
-                                    onEditingComplete: () async {
-                                      if (_formKey.currentState!.validate()) {
-                                        _formKey.currentState!.save();
-                                        Navigator.pop(context);
-                                        await Data.createGroup(groupName);
-                                      }
-                                    },
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      ElevatedButton(
-                                        child: Text('Create Group', textAlign: TextAlign.center),
-                                        style: ElevatedButton.styleFrom(elevation: 4),
-                                        onPressed: () async {
-                                          if (_formKey.currentState!.validate()) {
-                                            _formKey.currentState!.save();
-                                            Navigator.pop(context);
-                                            await Data.createGroup(groupName);
-                                          }
-                                        },
-                                      ),
-                                      ElevatedButton(
-                                        child: Text('Cancel', textAlign: TextAlign.center),
-                                        onPressed: () => Navigator.pop(context),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              );
-                            }),
-                          ),
-                        ),
-                      ),
+                      onPressed: () => showDialog(context: context, builder: (context) => CreateGroup()),
                     ),
-                    Button('Join\nGroup', icon: MdiIcons.accountGroup, onPressed: () {
-                      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Bruh')));
-                      showDialog(
-                        context: context,
-                        builder: (context) => PopUp(title: 'Join Group'),
-                      );
-                    }),
+                    Button(
+                      'Join\nGroup',
+                      icon: MdiIcons.accountGroup,
+                      onPressed: () => showDialog(context: context, builder: (context) => JoinGroup()),
+                    ),
                   ],
                 ),
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class CreateGroup extends StatelessWidget {
+  CreateGroup({Key? key}) : super(key: key);
+
+  final GlobalKey<FormState> form = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return PopUp(
+      title: 'Create Group',
+      content: Form(
+        key: form,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        child: Builder(
+          builder: (context) {
+            bool processing = false;
+
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  autofocus: true,
+                  maxLength: 20,
+                  keyboardType: TextInputType.name,
+                  validator: (value) => value?.trim().isEmpty ?? true ? 'Invalid group name' : null,
+                  decoration: InputDecoration(labelText: 'Group name'),
+                  onSaved: (value) async {
+                    if (processing || !form.currentState!.validate()) return;
+                    processing = true;
+
+                    await Data.createGroup(value!);
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Group created')));
+                    Navigator.pop(context);
+                  },
+                  onEditingComplete: () => form.currentState!.save(),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      child: Text('Create', textAlign: TextAlign.center),
+                      style: ElevatedButton.styleFrom(elevation: 4),
+                      onPressed: () => form.currentState!.save(),
+                    ),
+                    ElevatedButton(
+                      child: Text('Cancel', textAlign: TextAlign.center),
+                      style: ElevatedButton.styleFrom(elevation: 4),
+                      onPressed: () {
+                        if (processing) return;
+                        processing = true;
+
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class JoinGroup extends StatelessWidget {
+  JoinGroup({Key? key}) : super(key: key);
+
+  final GlobalKey<FormState> form = GlobalKey<FormState>();
+
+  final TextEditingController controller = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return PopUp(
+      title: 'Join Group',
+      content: Form(
+        key: form,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        child: Builder(
+          builder: (context) {
+            bool processing = false;
+
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  controller: controller,
+                  autofocus: true,
+                  maxLength: 20,
+                  keyboardType: TextInputType.text,
+                  inputFormatters: [FilteringTextInputFormatter.deny(RegExp(' '))],
+                  validator: (value) => value?.trim().isEmpty ?? true ? 'Invalid group ID' : null,
+                  decoration: InputDecoration(labelText: 'Group ID'),
+                  onSaved: (value) async {
+                    if (processing || !form.currentState!.validate()) return;
+                    processing = true;
+
+                    if (!await Data.joinGroup(value!))
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Group doesn\'t exist')));
+                    else
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Group joined')));
+
+                    Navigator.pop(context);
+                  },
+                  onEditingComplete: () => form.currentState!.save(),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      child: Text('Join', textAlign: TextAlign.center),
+                      style: ElevatedButton.styleFrom(elevation: 4),
+                      onPressed: () => form.currentState!.save(),
+                    ),
+                    ElevatedButton(
+                      child: Text('Cancel', textAlign: TextAlign.center),
+                      style: ElevatedButton.styleFrom(elevation: 4),
+                      onPressed: () {
+                        if (processing) return;
+                        processing = true;
+
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

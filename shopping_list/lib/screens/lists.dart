@@ -5,7 +5,7 @@ import '../imports.dart';
 class Lists extends StatelessWidget {
   const Lists({Key? key}) : super(key: key);
 
-  Future<void> _push(BuildContext context, ShoppingList list) async {
+  Future<void> push(BuildContext context, ShoppingList list) async {
     Data.currentList = list;
     await Navigator.pushNamed(context, 'Products');
   }
@@ -14,7 +14,7 @@ class Lists extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Data.currentList = null;
+        Data.currentGroup = null;
         return true;
       },
       child: Scaffold(
@@ -44,8 +44,8 @@ class Lists extends StatelessWidget {
                 child: StreamBuilder<List<ShoppingList>>(
                     stream: Data.getLists(),
                     builder: (context, snapshot) {
+                      Log.print(snapshot);
                       if (!snapshot.hasData) return SpinKitChasingDots(color: Colors.teal);
-
                       List<ShoppingList> lists = snapshot.data!;
 
                       return lists.isEmpty
@@ -59,28 +59,25 @@ class Lists extends StatelessWidget {
                           : ListView.builder(
                               padding: EdgeInsets.all(24),
                               physics: BouncingScrollPhysics(),
-                              //separatorBuilder: (context, index) => Divider(thickness: 1),
                               itemCount: lists.length,
                               itemBuilder: (context, index) {
-                                ShoppingList groupList = ShoppingList.fromMap(
-                                    '', {}); //Data.getGroupList(Data.currentGroupId!, lists.elementAt(index).id);
+                                ShoppingList list = lists.elementAt(index);
                                 return Card(
                                   elevation: 4,
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                                   child: ListTile(
                                     contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                                    title: Text(groupList.name, style: TextStyle(fontSize: 20)),
-                                    subtitle: Text(groupList.id, style: TextStyle(fontSize: 16)),
+                                    title: Text(list.name, style: TextStyle(fontSize: 20)),
+                                    // subtitle: Text(list.id, style: TextStyle(fontSize: 16)),
                                     trailing: IconButton(
                                       icon: Icon(MdiIcons.dotsHorizontal),
                                       onPressed: () => showDialog(
                                         context: context,
-                                        builder: (context) => PopUp(title: groupList.name),
+                                        builder: (context) => PopUp(title: list.name),
                                       ),
                                     ),
-                                    onTap: () {},
-                                    //onLongPress: () => null,
+                                    onTap: () => push(context, list),
                                   ),
                                 );
                               },
@@ -96,15 +93,76 @@ class Lists extends StatelessWidget {
                   child: Button(
                     'Create\nList',
                     icon: MdiIcons.playlistPlus,
-                    onPressed: () => showDialog(
-                      context: context,
-                      builder: (context) => PopUp(title: 'Create List'),
-                    ),
+                    onPressed: () => showDialog(context: context, builder: (context) => CreateList()),
                   ),
                 ),
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class CreateList extends StatelessWidget {
+  CreateList({Key? key}) : super(key: key);
+
+  final GlobalKey<FormState> form = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return PopUp(
+      title: 'Create List',
+      content: Form(
+        key: form,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        child: Builder(
+          builder: (context) {
+            bool processing = false;
+
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  autofocus: true,
+                  maxLength: 20,
+                  keyboardType: TextInputType.name,
+                  validator: (value) => value?.trim().isEmpty ?? true ? 'Invalid list name' : null,
+                  decoration: InputDecoration(labelText: 'List name'),
+                  onSaved: (value) async {
+                    if (processing || !form.currentState!.validate()) return;
+                    processing = true;
+
+                    await Data.createList(value!);
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('List created')));
+                    Navigator.pop(context);
+                  },
+                  onEditingComplete: () => form.currentState!.save(),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      child: Text('Create', textAlign: TextAlign.center),
+                      style: ElevatedButton.styleFrom(elevation: 4),
+                      onPressed: () => form.currentState!.save(),
+                    ),
+                    ElevatedButton(
+                      child: Text('Cancel', textAlign: TextAlign.center),
+                      style: ElevatedButton.styleFrom(elevation: 4),
+                      onPressed: () {
+                        if (processing) return;
+                        processing = true;
+
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
