@@ -44,9 +44,9 @@ class Lists extends StatelessWidget {
                 child: StreamBuilder<List<ShoppingList>>(
                     stream: Data.getLists(),
                     builder: (context, snapshot) {
-                      Log.print(snapshot);
                       if (!snapshot.hasData) return SpinKitChasingDots(color: Colors.teal);
                       List<ShoppingList> lists = snapshot.data!;
+                      Log.print(lists);
 
                       return lists.isEmpty
                           ? Center(

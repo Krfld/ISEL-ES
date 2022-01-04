@@ -57,6 +57,7 @@ class Groups extends StatelessWidget {
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) return SpinKitChasingDots(color: Colors.teal);
                     List<Group> groups = snapshot.data!;
+                    Log.print(groups);
 
                     return groups.isEmpty
                         ? Center(
@@ -163,11 +164,6 @@ class CreateGroup extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton(
-                      child: Text('Create', textAlign: TextAlign.center),
-                      style: ElevatedButton.styleFrom(elevation: 4),
-                      onPressed: () => form.currentState!.save(),
-                    ),
-                    ElevatedButton(
                       child: Text('Cancel', textAlign: TextAlign.center),
                       style: ElevatedButton.styleFrom(elevation: 4),
                       onPressed: () {
@@ -176,6 +172,11 @@ class CreateGroup extends StatelessWidget {
 
                         Navigator.pop(context);
                       },
+                    ),
+                    ElevatedButton(
+                      child: Text('Create', textAlign: TextAlign.center),
+                      style: ElevatedButton.styleFrom(elevation: 4),
+                      onPressed: () => form.currentState!.save(),
                     ),
                   ],
                 ),
@@ -234,11 +235,6 @@ class JoinGroup extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton(
-                      child: Text('Join', textAlign: TextAlign.center),
-                      style: ElevatedButton.styleFrom(elevation: 4),
-                      onPressed: () => form.currentState!.save(),
-                    ),
-                    ElevatedButton(
                       child: Text('Cancel', textAlign: TextAlign.center),
                       style: ElevatedButton.styleFrom(elevation: 4),
                       onPressed: () {
@@ -247,6 +243,11 @@ class JoinGroup extends StatelessWidget {
 
                         Navigator.pop(context);
                       },
+                    ),
+                    ElevatedButton(
+                      child: Text('Join', textAlign: TextAlign.center),
+                      style: ElevatedButton.styleFrom(elevation: 4),
+                      onPressed: () => form.currentState!.save(),
                     ),
                   ],
                 ),
