@@ -29,9 +29,9 @@ class Button extends StatelessWidget {
       label: Text(text, textAlign: TextAlign.center),
       style: ElevatedButton.styleFrom(
         elevation: 4,
+        padding: EdgeInsets.all(20),
         minimumSize: Size(128, 0),
-        padding: EdgeInsets.all(16),
-        textStyle: TextStyle(fontSize: 16),
+        // textStyle: TextStyle(fontSize: 16),
         //splashFactory: InkRipple.splashFactory,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(64))),
       ),
@@ -40,8 +40,30 @@ class Button extends StatelessWidget {
   }
 }
 
+class PopUpButton extends StatelessWidget {
+  final String text;
+  final bool warning;
+  final Function? onPressed;
+
+  const PopUpButton(this.text, {this.warning = false, @required this.onPressed, Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      child: Text(text, textAlign: TextAlign.center),
+      style: ElevatedButton.styleFrom(
+        elevation: 4,
+        padding: EdgeInsets.all(12),
+        minimumSize: Size(64 + 16, 0),
+        primary: warning ? Colors.redAccent : Colors.teal,
+      ),
+      onPressed: onPressed != null ? () => onPressed?.call() : null,
+    );
+  }
+}
+
 class PopUp extends StatelessWidget {
-  final String title;
+  final Widget title;
   final Widget? content;
   final List<Widget>? actions;
 
@@ -50,11 +72,41 @@ class PopUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-      title: Text(title, textAlign: TextAlign.center),
+      title: title,
       content: content,
       actions: actions,
-      // actionsAlignment: MainAxisAlignment.spaceEvenly,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+      contentPadding: EdgeInsets.fromLTRB(24, 8, 24, 0),
+      actionsPadding: EdgeInsets.only(bottom: 16),
+      actionsAlignment: MainAxisAlignment.spaceEvenly,
     );
+  }
+}
+
+class Name extends StatelessWidget {
+  final String text;
+  final Alignment alignment;
+  final double? fontSize;
+
+  const Name(this.text, {this.alignment = Alignment.center, this.fontSize, Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      alignment: alignment,
+      child: Text(text, style: TextStyle(fontSize: fontSize), textAlign: TextAlign.center),
+    );
+  }
+}
+
+class Toast extends StatelessWidget {
+  final BuildContext context;
+
+  const Toast(this.context, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

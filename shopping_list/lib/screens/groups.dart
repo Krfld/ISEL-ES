@@ -1,10 +1,36 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../imports.dart';
 
-class Groups extends StatelessWidget {
+class Groups extends StatefulWidget {
   const Groups({Key? key}) : super(key: key);
+
+  @override
+  State<Groups> createState() => _GroupsState();
+}
+
+class _GroupsState extends State<Groups> {
+  late StreamSubscription streamSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+
+    streamSubscription = Data.firestoreGroupsStream.listen((event) {
+      Data.groups = event;
+      Data.sinkGroupsStream();
+    });
+  }
+
+  @override
+  void dispose() {
+    streamSubscription.cancel();
+
+    super.dispose();
+  }
 
   Future<void> push(BuildContext context, Group group) async {
     Data.currentGroup = group;
@@ -39,7 +65,7 @@ class Groups extends StatelessWidget {
               icon: Icon(MdiIcons.account),
               onPressed: () => showDialog(
                 context: context,
-                builder: (context) => PopUp(title: 'Account'),
+                builder: (context) => PopUp(title: Text('Account')),
               ),
             ),
           ],
@@ -52,14 +78,13 @@ class Groups extends StatelessWidget {
                 elevation: 4,
                 margin: EdgeInsets.all(24),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                child: StreamBuilder<List<Group>>(
-                  stream: Data.getGroups(),
+                child: StreamBuilder<void>(
+                  stream: Data.groupsStream,
                   builder: (context, snapshot) {
-                    if (!snapshot.hasData) return SpinKitChasingDots(color: Colors.teal);
-                    List<Group> groups = snapshot.data!;
-                    Log.print(groups);
+                    if (snapshot.connectionState != ConnectionState.active)
+                      return SpinKitChasingDots(color: Colors.teal);
 
-                    return groups.isEmpty
+                    return Data.groups.isEmpty
                         ? Center(
                             child: Text(
                               'You\'re not in any shopping list group\nCreate or join one',
@@ -70,22 +95,20 @@ class Groups extends StatelessWidget {
                         : ListView.builder(
                             padding: EdgeInsets.all(24),
                             physics: BouncingScrollPhysics(),
-                            itemCount: groups.length,
+                            itemCount: Data.groups.length,
                             itemBuilder: (context, index) {
-                              Group group = groups.elementAt(index);
+                              Group group = Data.groups.elementAt(index);
                               return Card(
                                 elevation: 4,
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                                 child: ListTile(
                                   contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                                  title: Text(group.name, style: TextStyle(fontSize: 24)),
+                                  title: Name(group.name, fontSize: 24, alignment: Alignment.centerLeft),
                                   trailing: IconButton(
                                     icon: Icon(MdiIcons.dotsHorizontal),
                                     onPressed: () => showDialog(
-                                      context: context,
-                                      builder: (context) => PopUp(title: group.name),
-                                    ),
+                                        context: context, builder: (context) => GroupSettings(groupId: group.id)),
                                   ),
                                   onTap: () => push(context, group),
                                 ),
@@ -125,137 +148,185 @@ class Groups extends StatelessWidget {
   }
 }
 
-class CreateGroup extends StatelessWidget {
-  CreateGroup({Key? key}) : super(key: key);
+// ----------------------------------------------------------------------------------------------------
 
-  final GlobalKey<FormState> form = GlobalKey<FormState>();
+class GroupSettings extends StatelessWidget {
+  final String groupId;
+
+  const GroupSettings({required this.groupId, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> form = GlobalKey<FormState>();
+    bool processing = false;
+
     return PopUp(
-      title: 'Create Group',
+      title: StreamBuilder<void>(
+        stream: Data.groupsStream,
+        builder: (context, snapshot) => Name('${Data.getGroup(groupId).name}\nSettings'),
+      ),
       content: Form(
         key: form,
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        child: Builder(
-          builder: (context) {
-            bool processing = false;
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextFormField(
+              initialValue: Data.getGroup(groupId).name,
+              maxLength: 20,
+              keyboardType: TextInputType.name,
+              validator: (value) => value?.trim().isEmpty ?? true ? 'Invalid group name' : null,
+              decoration: InputDecoration(labelText: 'Group name'),
+              onSaved: (value) async {
+                if (processing || !form.currentState!.validate()) return;
+                processing = true;
 
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFormField(
-                  autofocus: true,
-                  maxLength: 20,
-                  keyboardType: TextInputType.name,
-                  validator: (value) => value?.trim().isEmpty ?? true ? 'Invalid group name' : null,
-                  decoration: InputDecoration(labelText: 'Group name'),
-                  onSaved: (value) async {
-                    if (processing || !form.currentState!.validate()) return;
-                    processing = true;
+                if (value != Data.getGroup(groupId).name && await Data.updateGroup(groupId, value!))
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Group edited')));
 
-                    await Data.createGroup(value!);
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Group created')));
-                    Navigator.pop(context);
-                  },
-                  onEditingComplete: () => form.currentState!.save(),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    ElevatedButton(
-                      child: Text('Cancel', textAlign: TextAlign.center),
-                      style: ElevatedButton.styleFrom(elevation: 4),
-                      onPressed: () {
-                        if (processing) return;
-                        processing = true;
-
-                        Navigator.pop(context);
-                      },
-                    ),
-                    ElevatedButton(
-                      child: Text('Create', textAlign: TextAlign.center),
-                      style: ElevatedButton.styleFrom(elevation: 4),
-                      onPressed: () => form.currentState!.save(),
-                    ),
-                  ],
-                ),
-              ],
-            );
-          },
+                Navigator.pop(context);
+              },
+              onEditingComplete: () => form.currentState!.save(),
+            ),
+            Divider(),
+          ],
         ),
       ),
+      actions: [
+        PopUpButton(
+          'Cancel',
+          onPressed: () {
+            if (processing) return;
+            processing = true;
+
+            Navigator.pop(context);
+          },
+        ),
+        PopUpButton('Save', onPressed: () => form.currentState!.save()),
+        /*PopUpButton(
+          'Leave group',
+          warning: true,
+          onPressed: () => showDialog(
+            context: context,
+            builder: (context) => PopUp(
+              title: 'Confirm',
+            ),
+          ),
+        ),*/
+      ],
     );
   }
 }
 
-class JoinGroup extends StatelessWidget {
-  JoinGroup({Key? key}) : super(key: key);
+// ----------------------------------------------------------------------------------------------------
 
-  final GlobalKey<FormState> form = GlobalKey<FormState>();
-
-  final TextEditingController controller = TextEditingController();
+class CreateGroup extends StatelessWidget {
+  const CreateGroup({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> form = GlobalKey<FormState>();
+
+    bool processing = false;
+
     return PopUp(
-      title: 'Join Group',
+      title: Text('Create Group'),
       content: Form(
         key: form,
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        child: Builder(
-          builder: (context) {
-            bool processing = false;
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextFormField(
+              maxLength: 20,
+              keyboardType: TextInputType.name,
+              validator: (value) => value?.trim().isEmpty ?? true ? 'Invalid group name' : null,
+              decoration: InputDecoration(labelText: 'Group name'),
+              onSaved: (value) async {
+                if (processing || !form.currentState!.validate()) return;
+                processing = true;
 
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFormField(
-                  controller: controller,
-                  autofocus: true,
-                  maxLength: 20,
-                  keyboardType: TextInputType.text,
-                  inputFormatters: [FilteringTextInputFormatter.deny(RegExp(' '))],
-                  validator: (value) => value?.trim().isEmpty ?? true ? 'Invalid group ID' : null,
-                  decoration: InputDecoration(labelText: 'Group ID'),
-                  onSaved: (value) async {
-                    if (processing || !form.currentState!.validate()) return;
-                    processing = true;
-
-                    if (!await Data.joinGroup(value!))
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Group doesn\'t exist')));
-                    else
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Group joined')));
-
-                    Navigator.pop(context);
-                  },
-                  onEditingComplete: () => form.currentState!.save(),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    ElevatedButton(
-                      child: Text('Cancel', textAlign: TextAlign.center),
-                      style: ElevatedButton.styleFrom(elevation: 4),
-                      onPressed: () {
-                        if (processing) return;
-                        processing = true;
-
-                        Navigator.pop(context);
-                      },
-                    ),
-                    ElevatedButton(
-                      child: Text('Join', textAlign: TextAlign.center),
-                      style: ElevatedButton.styleFrom(elevation: 4),
-                      onPressed: () => form.currentState!.save(),
-                    ),
-                  ],
-                ),
-              ],
-            );
-          },
+                await Data.createGroup(value!);
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Group created')));
+                Navigator.pop(context);
+              },
+              onEditingComplete: () => form.currentState!.save(),
+            ),
+            Divider(),
+          ],
         ),
       ),
+      actions: [
+        PopUpButton(
+          'Cancel',
+          onPressed: () {
+            if (processing) return;
+            processing = true;
+
+            Navigator.pop(context);
+          },
+        ),
+        PopUpButton('Create', onPressed: () => form.currentState!.save()),
+      ],
+    );
+  }
+}
+
+// ----------------------------------------------------------------------------------------------------
+
+class JoinGroup extends StatelessWidget {
+  const JoinGroup({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final GlobalKey<FormState> form = GlobalKey<FormState>();
+    final TextEditingController controller = TextEditingController();
+    bool processing = false;
+
+    return PopUp(
+      title: Text('Join Group'),
+      content: Form(
+        key: form,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextFormField(
+              controller: controller,
+              maxLength: 20,
+              keyboardType: TextInputType.text,
+              inputFormatters: [FilteringTextInputFormatter.deny(RegExp(' '))],
+              validator: (value) => value?.trim().isEmpty ?? true ? 'Invalid group ID' : null,
+              decoration: InputDecoration(labelText: 'Group ID'),
+              onSaved: (value) async {
+                if (processing || !form.currentState!.validate()) return;
+                processing = true;
+
+                if (!await Data.joinGroup(value!))
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Group doesn\'t exist')));
+                else
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Group joined')));
+
+                Navigator.pop(context);
+              },
+              onEditingComplete: () => form.currentState!.save(),
+            ),
+            Divider(),
+          ],
+        ),
+      ),
+      actions: [
+        PopUpButton(
+          'Cancel',
+          onPressed: () {
+            if (processing) return;
+            processing = true;
+
+            Navigator.pop(context);
+          },
+        ),
+        PopUpButton('Join', onPressed: () => form.currentState!.save()),
+      ],
     );
   }
 }

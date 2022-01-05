@@ -65,7 +65,7 @@ class Products extends StatelessWidget {
                                     icon: Icon(MdiIcons.dotsHorizontal),
                                     onPressed: () => showDialog(
                                       context: context,
-                                      builder: (context) => PopUp(title: product.name),
+                                      builder: (context) => PopUp(title: Name(product.name)),
                                     ),
                                   ),
                                   // onTap: () => push(context, list),
@@ -85,7 +85,7 @@ class Products extends StatelessWidget {
                   icon: MdiIcons.playlistPlus,
                   onPressed: () => showDialog(
                     context: context,
-                    builder: (context) => PopUp(title: 'Add Product'),
+                    builder: (context) => PopUp(title: Text('Add Product')),
                   ),
                 ),
               ),

@@ -1,9 +1,35 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../imports.dart';
 
-class Lists extends StatelessWidget {
+class Lists extends StatefulWidget {
   const Lists({Key? key}) : super(key: key);
+
+  @override
+  State<Lists> createState() => _ListsState();
+}
+
+class _ListsState extends State<Lists> {
+  late StreamSubscription streamSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+
+    streamSubscription = Data.firestoreListsStream.listen((event) {
+      Data.lists = event;
+      Data.sinkListsStream();
+    });
+  }
+
+  @override
+  void dispose() {
+    streamSubscription.cancel();
+
+    super.dispose();
+  }
 
   Future<void> push(BuildContext context, ShoppingList list) async {
     Data.currentList = list;
@@ -21,14 +47,15 @@ class Lists extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 4,
-          title: Text(Data.currentGroup!.name, style: TextStyle(fontSize: 24)),
+          title: StreamBuilder<void>(
+              stream: Data.groupsStream, builder: (context, snapshot) => Name(Data.currentGroup.name, fontSize: 20)),
           actions: [
             IconButton(
               tooltip: 'Deleted',
               icon: Icon(MdiIcons.trashCan),
               onPressed: () => showDialog(
                 context: context,
-                builder: (context) => PopUp(title: 'Deleted'),
+                builder: (context) => PopUp(title: Text('Deleted')),
               ),
             ),
           ],
@@ -41,14 +68,13 @@ class Lists extends StatelessWidget {
                 elevation: 4,
                 margin: EdgeInsets.all(24),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                child: StreamBuilder<List<ShoppingList>>(
-                    stream: Data.getLists(),
+                child: StreamBuilder<void>(
+                    stream: Data.listsStream,
                     builder: (context, snapshot) {
-                      if (!snapshot.hasData) return SpinKitChasingDots(color: Colors.teal);
-                      List<ShoppingList> lists = snapshot.data!;
-                      Log.print(lists);
+                      if (snapshot.connectionState != ConnectionState.active)
+                        return SpinKitChasingDots(color: Colors.teal);
 
-                      return lists.isEmpty
+                      return Data.lists.isEmpty
                           ? Center(
                               child: Text(
                                 'There are no shopping lists in this group\nCreate one',
@@ -59,9 +85,9 @@ class Lists extends StatelessWidget {
                           : ListView.builder(
                               padding: EdgeInsets.all(24),
                               physics: BouncingScrollPhysics(),
-                              itemCount: lists.length,
+                              itemCount: Data.lists.length,
                               itemBuilder: (context, index) {
-                                ShoppingList list = lists.elementAt(index);
+                                ShoppingList list = Data.lists.elementAt(index);
                                 return Card(
                                   elevation: 4,
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
@@ -74,7 +100,7 @@ class Lists extends StatelessWidget {
                                       icon: Icon(MdiIcons.dotsHorizontal),
                                       onPressed: () => showDialog(
                                         context: context,
-                                        builder: (context) => PopUp(title: list.name),
+                                        builder: (context) => PopUp(title: Name(list.name)),
                                       ),
                                     ),
                                     onTap: () => push(context, list),
@@ -105,6 +131,8 @@ class Lists extends StatelessWidget {
   }
 }
 
+// ----------------------------------------------------------------------------------------------------
+
 class CreateList extends StatelessWidget {
   CreateList({Key? key}) : super(key: key);
 
@@ -112,59 +140,53 @@ class CreateList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool processing = false;
+
     return PopUp(
-      title: 'Create List',
+      title: Text('Create List'),
       content: Form(
         key: form,
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        child: Builder(
-          builder: (context) {
-            bool processing = false;
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextFormField(
+              autofocus: true,
+              maxLength: 10,
+              keyboardType: TextInputType.name,
+              validator: (value) => value?.trim().isEmpty ?? true ? 'Invalid list name' : null,
+              decoration: InputDecoration(labelText: 'List name'),
+              onSaved: (value) async {
+                if (processing || !form.currentState!.validate()) return;
+                processing = true;
 
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFormField(
-                  autofocus: true,
-                  maxLength: 20,
-                  keyboardType: TextInputType.name,
-                  validator: (value) => value?.trim().isEmpty ?? true ? 'Invalid list name' : null,
-                  decoration: InputDecoration(labelText: 'List name'),
-                  onSaved: (value) async {
-                    if (processing || !form.currentState!.validate()) return;
-                    processing = true;
-
-                    await Data.createList(value!);
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('List created')));
-                    Navigator.pop(context);
-                  },
-                  onEditingComplete: () => form.currentState!.save(),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    ElevatedButton(
-                      child: Text('Cancel', textAlign: TextAlign.center),
-                      style: ElevatedButton.styleFrom(elevation: 4),
-                      onPressed: () {
-                        if (processing) return;
-                        processing = true;
-
-                        Navigator.pop(context);
-                      },
-                    ),
-                    ElevatedButton(
-                      child: Text('Create', textAlign: TextAlign.center),
-                      style: ElevatedButton.styleFrom(elevation: 4),
-                      onPressed: () => form.currentState!.save(),
-                    ),
-                  ],
-                ),
-              ],
-            );
-          },
+                await Data.createList(value!);
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('List created')));
+                Navigator.pop(context);
+              },
+              onEditingComplete: () => form.currentState!.save(),
+            ),
+            Divider(),
+          ],
         ),
       ),
+      actions: [
+        ElevatedButton(
+          child: Text('Cancel', textAlign: TextAlign.center),
+          style: ElevatedButton.styleFrom(elevation: 4),
+          onPressed: () {
+            if (processing) return;
+            processing = true;
+
+            Navigator.pop(context);
+          },
+        ),
+        ElevatedButton(
+          child: Text('Create', textAlign: TextAlign.center),
+          style: ElevatedButton.styleFrom(elevation: 4),
+          onPressed: () => form.currentState!.save(),
+        ),
+      ],
     );
   }
 }
