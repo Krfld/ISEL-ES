@@ -88,7 +88,7 @@ class Name extends StatelessWidget {
   final Alignment alignment;
   final double? fontSize;
 
-  const Name(this.text, {this.alignment = Alignment.center, this.fontSize, Key? key}) : super(key: key);
+  const Name(this.text, {this.alignment = Alignment.centerLeft, this.fontSize, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

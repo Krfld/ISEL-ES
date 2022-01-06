@@ -19,7 +19,7 @@ Map product = {
   'name': String,
   'brand': String, //?
   'store': String, //?
-  'info': String, //?
+  'details': String, //?
   'amount': int, //?
   'tag': int, // 0 - None | 1 - Important | 2 - Discount
   'added': {'user': String, 'timestamp': Timestamp},

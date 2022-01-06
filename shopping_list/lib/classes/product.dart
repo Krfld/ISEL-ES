@@ -6,7 +6,7 @@ class Product implements Comparable<Product> {
   final String name;
   final String? brand;
   final String? store;
-  final String? info;
+  final String? details;
   final int? amount;
   final int tag; // 0 - None | 1 - Important | 2 - Discount
   final Signature added;
@@ -18,7 +18,7 @@ class Product implements Comparable<Product> {
     required this.name,
     required this.brand,
     required this.store,
-    required this.info,
+    required this.details,
     required this.amount,
     required this.tag,
     required this.added,
@@ -36,7 +36,7 @@ class Product implements Comparable<Product> {
       added: productData['added'],
       brand: productData['brand'],
       store: productData['store'],
-      info: productData['info'],
+      details: productData['details'],
       amount: productData['amount'],
       tag: productData['tag'],
       bought: bought != null ? Signature.fromMap(bought) : null,
@@ -48,7 +48,7 @@ class Product implements Comparable<Product> {
         'name': name,
         'brand': brand,
         'store': store,
-        'info': info,
+        'details': details,
         'amount': amount,
         'tag': tag,
         'added': added.toMap(),
