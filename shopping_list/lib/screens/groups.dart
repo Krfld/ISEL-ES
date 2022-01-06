@@ -108,7 +108,7 @@ class _GroupsState extends State<Groups> {
                                   trailing: IconButton(
                                     icon: Icon(MdiIcons.dotsHorizontal),
                                     onPressed: () => showDialog(
-                                        context: context, builder: (context) => GroupSettings(groupId: group.id)),
+                                        context: context, builder: (context) => GroupSettings(groupId: group.id!)),
                                   ),
                                   onTap: () => push(context, group),
                                 ),

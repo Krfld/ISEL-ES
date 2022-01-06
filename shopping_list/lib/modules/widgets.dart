@@ -95,7 +95,7 @@ class Name extends StatelessWidget {
     return FittedBox(
       fit: BoxFit.scaleDown,
       alignment: alignment,
-      child: Text(text, style: TextStyle(fontSize: fontSize), textAlign: TextAlign.center),
+      child: Text(text, style: TextStyle(fontSize: fontSize)), //, textAlign: TextAlign.center
     );
   }
 }

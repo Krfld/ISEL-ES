@@ -1,21 +1,22 @@
 class Group implements Comparable<Group> {
-  final String id;
-  final String name;
-  final List users;
+  final String? _id;
+  String? get id => _id;
 
-  Group({
-    required this.id,
-    required this.name,
-    required this.users,
-  });
+  final String _name;
+  String get name => _name;
+
+  final List _users;
+  List get users => _users;
+
+  Group(this._id, this._name, this._users);
 
   Group.fromMap(String groupId, Map groupData)
-      : id = groupId,
-        name = groupData['name'],
-        users = groupData['users'];
+      : _id = groupId,
+        _name = groupData['name'],
+        _users = groupData['users'];
 
-  Map toMap() => {'name': name, 'users': users};
+  Map toMap() => {'name': _name, 'users': _users};
 
   @override
-  int compareTo(other) => name.compareTo(other.name);
+  int compareTo(other) => _name.compareTo(other._name);
 }

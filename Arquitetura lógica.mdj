@@ -3088,7 +3088,8 @@
 									"_parent": {
 										"$ref": "AAAAAAF+LHs6iEPEBfg="
 									},
-									"name": "Role5"
+									"name": "Role5",
+									"type": ""
 								}
 							]
 						}
@@ -4096,9 +4097,9 @@
 												"$ref": "AAAAAAF+LIThBErWuao="
 											},
 											"font": "Arial;13;0",
-											"left": 239,
+											"left": 238,
 											"top": 331,
-											"width": 5.05908203125,
+											"width": 6.5,
 											"height": 13,
 											"alpha": -0.5235987755982988,
 											"distance": 25,
@@ -4369,9 +4370,9 @@
 												"$ref": "AAAAAAF+LIThBErWuao="
 											},
 											"font": "Arial;13;0",
-											"left": 492,
+											"left": 491,
 											"top": 273,
-											"width": 5.05908203125,
+											"width": 6.5,
 											"height": 13,
 											"alpha": -0.5235987755982988,
 											"distance": 25,
@@ -4536,7 +4537,8 @@
 									"_parent": {
 										"$ref": "AAAAAAF+LIDEQEcaF2c="
 									},
-									"name": "id"
+									"name": "id",
+									"type": ""
 								},
 								{
 									"_type": "UMLAttribute",
@@ -4544,7 +4546,8 @@
 									"_parent": {
 										"$ref": "AAAAAAF+LIDEQEcaF2c="
 									},
-									"name": "nome"
+									"name": "nome",
+									"type": ""
 								},
 								{
 									"_type": "UMLAttribute",
@@ -4552,7 +4555,8 @@
 									"_parent": {
 										"$ref": "AAAAAAF+LIDEQEcaF2c="
 									},
-									"name": "utilizadores"
+									"name": "utilizadores",
+									"type": ""
 								}
 							]
 						},
@@ -4603,7 +4607,8 @@
 									"_parent": {
 										"$ref": "AAAAAAF+LIDWKEdEAok="
 									},
-									"name": "id"
+									"name": "id",
+									"type": ""
 								},
 								{
 									"_type": "UMLAttribute",
@@ -4611,7 +4616,8 @@
 									"_parent": {
 										"$ref": "AAAAAAF+LIDWKEdEAok="
 									},
-									"name": "nome"
+									"name": "nome",
+									"type": ""
 								},
 								{
 									"_type": "UMLAttribute",
@@ -4619,7 +4625,8 @@
 									"_parent": {
 										"$ref": "AAAAAAF+LIDWKEdEAok="
 									},
-									"name": "apagada"
+									"name": "apagada",
+									"type": ""
 								}
 							]
 						},
@@ -4637,7 +4644,8 @@
 									"_parent": {
 										"$ref": "AAAAAAF+LIDtp0du3QQ="
 									},
-									"name": "id"
+									"name": "id",
+									"type": ""
 								},
 								{
 									"_type": "UMLAttribute",
@@ -4645,7 +4653,8 @@
 									"_parent": {
 										"$ref": "AAAAAAF+LIDtp0du3QQ="
 									},
-									"name": "nome"
+									"name": "nome",
+									"type": ""
 								},
 								{
 									"_type": "UMLAttribute",
@@ -4653,7 +4662,8 @@
 									"_parent": {
 										"$ref": "AAAAAAF+LIDtp0du3QQ="
 									},
-									"name": "marca"
+									"name": "marca",
+									"type": ""
 								},
 								{
 									"_type": "UMLAttribute",
@@ -4661,7 +4671,8 @@
 									"_parent": {
 										"$ref": "AAAAAAF+LIDtp0du3QQ="
 									},
-									"name": "loja"
+									"name": "loja",
+									"type": ""
 								},
 								{
 									"_type": "UMLAttribute",
@@ -4669,7 +4680,8 @@
 									"_parent": {
 										"$ref": "AAAAAAF+LIDtp0du3QQ="
 									},
-									"name": "detalhes"
+									"name": "detalhes",
+									"type": ""
 								},
 								{
 									"_type": "UMLAttribute",
@@ -4677,7 +4689,8 @@
 									"_parent": {
 										"$ref": "AAAAAAF+LIDtp0du3QQ="
 									},
-									"name": "quantidade"
+									"name": "quantidade",
+									"type": ""
 								},
 								{
 									"_type": "UMLAttribute",
@@ -4685,7 +4698,8 @@
 									"_parent": {
 										"$ref": "AAAAAAF+LIDtp0du3QQ="
 									},
-									"name": "etiqueta"
+									"name": "etiqueta",
+									"type": ""
 								},
 								{
 									"_type": "UMLAttribute",
@@ -4693,7 +4707,8 @@
 									"_parent": {
 										"$ref": "AAAAAAF+LIDtp0du3QQ="
 									},
-									"name": "adicionado"
+									"name": "adicionado",
+									"type": ""
 								},
 								{
 									"_type": "UMLAttribute",
@@ -4701,7 +4716,8 @@
 									"_parent": {
 										"$ref": "AAAAAAF+LIDtp0du3QQ="
 									},
-									"name": "comprado"
+									"name": "comprado",
+									"type": ""
 								},
 								{
 									"_type": "UMLAttribute",
@@ -4709,7 +4725,8 @@
 									"_parent": {
 										"$ref": "AAAAAAF+LIDtp0du3QQ="
 									},
-									"name": "removido"
+									"name": "removido",
+									"type": ""
 								}
 							]
 						}
