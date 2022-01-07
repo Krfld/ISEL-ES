@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -58,17 +57,35 @@ class FA {
 }
 
 ///
+/// Database (Using Cloud Firestore)
+///
+
+class DB {
+  static FirebaseFirestore get firestoreInstance => _CF.firestoreInstance;
+
+  static Future<DocumentReference<Map<String, dynamic>>> addDocument(String path, Map<String, dynamic> doc) =>
+      _CF.addDocument(path, doc);
+  static Future<bool> updateDocument(String path, Map<String, dynamic> doc) => _CF.updateDocument(path, doc);
+}
+
+///
 /// Cloud Firestore
 ///
 
-class CF {
-  static FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
+class _CF {
+  static final FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
 
-  static Future<DocumentReference<Map<String, dynamic>>> addDocument(String path, Map<String, dynamic> data) async =>
-      await firestoreInstance.collection(path).add(data);
+  static Future<DocumentReference<Map<String, dynamic>>> addDocument(String path, Map<String, dynamic> doc) async =>
+      await firestoreInstance.collection(path).add(doc);
 
-  static Future<void> updateDocument(String path, Map<String, dynamic> data, {bool merge = false}) async =>
-      await firestoreInstance.doc(path).set(data, SetOptions(merge: merge));
+  static Future<bool> updateDocument(String path, Map<String, dynamic> doc) async {
+    try {
+      await firestoreInstance.doc(path).update(doc);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 
   // static Stream<QuerySnapshot<Map<String, dynamic>>> col(String path) =>
   //     firestore.collection(path).orderBy('name').snapshots();
@@ -80,7 +97,7 @@ class CF {
 /// Realtime Database
 ///
 
-class RD {
+class _RD {
   /// Database reference
   static final DatabaseReference _dbRef = FirebaseDatabase.instance.reference().child('');
 

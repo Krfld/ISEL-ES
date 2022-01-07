@@ -12,7 +12,7 @@ Map group = {
 
 Map list = {
   'name': String,
-  'deleted': {'user': String, 'timestamp': Timestamp}, //?
+  'deleted': signature, //?
 };
 
 Map product = {
@@ -22,10 +22,9 @@ Map product = {
   'details': String, //?
   'amount': int, //?
   'tag': int, // 0 - None | 1 - Important | 2 - Discount
-  'added': {'user': String, 'timestamp': Timestamp},
-  'bought': {'user': String, 'timestamp': Timestamp}, //?
-  'removed': {'user': String, 'timestamp': Timestamp}, //?
+  'added': signature,
+  'bought': signature, //?
+  'removed': signature, //?
 };
 
-// LDXZLBplxLHAoqOdy5WX
-// 4u1L78Q0u6MTniQe37nK
+Map signature = {'user': String, 'timestamp': Timestamp};

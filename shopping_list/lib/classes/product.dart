@@ -33,28 +33,39 @@ class Product implements Comparable<Product> {
     return Product(
       id: productId,
       name: productData['name'],
-      added: productData['added'],
       brand: productData['brand'],
       store: productData['store'],
       details: productData['details'],
       amount: productData['amount'],
       tag: productData['tag'],
+      added: Signature.fromMap(productData['added']),
       bought: bought != null ? Signature.fromMap(bought) : null,
       removed: removed != null ? Signature.fromMap(removed) : null,
     );
   }
 
-  Map toMap() => {
-        'name': name,
-        'brand': brand,
-        'store': store,
-        'details': details,
-        'amount': amount,
-        'tag': tag,
-        'added': added.toMap(),
-        'bought': bought?.toMap(),
-        'removed': removed?.toMap(),
-      };
+  Map toMap() {
+    Map product = {
+      'name': name,
+      //'brand': brand,
+      //'store': store,
+      //'details': details,
+      //'amount': amount,
+      'tag': tag,
+      'added': added.toMap(),
+      //'bought': bought?.toMap(),
+      //'removed': removed?.toMap(),
+    };
+
+    if (brand != null) product['brand'] = brand;
+    if (store != null) product['store'] = store;
+    if (details != null) product['details'] = details;
+    if (amount != null) product['amount'] = amount;
+    if (bought != null) product['bought'] = bought!.toMap();
+    if (removed != null) product['removed'] = removed!.toMap();
+
+    return product;
+  }
 
   @override
   int compareTo(other) => added.compareTo(other.added); //TODO Check if comparison matches (recent first)

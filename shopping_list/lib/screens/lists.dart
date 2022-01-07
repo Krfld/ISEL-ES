@@ -40,7 +40,7 @@ class _ListsState extends State<Lists> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Data.currentGroup = null;
+        GroupsLogic.currentGroup = null;
         return true;
       },
       child: Scaffold(
@@ -48,7 +48,8 @@ class _ListsState extends State<Lists> {
         appBar: AppBar(
           elevation: 4,
           title: StreamBuilder<void>(
-              stream: Data.groupsStream, builder: (context, snapshot) => Name(Data.currentGroup.name, fontSize: 20)),
+              stream: GroupsLogic.groupsStream,
+              builder: (context, snapshot) => Name(GroupsLogic.currentGroup.name, fontSize: 20)),
           actions: [
             IconButton(
               tooltip: 'Deleted',

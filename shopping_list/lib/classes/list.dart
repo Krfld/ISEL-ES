@@ -22,7 +22,11 @@ class ShoppingList implements Comparable<ShoppingList> {
     );
   }
 
-  Map toMap() => {'name': name, 'deleted': deleted?.toMap()};
+  Map toMap() {
+    Map shoppingList = {'name': name};
+    if (deleted != null) shoppingList['deleted'] = deleted!.toMap();
+    return shoppingList;
+  }
 
   @override
   int compareTo(other) => name.compareTo(other.name);
