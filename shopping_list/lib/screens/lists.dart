@@ -18,9 +18,9 @@ class _ListsState extends State<Lists> {
   void initState() {
     super.initState();
 
-    streamSubscription = Data.firestoreListsStream.listen((event) {
-      Data.lists = event;
-      Data.sinkListsStream();
+    streamSubscription = ShoppingListsModel.firestoreListsStream.listen((event) {
+      ShoppingListsModel.lists = event;
+      ShoppingListsModel.sinkListsStream();
     });
   }
 
@@ -32,7 +32,7 @@ class _ListsState extends State<Lists> {
   }
 
   Future<void> push(BuildContext context, ShoppingList list) async {
-    Data.currentList = list;
+    ShoppingListsModel.currentList = list;
     // await Navigator.pushNamed(context, 'Products');
   }
 
@@ -40,7 +40,7 @@ class _ListsState extends State<Lists> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        GroupsLogic.currentGroup = null;
+        GroupsModel.currentGroup = null;
         return true;
       },
       child: Scaffold(
@@ -48,8 +48,8 @@ class _ListsState extends State<Lists> {
         appBar: AppBar(
           elevation: 4,
           title: StreamBuilder<void>(
-              stream: GroupsLogic.groupsStream,
-              builder: (context, snapshot) => Name(GroupsLogic.currentGroup.name, fontSize: 20)),
+              stream: GroupsModel.groupsStream,
+              builder: (context, snapshot) => Name(GroupsModel.currentGroup.name, fontSize: 20)),
           actions: [
             IconButton(
               tooltip: 'Deleted',
@@ -70,12 +70,12 @@ class _ListsState extends State<Lists> {
                 margin: EdgeInsets.all(24),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                 child: StreamBuilder<void>(
-                    stream: Data.listsStream,
+                    stream: ShoppingListsModel.listsStream,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState != ConnectionState.active)
                         return SpinKitChasingDots(color: Colors.teal);
 
-                      return Data.lists.isEmpty
+                      return ShoppingListsModel.lists.isEmpty
                           ? Center(
                               child: Text(
                                 'There are no shopping lists in this group\nCreate one',
@@ -86,9 +86,9 @@ class _ListsState extends State<Lists> {
                           : ListView.builder(
                               padding: EdgeInsets.all(24),
                               physics: BouncingScrollPhysics(),
-                              itemCount: Data.lists.length,
+                              itemCount: ShoppingListsModel.lists.length,
                               itemBuilder: (context, index) {
-                                ShoppingList list = Data.lists.elementAt(index);
+                                ShoppingList list = ShoppingListsModel.lists.elementAt(index);
                                 return Card(
                                   elevation: 4,
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
@@ -161,7 +161,7 @@ class CreateList extends StatelessWidget {
                 if (processing || !form.currentState!.validate()) return;
                 processing = true;
 
-                await Data.createList(value!);
+                await ShoppingListsModel.createList(value!);
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('List created')));
                 Navigator.pop(context);
               },

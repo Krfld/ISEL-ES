@@ -9,7 +9,7 @@ class Products extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Data.currentList = null;
+        ShoppingListsModel.currentList = null;
         return true;
       },
       child: Scaffold(

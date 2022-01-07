@@ -19,9 +19,9 @@ class _GroupsState extends State<Groups> {
   void initState() {
     super.initState();
 
-    streamSubscription = GroupsLogic.firestoreGroupsStream.listen((event) {
-      GroupsLogic.groups = event;
-      GroupsLogic.sinkGroupsStream();
+    streamSubscription = GroupsModel.firestoreGroupsStream.listen((event) {
+      GroupsModel.groups = event;
+      GroupsModel.sinkGroupsStream();
     });
   }
 
@@ -33,7 +33,7 @@ class _GroupsState extends State<Groups> {
   }
 
   Future<void> push(BuildContext context, Group group) async {
-    GroupsLogic.currentGroup = group;
+    GroupsModel.currentGroup = group;
     await Navigator.pushNamed(context, 'Lists');
   }
 
@@ -79,12 +79,12 @@ class _GroupsState extends State<Groups> {
                 margin: EdgeInsets.all(24),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                 child: StreamBuilder<void>(
-                  stream: GroupsLogic.groupsStream,
+                  stream: GroupsModel.groupsStream,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState != ConnectionState.active)
                       return SpinKitChasingDots(color: Colors.teal);
 
-                    return GroupsLogic.groups.isEmpty
+                    return GroupsModel.groups.isEmpty
                         ? Center(
                             child: Text(
                               'You\'re not in any shopping list group\nCreate or join one',
@@ -95,9 +95,9 @@ class _GroupsState extends State<Groups> {
                         : ListView.builder(
                             padding: EdgeInsets.all(24),
                             physics: BouncingScrollPhysics(),
-                            itemCount: GroupsLogic.groups.length,
+                            itemCount: GroupsModel.groups.length,
                             itemBuilder: (context, index) {
-                              Group group = GroupsLogic.groups.elementAt(index);
+                              Group group = GroupsModel.groups.elementAt(index);
                               return Card(
                                 elevation: 4,
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
@@ -108,7 +108,7 @@ class _GroupsState extends State<Groups> {
                                   trailing: IconButton(
                                     icon: Icon(MdiIcons.dotsHorizontal),
                                     onPressed: () => showDialog(
-                                        context: context, builder: (context) => GroupSettings(groupId: group.id!)),
+                                        context: context, builder: (context) => GroupSettings(groupId: group.id)),
                                   ),
                                   onTap: () => push(context, group),
                                 ),
@@ -162,8 +162,8 @@ class GroupSettings extends StatelessWidget {
 
     return PopUp(
       title: StreamBuilder<void>(
-        stream: GroupsLogic.groupsStream,
-        builder: (context, snapshot) => Name('${GroupsLogic.getGroup(groupId).name}\nSettings'),
+        stream: GroupsModel.groupsStream,
+        builder: (context, snapshot) => Name('${GroupsModel.getGroup(groupId).name}\nSettings'),
       ),
       content: Form(
         key: form,
@@ -172,7 +172,7 @@ class GroupSettings extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             TextFormField(
-              initialValue: GroupsLogic.getGroup(groupId).name,
+              initialValue: GroupsModel.getGroup(groupId).name,
               maxLength: 20,
               keyboardType: TextInputType.name,
               validator: (value) => value?.trim().isEmpty ?? true ? 'Invalid group name' : null,
@@ -181,7 +181,7 @@ class GroupSettings extends StatelessWidget {
                 if (processing || !form.currentState!.validate()) return;
                 processing = true;
 
-                if (value != GroupsLogic.getGroup(groupId).name && await GroupsLogic.updateGroup(groupId, value!))
+                if (value != GroupsModel.getGroup(groupId).name && await GroupsModel.updateGroup(groupId, value!))
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Group edited')));
 
                 Navigator.pop(context);
@@ -246,7 +246,7 @@ class CreateGroup extends StatelessWidget {
                 if (processing || !form.currentState!.validate()) return;
                 processing = true;
 
-                await GroupsLogic.createGroup(value!);
+                await GroupsModel.createGroup(value!);
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Group created')));
                 Navigator.pop(context);
               },
@@ -302,7 +302,7 @@ class JoinGroup extends StatelessWidget {
                 if (processing || !form.currentState!.validate()) return;
                 processing = true;
 
-                if (!await GroupsLogic.joinGroup(value!))
+                if (!await GroupsModel.joinGroup(value!))
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Group doesn\'t exist')));
                 else
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Group joined')));
