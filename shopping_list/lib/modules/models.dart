@@ -20,23 +20,23 @@ class GroupsModel {
   static Stream<void> get groupsStream => _groupsStreamController.stream;
 
   /// Database
-  static Stream<List<Group>> get firestoreGroupsStream => DB.firestoreInstance
+  static Stream<List<Group>> get firestoreGroupsStream => CF.firestoreInstance
       .collection('groups')
       .where('users', arrayContains: FA.user.id)
       .snapshots()
       .map((snapshot) => snapshot.docs.map((doc) => Group.fromMap(doc.id, doc.data())).toList()..sort());
 
-  static Future<void> createGroup(String groupName) async => await DB.addDocument('groups', {
+  static Future<void> createGroup(String groupName) async => await CF.addDocument('groups', {
         'name': groupName,
         'users': [FA.user.id],
       });
 
-  static Future<bool> joinGroup(String groupId) async => await DB.updateDocument('groups/$groupId', {
+  static Future<bool> joinGroup(String groupId) async => await CF.updateDocument('groups/$groupId', {
         'users': FieldValue.arrayUnion([FA.user.id]),
       });
 
   static Future<bool> updateGroup(String groupId, String groupName) async =>
-      await DB.updateDocument('groups/$groupId', {
+      await CF.updateDocument('groups/$groupId', {
         'name': groupName,
       });
 }
@@ -56,7 +56,7 @@ class ShoppingListsModel {
   static Stream<void> get listsStream => _listsStreamController.stream;
 
   /// Database
-  static Stream<List<ShoppingList>> get firestoreListsStream => DB.firestoreInstance
+  static Stream<List<ShoppingList>> get firestoreListsStream => CF.firestoreInstance
       .collection('groups')
       .doc(GroupsModel.currentGroup.id)
       .collection('lists')
@@ -64,7 +64,7 @@ class ShoppingListsModel {
       .map((snapshot) => snapshot.docs.map((doc) => ShoppingList.fromMap(doc.id, doc.data())).toList()..sort());
 
   static Future<void> createList(String listName) async =>
-      await DB.addDocument('groups/${GroupsModel.currentGroup.id}/lists', {
+      await CF.addDocument('groups/${GroupsModel.currentGroup.id}/lists', {
         'name': listName,
       });
 }
@@ -80,7 +80,7 @@ class ProductsModel {
   static Stream<void> get productsStream => _productsStreamController.stream;
 
   /// Database
-  static Stream<List<Product>> get firestoreProductsStream => DB.firestoreInstance
+  static Stream<List<Product>> get firestoreProductsStream => CF.firestoreInstance
       .collection('groups')
       .doc(GroupsModel.currentGroup.id)
       .collection('lists')

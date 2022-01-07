@@ -33,20 +33,26 @@ class FA {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
   static Future<bool> signInAnonymously() async {
+    Map<String, dynamic> guest = {'isGuest': true};
+
     try {
       String userId = (await _auth.signInAnonymously()).user!.uid;
 
-      await FirebaseFirestore.instance.collection('users').doc(userId).get().then((doc) async {
-        if (!doc.exists) {
-          await FirebaseFirestore.instance
-              .collection('users')
-              .doc(userId)
-              .set({'isGuest': true}, SetOptions(merge: true));
+      _user = AppUser.fromMap(userId, guest);
 
-          _user = AppUser.fromMap(userId, {'isGuest': true});
-        } else
-          _user = AppUser.fromMap(userId, doc.data()!);
-      });
+      await CF.setDocument('users/$userId', guest, merge: true);
+
+      // await FirebaseFirestore.instance.collection('users').doc(userId).get().then((doc) async {
+      //   if (!doc.exists) {
+      //     await FirebaseFirestore.instance
+      //         .collection('users')
+      //         .doc(userId)
+      //         .set({'isGuest': true}, SetOptions(merge: true));
+
+      //     _user = AppUser.fromMap(userId, {'isGuest': true});
+      //   } else
+      //     _user = AppUser.fromMap(userId, doc.data()!);
+      // });
 
       return true;
     } catch (error) {
@@ -56,31 +62,22 @@ class FA {
   }
 }
 
-///
-/// Database (Using Cloud Firestore)
-///
-
-class DB {
-  static FirebaseFirestore get firestoreInstance => _CF.firestoreInstance;
-
-  static Future<DocumentReference<Map<String, dynamic>>> addDocument(String path, Map<String, dynamic> doc) =>
-      _CF.addDocument(path, doc);
-  static Future<bool> updateDocument(String path, Map<String, dynamic> doc) => _CF.updateDocument(path, doc);
-}
-
-///
 /// Cloud Firestore
 ///
 
-class _CF {
-  static final FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
+class CF {
+  static final FirebaseFirestore _firestoreInstance = FirebaseFirestore.instance;
+  static FirebaseFirestore get firestoreInstance => _firestoreInstance;
 
   static Future<DocumentReference<Map<String, dynamic>>> addDocument(String path, Map<String, dynamic> doc) async =>
-      await firestoreInstance.collection(path).add(doc);
+      await _firestoreInstance.collection(path).add(doc);
+
+  static Future<void> setDocument(String path, Map<String, dynamic> doc, {bool merge = false}) async =>
+      await _firestoreInstance.doc(path).set(doc, SetOptions(merge: merge));
 
   static Future<bool> updateDocument(String path, Map<String, dynamic> doc) async {
     try {
-      await firestoreInstance.doc(path).update(doc);
+      await _firestoreInstance.doc(path).update(doc);
       return true;
     } catch (e) {
       return false;

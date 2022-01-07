@@ -70,46 +70,47 @@ class _ListsState extends State<Lists> {
                 margin: EdgeInsets.all(24),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                 child: StreamBuilder<void>(
-                    stream: ShoppingListsModel.listsStream,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState != ConnectionState.active)
-                        return SpinKitChasingDots(color: Colors.teal);
+                  stream: ShoppingListsModel.listsStream,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState != ConnectionState.active)
+                      return SpinKitChasingDots(color: Colors.teal);
 
-                      return ShoppingListsModel.lists.isEmpty
-                          ? Center(
-                              child: Text(
-                                'There are no shopping lists in this group\nCreate one',
-                                style: TextStyle(fontSize: 14, color: Colors.black38),
-                                textAlign: TextAlign.center,
-                              ),
-                            )
-                          : ListView.builder(
-                              padding: EdgeInsets.all(24),
-                              physics: BouncingScrollPhysics(),
-                              itemCount: ShoppingListsModel.lists.length,
-                              itemBuilder: (context, index) {
-                                ShoppingList list = ShoppingListsModel.lists.elementAt(index);
-                                return Card(
-                                  elevation: 4,
+                    return ShoppingListsModel.lists.isEmpty
+                        ? Center(
+                            child: Text(
+                              'There are no shopping lists in this group\nCreate one',
+                              style: TextStyle(fontSize: 14, color: Colors.black38),
+                              textAlign: TextAlign.center,
+                            ),
+                          )
+                        : ListView.builder(
+                            padding: EdgeInsets.all(24),
+                            physics: BouncingScrollPhysics(),
+                            itemCount: ShoppingListsModel.lists.length,
+                            itemBuilder: (context, index) {
+                              ShoppingList list = ShoppingListsModel.lists.elementAt(index);
+                              return Card(
+                                elevation: 4,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+                                child: ListTile(
+                                  contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                                  child: ListTile(
-                                    contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                                    title: Text(list.name, style: TextStyle(fontSize: 20)),
-                                    // subtitle: Text(list.id, style: TextStyle(fontSize: 16)),
-                                    trailing: IconButton(
-                                      icon: Icon(MdiIcons.dotsHorizontal),
-                                      onPressed: () => showDialog(
-                                        context: context,
-                                        builder: (context) => PopUp(title: Name(list.name)),
-                                      ),
+                                  title: Text(list.name, style: TextStyle(fontSize: 20)),
+                                  // subtitle: Text(list.id, style: TextStyle(fontSize: 16)),
+                                  trailing: IconButton(
+                                    icon: Icon(MdiIcons.dotsHorizontal),
+                                    onPressed: () => showDialog(
+                                      context: context,
+                                      builder: (context) => PopUp(title: Name(list.name)),
                                     ),
-                                    onTap: () => push(context, list),
                                   ),
-                                );
-                              },
-                            );
-                    }),
+                                  onTap: () => push(context, list),
+                                ),
+                              );
+                            },
+                          );
+                  },
+                ),
               ),
             ),
             Expanded(
@@ -120,7 +121,10 @@ class _ListsState extends State<Lists> {
                   child: Button(
                     'Create\nList',
                     icon: MdiIcons.playlistPlus,
-                    onPressed: () => showDialog(context: context, builder: (context) => CreateList()),
+                    onPressed: () => showDialog(
+                      context: context,
+                      builder: (context) => CreateList(),
+                    ),
                   ),
                 ),
               ),
@@ -152,7 +156,6 @@ class CreateList extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             TextFormField(
-              autofocus: true,
               maxLength: 10,
               keyboardType: TextInputType.name,
               validator: (value) => value?.trim().isEmpty ?? true ? 'Invalid list name' : null,
@@ -167,7 +170,6 @@ class CreateList extends StatelessWidget {
               },
               onEditingComplete: () => form.currentState!.save(),
             ),
-            Divider(),
           ],
         ),
       ),

@@ -108,7 +108,9 @@ class _GroupsState extends State<Groups> {
                                   trailing: IconButton(
                                     icon: Icon(MdiIcons.dotsHorizontal),
                                     onPressed: () => showDialog(
-                                        context: context, builder: (context) => GroupSettings(groupId: group.id)),
+                                      context: context,
+                                      builder: (context) => GroupSettings(groupId: group.id),
+                                    ),
                                   ),
                                   onTap: () => push(context, group),
                                 ),
@@ -130,12 +132,18 @@ class _GroupsState extends State<Groups> {
                     Button(
                       'Create\nGroup',
                       icon: MdiIcons.accountMultiplePlus,
-                      onPressed: () => showDialog(context: context, builder: (context) => CreateGroup()),
+                      onPressed: () => showDialog(
+                        context: context,
+                        builder: (context) => CreateGroup(),
+                      ),
                     ),
                     Button(
                       'Join\nGroup',
                       icon: MdiIcons.accountGroup,
-                      onPressed: () => showDialog(context: context, builder: (context) => JoinGroup()),
+                      onPressed: () => showDialog(
+                        context: context,
+                        builder: (context) => JoinGroup(),
+                      ),
                     ),
                   ],
                 ),
@@ -163,7 +171,7 @@ class GroupSettings extends StatelessWidget {
     return PopUp(
       title: StreamBuilder<void>(
         stream: GroupsModel.groupsStream,
-        builder: (context, snapshot) => Name('${GroupsModel.getGroup(groupId).name}\nSettings'),
+        builder: (context, snapshot) => Name('Settings: ${GroupsModel.getGroup(groupId).name}'),
       ),
       content: Form(
         key: form,
@@ -188,7 +196,6 @@ class GroupSettings extends StatelessWidget {
               },
               onEditingComplete: () => form.currentState!.save(),
             ),
-            Divider(),
           ],
         ),
       ),
@@ -252,7 +259,6 @@ class CreateGroup extends StatelessWidget {
               },
               onEditingComplete: () => form.currentState!.save(),
             ),
-            Divider(),
           ],
         ),
       ),
@@ -311,7 +317,6 @@ class JoinGroup extends StatelessWidget {
               },
               onEditingComplete: () => form.currentState!.save(),
             ),
-            Divider(),
           ],
         ),
       ),
