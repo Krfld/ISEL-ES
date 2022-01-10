@@ -9,10 +9,11 @@ class Signature implements Comparable<Signature> {
     required this.timestamp,
   });
 
-  Map toMap() => {'name': user, 'timestamp': timestamp};
   Signature.fromMap(Map signature)
       : user = signature['user'],
         timestamp = signature['timestamp'];
+
+  Map toMap() => {'user': user, 'timestamp': timestamp};
 
   @override
   int compareTo(Signature other) => timestamp.compareTo(other.timestamp);

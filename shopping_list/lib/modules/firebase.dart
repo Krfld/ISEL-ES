@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import './../classes/user.dart';
-import './../modules/tools.dart';
+import '../models/user.dart';
+import '../modules/tools.dart';
 
 ///
 /// Firebase Core
@@ -63,7 +63,6 @@ class FA {
 }
 
 /// Cloud Firestore
-///
 
 class CF {
   static final FirebaseFirestore _firestoreInstance = FirebaseFirestore.instance;

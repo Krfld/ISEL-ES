@@ -4,17 +4,27 @@ export './screens/groups.dart';
 export './screens/lists.dart';
 export './screens/products.dart';
 
+/// Services
+export './services/groups_service.dart';
+export './services/lists_service.dart';
+export './services/products_service.dart';
+
+/// Models
+export './models/user.dart';
+export './models/group.dart';
+export './models/shopping_list.dart';
+export './models/product.dart';
+export './models/signature.dart';
+
+/// Repositories
+export './repositories/groups_repository.dart';
+export './repositories/shopping_lists_repository.dart';
+export './repositories/products_repository.dart';
+
 /// Modules
-export './modules/models.dart';
+// export './modules/firebase.dart';
 export './modules/tools.dart';
 export './modules/widgets.dart';
-
-/// Classes
-export './classes/user.dart';
-export './classes/group.dart';
-export './classes/list.dart';
-export './classes/product.dart';
-export './classes/signature.dart';
 
 /// Packages
 export 'package:flutter_spinkit/flutter_spinkit.dart';
