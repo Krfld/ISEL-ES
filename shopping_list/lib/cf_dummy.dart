@@ -27,4 +27,7 @@ Map product = {
   'removed': signature, //?
 };
 
-Map signature = {'user': String, 'timestamp': Timestamp};
+Map signature = {
+  'user': String,
+  'timestamp': Timestamp,
+};
