@@ -185,6 +185,7 @@ class GroupSettings extends StatelessWidget {
               keyboardType: TextInputType.name,
               validator: (value) => value?.trim().isEmpty ?? true ? 'Invalid group name' : null,
               decoration: InputDecoration(labelText: 'Group name'),
+              onEditingComplete: () => form.currentState!.save(),
               onSaved: (value) async {
                 if (processing || !form.currentState!.validate()) return;
                 processing = true;
@@ -194,7 +195,6 @@ class GroupSettings extends StatelessWidget {
 
                 Navigator.pop(context);
               },
-              onEditingComplete: () => form.currentState!.save(),
             ),
           ],
         ),
@@ -249,6 +249,7 @@ class CreateGroup extends StatelessWidget {
               keyboardType: TextInputType.name,
               validator: (value) => value?.trim().isEmpty ?? true ? 'Invalid group name' : null,
               decoration: InputDecoration(labelText: 'Group name'),
+              onEditingComplete: () => form.currentState!.save(),
               onSaved: (value) async {
                 if (processing || !form.currentState!.validate()) return;
                 processing = true;
@@ -257,7 +258,6 @@ class CreateGroup extends StatelessWidget {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Group created')));
                 Navigator.pop(context);
               },
-              onEditingComplete: () => form.currentState!.save(),
             ),
           ],
         ),
@@ -304,6 +304,7 @@ class JoinGroup extends StatelessWidget {
               inputFormatters: [FilteringTextInputFormatter.deny(RegExp(' '))],
               validator: (value) => value?.trim().isEmpty ?? true ? 'Invalid group ID' : null,
               decoration: InputDecoration(labelText: 'Group ID'),
+              onEditingComplete: () => form.currentState!.save(),
               onSaved: (value) async {
                 if (processing || !form.currentState!.validate()) return;
                 processing = true;
@@ -315,7 +316,6 @@ class JoinGroup extends StatelessWidget {
 
                 Navigator.pop(context);
               },
-              onEditingComplete: () => form.currentState!.save(),
             ),
           ],
         ),
