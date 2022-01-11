@@ -1,9 +1,10 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:async';
 
 import '../imports.dart';
+
+// import '../imports.dart';
 
 class Groups extends StatefulWidget {
   const Groups({Key? key}) : super(key: key);
@@ -190,8 +191,7 @@ class GroupSettings extends StatelessWidget {
                 if (processing || !form.currentState!.validate()) return;
                 processing = true;
 
-                if (value != GroupsService.getGroup(groupId).name &&
-                    await GroupsRepository.updateGroup(groupId, value!))
+                if (value != GroupsService.getGroup(groupId).name && await GroupsService.updateGroup(groupId, value!))
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Group edited')));
 
                 Navigator.pop(context);
@@ -255,7 +255,7 @@ class CreateGroup extends StatelessWidget {
                 if (processing || !form.currentState!.validate()) return;
                 processing = true;
 
-                await GroupsRepository.createGroup(value!);
+                await GroupsService.createGroup(value!);
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Group created')));
                 Navigator.pop(context);
               },
@@ -310,7 +310,7 @@ class JoinGroup extends StatelessWidget {
                 if (processing || !form.currentState!.validate()) return;
                 processing = true;
 
-                if (!await GroupsRepository.joinGroup(value!))
+                if (!await GroupsService.joinGroup(value!))
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Group doesn\'t exist')));
                 else
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Group joined')));

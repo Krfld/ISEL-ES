@@ -2,14 +2,16 @@ import 'dart:async';
 import 'package:shopping_list/repositories/products_repository.dart';
 
 import '../models/product.dart';
-import '../imports.dart';
 
 class ProductsModel {
   static List<Product> products = [];
 
   static Product getProduct(String productId) => products.singleWhere((product) => product.id == productId);
 
+  /// Repository
+
   /// Streams
+
   static Stream<List<Product>> get firestoreProductsStream => ProductsRepository.firestoreProductsStream
       .map((snapshot) => snapshot.docs.map((doc) => Product.fromMap(doc.id, doc.data())).toList()..sort());
 

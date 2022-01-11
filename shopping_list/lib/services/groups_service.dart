@@ -3,6 +3,8 @@ import '../models/group.dart';
 import '../repositories/groups_repository.dart';
 
 class GroupsService {
+  static final GroupsRepository _groupsRepository = GroupsRepository();
+
   static List<Group> groups = [];
 
   static String? _currentGroupId;
@@ -11,9 +13,16 @@ class GroupsService {
 
   static Group getGroup(String groupId) => groups.singleWhere((group) => group.id == groupId);
 
+  /// Repository
+
+  static Future<void> createGroup(String groupName) => _groupsRepository.createGroup(groupName);
+  static Future<bool> joinGroup(String groupId) => _groupsRepository.joinGroup(groupId);
+  static Future<bool> updateGroup(String groupId, String groupName) =>
+      _groupsRepository.updateGroup(groupId, groupName);
+
   /// Streams
 
-  static Stream<List<Group>> get firestoreGroupsStream => GroupsRepository.firestoreGroupsStream
+  static Stream<List<Group>> get firestoreGroupsStream => _groupsRepository.firestoreGroupsStream
       .map((snapshot) => snapshot.docs.map((doc) => Group.fromMap(doc.id, doc.data())).toList()..sort());
 
   static final StreamController<void> _groupsStreamController = StreamController.broadcast();

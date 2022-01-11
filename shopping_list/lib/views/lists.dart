@@ -1,6 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 import '../imports.dart';
 
@@ -164,7 +163,7 @@ class CreateList extends StatelessWidget {
                 if (processing || !form.currentState!.validate()) return;
                 processing = true;
 
-                await ShoppingListsRepository.createList(value!);
+                await ShoppingListsService.createList(value!);
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('List created')));
                 Navigator.pop(context);
               },
