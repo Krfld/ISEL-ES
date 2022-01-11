@@ -1,8 +1,8 @@
-/// Screens
-export './screens/home.dart';
-export './screens/groups.dart';
-export './screens/lists.dart';
-export './screens/products.dart';
+/// Views
+export './views/home.dart';
+export './views/groups.dart';
+export './views/lists.dart';
+export './views/products.dart';
 
 /// Services
 export './services/groups_service.dart';

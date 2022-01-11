@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-/// Loading widget
+/// Loading
 class LoadingScreen extends StatelessWidget {
   const LoadingScreen({Key? key}) : super(key: key);
 
@@ -12,7 +12,7 @@ class LoadingScreen extends StatelessWidget {
   }
 }
 
-/// Button widget
+/// Button
 class Button extends StatelessWidget {
   final String text;
   final IconData icon;
@@ -38,6 +38,7 @@ class Button extends StatelessWidget {
   }
 }
 
+/// PopUp Button
 class PopUpButton extends StatelessWidget {
   final String text;
   final bool warning;
@@ -60,6 +61,7 @@ class PopUpButton extends StatelessWidget {
   }
 }
 
+/// PopUp
 class PopUp extends StatelessWidget {
   final Widget title;
   final Widget? content;
@@ -81,6 +83,7 @@ class PopUp extends StatelessWidget {
   }
 }
 
+/// Name
 class Name extends StatelessWidget {
   final String text;
   final Alignment alignment;
