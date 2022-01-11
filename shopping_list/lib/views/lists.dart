@@ -17,9 +17,9 @@ class _ListsState extends State<Lists> {
   void initState() {
     super.initState();
 
-    streamSubscription = ShoppingListsService.firestoreListsStream.listen((event) {
-      ShoppingListsService.lists = event;
-      ShoppingListsService.sinkListsStream();
+    streamSubscription = ShoppingListsService.listsStream.listen((event) {
+      ShoppingListsService.shoppingLists = event;
+      ShoppingListsService.sinkCustomListsStream();
     });
   }
 
@@ -31,7 +31,7 @@ class _ListsState extends State<Lists> {
   }
 
   Future<void> push(BuildContext context, ShoppingList list) async {
-    ShoppingListsService.currentList = list;
+    ShoppingListsService.currentShoppingList = list;
     // await Navigator.pushNamed(context, 'Products');
   }
 
@@ -47,7 +47,7 @@ class _ListsState extends State<Lists> {
         appBar: AppBar(
           elevation: 4,
           title: StreamBuilder<void>(
-              stream: GroupsService.groupsStream,
+              stream: GroupsService.customGroupsStream,
               builder: (context, snapshot) => Name(GroupsService.currentGroup.name, fontSize: 20)),
           actions: [
             IconButton(
@@ -69,12 +69,12 @@ class _ListsState extends State<Lists> {
                 margin: EdgeInsets.all(24),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                 child: StreamBuilder<void>(
-                  stream: ShoppingListsService.listsStream,
+                  stream: ShoppingListsService.customListsStream,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState != ConnectionState.active)
                       return SpinKitChasingDots(color: Colors.teal);
 
-                    return ShoppingListsService.lists.isEmpty
+                    return ShoppingListsService.shoppingLists.isEmpty
                         ? Center(
                             child: Text(
                               'There are no shopping lists in this group\nCreate one',
@@ -85,9 +85,9 @@ class _ListsState extends State<Lists> {
                         : ListView.builder(
                             padding: EdgeInsets.all(24),
                             physics: BouncingScrollPhysics(),
-                            itemCount: ShoppingListsService.lists.length,
+                            itemCount: ShoppingListsService.shoppingLists.length,
                             itemBuilder: (context, index) {
-                              ShoppingList list = ShoppingListsService.lists.elementAt(index);
+                              ShoppingList list = ShoppingListsService.shoppingLists.elementAt(index);
                               return Card(
                                 elevation: 4,
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),

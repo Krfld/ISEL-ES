@@ -3157,7 +3157,7 @@
 														}
 													],
 													"font": "Arial;13;0",
-													"width": 1793,
+													"width": 1817,
 													"height": 1217,
 													"nameLabel": {
 														"$ref": "AAAAAAF+Rial9q93oKk="
@@ -4435,7 +4435,7 @@
 															"left": 1596,
 															"top": 341,
 															"width": 14,
-															"height": 44
+															"height": 92
 														}
 													],
 													"font": "Arial;13;0",
@@ -4480,7 +4480,7 @@
 															},
 															"font": "Arial;13;0",
 															"left": 1358,
-															"top": 380,
+															"top": 420,
 															"width": 138.74072265625,
 															"height": 13,
 															"alpha": 1.5707963267948966,
@@ -4489,7 +4489,7 @@
 																"$ref": "AAAAAAF+SZq7v6fTOo0="
 															},
 															"edgePosition": 1,
-															"text": "6 : stream de snapshots"
+															"text": "6 : stream dos produtos"
 														},
 														{
 															"_type": "EdgeLabelView",
@@ -4503,7 +4503,7 @@
 															"visible": false,
 															"font": "Arial;13;0",
 															"left": 1427,
-															"top": 395,
+															"top": 435,
 															"height": 13,
 															"alpha": 1.5707963267948966,
 															"distance": 25,
@@ -4524,7 +4524,7 @@
 															"visible": false,
 															"font": "Arial;13;0",
 															"left": 1428,
-															"top": 360,
+															"top": 400,
 															"height": 13,
 															"alpha": -1.5707963267948966,
 															"distance": 10,
@@ -4545,7 +4545,7 @@
 															"visible": false,
 															"font": "Arial;13;0",
 															"left": 1248,
-															"top": 376,
+															"top": 416,
 															"width": 14,
 															"height": 25
 														}
@@ -4557,7 +4557,7 @@
 													"tail": {
 														"$ref": "AAAAAAF+Rj3YCbCE54g="
 													},
-													"points": "1596:376;1261:376",
+													"points": "1596:416;1261:416",
 													"nameLabel": {
 														"$ref": "AAAAAAF+SZq7v6fU23M="
 													},
@@ -4674,117 +4674,6 @@
 												},
 												{
 													"_type": "UMLSeqMessageView",
-													"_id": "AAAAAAF+Sa8lz6m8FKM=",
-													"_parent": {
-														"$ref": "AAAAAAF+Rial9q91TyM="
-													},
-													"model": {
-														"$ref": "AAAAAAF+Sa8lzqm7B24="
-													},
-													"subViews": [
-														{
-															"_type": "EdgeLabelView",
-															"_id": "AAAAAAF+Sa8lz6m97pA=",
-															"_parent": {
-																"$ref": "AAAAAAF+Sa8lz6m8FKM="
-															},
-															"model": {
-																"$ref": "AAAAAAF+Sa8lzqm7B24="
-															},
-															"font": "Arial;13;0",
-															"left": 1189,
-															"top": 400,
-															"width": 223.2724609375,
-															"height": 13,
-															"alpha": 2.7187373116565148,
-															"distance": 21.93171219946131,
-															"hostEdge": {
-																"$ref": "AAAAAAF+Sa8lz6m8FKM="
-															},
-															"edgePosition": 1,
-															"text": "7 : transformar snapshots em produtos"
-														},
-														{
-															"_type": "EdgeLabelView",
-															"_id": "AAAAAAF+Sa8lz6m+Gbw=",
-															"_parent": {
-																"$ref": "AAAAAAF+Sa8lz6m8FKM="
-															},
-															"model": {
-																"$ref": "AAAAAAF+Sa8lzqm7B24="
-															},
-															"visible": false,
-															"font": "Arial;13;0",
-															"left": 1315,
-															"top": 419,
-															"height": 13,
-															"alpha": 1.5707963267948966,
-															"distance": 25,
-															"hostEdge": {
-																"$ref": "AAAAAAF+Sa8lz6m8FKM="
-															},
-															"edgePosition": 1
-														},
-														{
-															"_type": "EdgeLabelView",
-															"_id": "AAAAAAF+Sa8lz6m/ll8=",
-															"_parent": {
-																"$ref": "AAAAAAF+Sa8lz6m8FKM="
-															},
-															"model": {
-																"$ref": "AAAAAAF+Sa8lzqm7B24="
-															},
-															"visible": false,
-															"font": "Arial;13;0",
-															"left": 1281,
-															"top": 420,
-															"height": 13,
-															"alpha": -1.5707963267948966,
-															"distance": 10,
-															"hostEdge": {
-																"$ref": "AAAAAAF+Sa8lz6m8FKM="
-															},
-															"edgePosition": 1
-														},
-														{
-															"_type": "UMLActivationView",
-															"_id": "AAAAAAF+Sa8lz6nA4Ag=",
-															"_parent": {
-																"$ref": "AAAAAAF+Sa8lz6m8FKM="
-															},
-															"model": {
-																"$ref": "AAAAAAF+Sa8lzqm7B24="
-															},
-															"font": "Arial;13;0",
-															"left": 1255,
-															"top": 436,
-															"width": 14,
-															"height": 29
-														}
-													],
-													"font": "Arial;13;0",
-													"head": {
-														"$ref": "AAAAAAF+Rj1c+rBiEvw="
-													},
-													"tail": {
-														"$ref": "AAAAAAF+Rj1c+rBiEvw="
-													},
-													"points": "1261:416;1291:416;1291:436;1268:436",
-													"nameLabel": {
-														"$ref": "AAAAAAF+Sa8lz6m97pA="
-													},
-													"stereotypeLabel": {
-														"$ref": "AAAAAAF+Sa8lz6m+Gbw="
-													},
-													"propertyLabel": {
-														"$ref": "AAAAAAF+Sa8lz6m/ll8="
-													},
-													"activation": {
-														"$ref": "AAAAAAF+Sa8lz6nA4Ag="
-													}
-												},
-												{
-													"_type": "UMLSeqMessageView",
 													"_id": "AAAAAAF+SZs1Mafux2I=",
 													"_parent": {
 														"$ref": "AAAAAAF+Rial9q91TyM="
@@ -4813,7 +4702,7 @@
 																"$ref": "AAAAAAF+SZs1Mafux2I="
 															},
 															"edgePosition": 1,
-															"text": "8 : stream dos produtos"
+															"text": "7 : stream dos produtos"
 														},
 														{
 															"_type": "EdgeLabelView",
@@ -4925,7 +4814,7 @@
 																"$ref": "AAAAAAF+SZuPhqgFmRM="
 															},
 															"edgePosition": 1,
-															"text": "9 : stream dos produtos"
+															"text": "8 : stream dos produtos"
 														},
 														{
 															"_type": "EdgeLabelView",
@@ -5037,7 +4926,7 @@
 																"$ref": "AAAAAAF+SZzWVqge1us="
 															},
 															"edgePosition": 1,
-															"text": "10 : mostrar produtos"
+															"text": "9 : mostrar produtos"
 														},
 														{
 															"_type": "EdgeLabelView",
@@ -5149,7 +5038,7 @@
 																"$ref": "AAAAAAF+SZ8BkKiSZa8="
 															},
 															"edgePosition": 1,
-															"text": "11 : sinaliza produto X"
+															"text": "10 : sinaliza produto X"
 														},
 														{
 															"_type": "EdgeLabelView",
@@ -5287,7 +5176,7 @@
 													},
 													"font": "Arial;13;0",
 													"lineStyle": 1,
-													"points": "1480:464;1552:376"
+													"points": "1480:464;1544:416"
 												},
 												{
 													"_type": "FreelineEdgeView",
@@ -5329,7 +5218,7 @@
 																"$ref": "AAAAAAF+SZ8qPqioMKM="
 															},
 															"edgePosition": 1,
-															"text": "12 : bought(X)"
+															"text": "11 : bought(X)"
 														},
 														{
 															"_type": "EdgeLabelView",
@@ -5386,7 +5275,7 @@
 															"left": 952,
 															"top": 774,
 															"width": 14,
-															"height": 29
+															"height": 35
 														}
 													],
 													"font": "Arial;13;0",
@@ -5440,7 +5329,7 @@
 																"$ref": "AAAAAAF+SZ/P0Ki/w+k="
 															},
 															"edgePosition": 1,
-															"text": "13 : bought(X)"
+															"text": "12 : bought(X)"
 														},
 														{
 															"_type": "EdgeLabelView",
@@ -5551,7 +5440,7 @@
 																"$ref": "AAAAAAF+SaAqi6jVWzY="
 															},
 															"edgePosition": 1,
-															"text": "14 : updateProduct(X)"
+															"text": "13 : updateProduct(X)"
 														},
 														{
 															"_type": "EdgeLabelView",
@@ -5662,7 +5551,7 @@
 																"$ref": "AAAAAAF+SbE2gKoRqzk="
 															},
 															"edgePosition": 1,
-															"text": "15 : botão BACK premido"
+															"text": "14 : botão BACK premido"
 														},
 														{
 															"_type": "EdgeLabelView",
@@ -5719,7 +5608,7 @@
 															"left": 679,
 															"top": 1054,
 															"width": 14,
-															"height": 29
+															"height": 35
 														}
 													],
 													"font": "Arial;13;0",
@@ -5773,7 +5662,7 @@
 																"$ref": "AAAAAAF+SbHYjqpGX78="
 															},
 															"edgePosition": 1,
-															"text": "16 : transita_vista(vistaProdutos)"
+															"text": "15 : transita_vista(vistaProdutos)"
 														},
 														{
 															"_type": "EdgeLabelView",
@@ -5865,7 +5754,7 @@
 													"top": 1024,
 													"width": 185,
 													"height": 41,
-													"text": "A partir deste ponto, o ator está na janela dos produtos"
+													"text": "A partir deste ponto, o ator volta à janela dos produtos"
 												},
 												{
 													"_type": "FreelineEdgeView",
@@ -5958,7 +5847,7 @@
 											"_parent": {
 												"$ref": "AAAAAAF+Rial9q90tto="
 											},
-											"name": "stream de snapshots",
+											"name": "stream dos produtos",
 											"source": {
 												"$ref": "AAAAAAF+Rj3YCbB9y28="
 											},
@@ -5966,20 +5855,6 @@
 												"$ref": "AAAAAAF+Rj1c+bBb3zQ="
 											},
 											"messageSort": "reply"
-										},
-										{
-											"_type": "UMLMessage",
-											"_id": "AAAAAAF+Sa8lzqm7B24=",
-											"_parent": {
-												"$ref": "AAAAAAF+Rial9q90tto="
-											},
-											"name": "transformar snapshots em produtos",
-											"source": {
-												"$ref": "AAAAAAF+Rj1c+bBb3zQ="
-											},
-											"target": {
-												"$ref": "AAAAAAF+Rj1c+bBb3zQ="
-											}
 										},
 										{
 											"_type": "UMLMessage",
@@ -10489,9 +10364,9 @@
 														"$ref": "AAAAAAF+NoH1mrRzOcM="
 													},
 													"font": "Arial;13;0",
-													"left": 69.78271484375,
+													"left": 71.94091796875,
 													"top": 61,
-													"width": 111.474609375,
+													"width": 120.9580078125,
 													"height": 13,
 													"text": "Dinâmica do produto"
 												},
@@ -10504,7 +10379,7 @@
 													"font": "Arial;13;1",
 													"left": 45,
 													"top": 61,
-													"width": 19.78271484375,
+													"width": 21.94091796875,
 													"height": 13,
 													"text": "stm"
 												}
@@ -11795,9 +11670,9 @@
 														"$ref": "AAAAAAF+RNPWAGYq2ew="
 													},
 													"font": "Arial;13;0",
-													"left": 85.78271484375,
+													"left": 87.94091796875,
 													"top": 53,
-													"width": 154.7783203125,
+													"width": 171.51708984375,
 													"height": 13,
 													"text": "Dinâmica da lista de compras"
 												},
@@ -11810,7 +11685,7 @@
 													"font": "Arial;13;1",
 													"left": 61,
 													"top": 53,
-													"width": 19.78271484375,
+													"width": 21.94091796875,
 													"height": 13,
 													"text": "stm"
 												}
@@ -14957,9 +14832,9 @@
 												"$ref": "AAAAAAF+NpNoTLdIfmU="
 											},
 											"font": "Arial;13;0",
-											"left": 53.77001953125,
+											"left": 56.68994140625,
 											"top": 21,
-											"width": 160.19921875,
+											"width": 177.3125,
 											"height": 13,
 											"text": "Implantação Lista de Compras"
 										},
@@ -14972,7 +14847,7 @@
 											"font": "Arial;13;1",
 											"left": 29,
 											"top": 21,
-											"width": 19.77001953125,
+											"width": 22.68994140625,
 											"height": 13,
 											"text": "dep"
 										}

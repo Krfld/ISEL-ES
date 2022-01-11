@@ -9,12 +9,12 @@ export './services/groups_service.dart';
 export './services/shopping_lists_service.dart';
 export './services/products_service.dart';
 
-/// Models
-export './models/user.dart';
-export './models/group.dart';
-export './models/shopping_list.dart';
-export './models/product.dart';
-export './models/signature.dart';
+/// Entities
+export './entities/user.dart';
+export './entities/group.dart';
+export './entities/shopping_list.dart';
+export './entities/product.dart';
+export './entities/signature.dart';
 
 /// Repositories
 // export './repositories/groups_repository.dart';

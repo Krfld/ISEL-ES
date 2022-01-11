@@ -1,9 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../modules/firebase.dart';
 
+import '../entities/group.dart';
+
 class GroupsRepository {
-  Stream<QuerySnapshot<Map<String, dynamic>>> get firestoreGroupsStream =>
-      CF.firestoreInstance.collection('groups').where('users', arrayContains: FA.user.id).snapshots();
+  Stream<List<Group>> groupsStream() => CF.firestoreInstance
+      .collection('groups')
+      .where('users', arrayContains: FA.user.id)
+      .snapshots()
+      .map((snapshot) => snapshot.docs.map((doc) => Group.fromMap(doc.id, doc.data())).toList()..sort());
 
   Future<void> createGroup(String groupName) async => await CF.addDocument('groups', {
         'name': groupName,

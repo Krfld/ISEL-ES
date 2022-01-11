@@ -20,9 +20,9 @@ class _GroupsState extends State<Groups> {
   void initState() {
     super.initState();
 
-    streamSubscription = GroupsService.firestoreGroupsStream.listen((event) {
+    streamSubscription = GroupsService.groupsStream.listen((event) {
       GroupsService.groups = event;
-      GroupsService.sinkGroupsStream();
+      GroupsService.sinkCustomGroupsStream();
     });
   }
 
@@ -80,7 +80,7 @@ class _GroupsState extends State<Groups> {
                 margin: EdgeInsets.all(24),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                 child: StreamBuilder<void>(
-                  stream: GroupsService.groupsStream,
+                  stream: GroupsService.customGroupsStream,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState != ConnectionState.active)
                       return SpinKitChasingDots(color: Colors.teal);
@@ -171,7 +171,7 @@ class GroupSettings extends StatelessWidget {
 
     return PopUp(
       title: StreamBuilder<void>(
-        stream: GroupsService.groupsStream,
+        stream: GroupsService.customGroupsStream,
         builder: (context, snapshot) => Name('Settings: ${GroupsService.getGroup(groupId).name}'),
       ),
       content: Form(

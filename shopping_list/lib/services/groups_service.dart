@@ -1,5 +1,5 @@
 import 'dart:async';
-import '../models/group.dart';
+import '../entities/group.dart';
 import '../repositories/groups_repository.dart';
 
 class GroupsService {
@@ -13,7 +13,7 @@ class GroupsService {
 
   static Group getGroup(String groupId) => groups.singleWhere((group) => group.id == groupId);
 
-  /// Repository
+  /// Operations
 
   static Future<void> createGroup(String groupName) => _groupsRepository.createGroup(groupName);
   static Future<bool> joinGroup(String groupId) => _groupsRepository.joinGroup(groupId);
@@ -22,10 +22,9 @@ class GroupsService {
 
   /// Streams
 
-  static Stream<List<Group>> get firestoreGroupsStream => _groupsRepository.firestoreGroupsStream
-      .map((snapshot) => snapshot.docs.map((doc) => Group.fromMap(doc.id, doc.data())).toList()..sort());
+  static Stream<List<Group>> get groupsStream => _groupsRepository.groupsStream();
 
-  static final StreamController<void> _groupsStreamController = StreamController.broadcast();
-  static void sinkGroupsStream() => _groupsStreamController.sink.add(null);
-  static Stream<void> get groupsStream => _groupsStreamController.stream;
+  static final StreamController<void> _customGroupsStreamController = StreamController.broadcast();
+  static void sinkCustomGroupsStream() => _customGroupsStreamController.sink.add(null);
+  static Stream<void> get customGroupsStream => _customGroupsStreamController.stream;
 }

@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../modules/firebase.dart';
 
-import '../services/groups_service.dart';
-import '../services/shopping_lists_service.dart';
+import '../entities/product.dart';
 
 class ProductsRepository {
-  static Stream<QuerySnapshot<Map<String, dynamic>>> get firestoreProductsStream => CF.firestoreInstance
+  static Stream<List<Product>> productsStream(String groupId, String listId) => CF.firestoreInstance
       .collection('groups')
-      .doc(GroupsService.currentGroup.id)
+      .doc(groupId)
       .collection('lists')
-      .doc(ShoppingListsService.currentList.id)
+      .doc(listId)
       .collection('products')
-      .snapshots();
+      .snapshots()
+      .map((snapshot) => snapshot.docs.map((doc) => Product.fromMap(doc.id, doc.data())).toList()..sort());
 }
