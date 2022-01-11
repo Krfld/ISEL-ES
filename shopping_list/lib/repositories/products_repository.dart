@@ -4,11 +4,11 @@ import '../modules/firebase.dart';
 import '../entities/product.dart';
 
 class ProductsRepository {
-  static Stream<List<Product>> productsStream(String groupId, String listId) => CF.firestoreInstance
+  static Stream<List<Product>> productsStream(String currentGroupId, String currentListId) => CF.firestoreInstance
       .collection('groups')
-      .doc(groupId)
+      .doc(currentGroupId)
       .collection('lists')
-      .doc(listId)
+      .doc(currentListId)
       .collection('products')
       .snapshots()
       .map((snapshot) => snapshot.docs.map((doc) => Product.fromMap(doc.id, doc.data())).toList()..sort());

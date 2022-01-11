@@ -14,10 +14,10 @@ class ProductsModel {
 
   /// Streams
 
-  static Stream<List<Product>> get firestoreProductsStream =>
+  static Stream<List<Product>> get productsStream =>
       ProductsRepository.productsStream(GroupsService.currentGroup.id, ShoppingListsService.currentShoppingList.id);
 
-  static final StreamController<void> _productsStreamController = StreamController.broadcast();
-  static void sinkProductsStream() => _productsStreamController.sink.add(null);
-  static Stream<void> get productsStream => _productsStreamController.stream;
+  static final StreamController<void> _customProductsStreamController = StreamController.broadcast();
+  static void sinkCustomProductsStream() => _customProductsStreamController.sink.add(null);
+  static Stream<void> get customProductsStream => _customProductsStreamController.stream;
 }
