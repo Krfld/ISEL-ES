@@ -1,17 +1,17 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../.imports.dart';
+import '../entities/user.dart';
+import '../modules/tools.dart';
 
 ///
-/// Firebase
+/// Firebase Core
 ///
 
-class FB {
-  /// Init firebase
+class FC {
+  /// Init firebase and sign in
   static Future<bool> init() async {
-    await Firebase.initializeApp();
+    // await Firebase.initializeApp();
 
     bool signedIn = await FA.signInAnonymously();
 
@@ -22,10 +22,78 @@ class FB {
 }
 
 ///
+/// Firebase Authentication
+///
+
+class FA {
+  static AppUser? _user;
+  static AppUser get user => _user!;
+
+  /// Authentication instance
+  static final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  static Future<bool> signInAnonymously() async {
+    Map<String, dynamic> guest = {'isGuest': true};
+
+    try {
+      String userId = (await _auth.signInAnonymously()).user!.uid;
+
+      _user = AppUser.fromMap(userId, guest);
+
+      await CF.setDocument('users/$userId', guest, merge: true);
+
+      // await FirebaseFirestore.instance.collection('users').doc(userId).get().then((doc) async {
+      //   if (!doc.exists) {
+      //     await FirebaseFirestore.instance
+      //         .collection('users')
+      //         .doc(userId)
+      //         .set({'isGuest': true}, SetOptions(merge: true));
+
+      //     _user = AppUser.fromMap(userId, {'isGuest': true});
+      //   } else
+      //     _user = AppUser.fromMap(userId, doc.data()!);
+      // });
+
+      return true;
+    } catch (error) {
+      Log.print(error, prefix: 'SignInAnonymously', isError: true);
+      return false;
+    }
+  }
+}
+
+/// Cloud Firestore
+
+class CF {
+  static final FirebaseFirestore _firestoreInstance = FirebaseFirestore.instance;
+  static FirebaseFirestore get firestoreInstance => _firestoreInstance;
+
+  static Future<DocumentReference<Map<String, dynamic>>> addDocument(String path, Map<String, dynamic> doc) async =>
+      await _firestoreInstance.collection(path).add(doc);
+
+  static Future<void> setDocument(String path, Map<String, dynamic> doc, {bool merge = false}) async =>
+      await _firestoreInstance.doc(path).set(doc, SetOptions(merge: merge));
+
+  static Future<bool> updateDocument(String path, Map<String, dynamic> doc) async {
+    try {
+      await _firestoreInstance.doc(path).update(doc);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // static Stream<QuerySnapshot<Map<String, dynamic>>> col(String path) =>
+  //     firestore.collection(path).orderBy('name').snapshots();
+  // static Stream<DocumentSnapshot<Map<String, dynamic>>> doc(String path) => firestore.doc(path).snapshots();
+}
+
+/*
+///
 /// Realtime Database
 ///
 
-class DB {
+class _RD {
   /// Database reference
   static final DatabaseReference _dbRef = FirebaseDatabase.instance.reference().child('');
 
@@ -96,22 +164,4 @@ class DB {
     }
   }*/
 }
-
-class FA {
-  static String? _userId;
-  static String get userId => 'a'; //_userId!;
-
-  /// Authentication instance
-  static final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  ///! Needs to DB.write info
-  static Future<bool> signInAnonymously() async {
-    try {
-      _userId = (await _auth.signInAnonymously()).user!.uid;
-      return true;
-    } catch (e) {
-      Log.print(e, prefix: 'SignInAnonymously', isError: true);
-      return false;
-    }
-  }
-}
+*/

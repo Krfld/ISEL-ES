@@ -1,4 +1,4 @@
-import 'dart:developer';
+import 'dart:developer' show log;
 
 class Tools {
   /// Delay function

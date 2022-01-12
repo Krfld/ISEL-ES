@@ -1,30 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart' show Firebase;
+
 import './modules/firebase.dart';
+import './imports.dart';
 
-import './.imports.dart';
-
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  await Firebase.initializeApp();
+  runApp(App());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
 
-  static bool _inited = false;
+  Future<bool> setup() async {
+    if (!await FC.init()) return false;
 
-  Future<bool> init() async {
-    if (_inited) return true;
-
-    if (!await FB.init()) {
-      Log.print('Authentication failed');
-      return false;
-    }
-
-    await Data.init();
-
-    await Tools.delay(seconds: 2);
-    return _inited = true;
+    await Tools.delay(seconds: 1);
+    return true;
   }
 
   @override
@@ -36,12 +29,12 @@ class MyApp extends StatelessWidget {
         'Home': (context) => Home(),
         'Groups': (context) => Groups(),
         'Lists': (context) => Lists(),
-        'products': (context) => Products(),
+        'Products': (context) => Products(),
       },
       home: FutureBuilder<bool>(
-        future: init(),
-        builder: (context, init) {
-          return init.connectionState == ConnectionState.done && init.data! ? Groups() : LoadingScreen();
+        future: setup(),
+        builder: (context, setup) {
+          return setup.data ?? false ? Groups() : LoadingScreen();
         },
       ),
     );
