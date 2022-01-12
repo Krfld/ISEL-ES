@@ -5,7 +5,9 @@ import '../repositories/products_repository.dart';
 import '../services/groups_service.dart';
 import '../services/shopping_lists_service.dart';
 
-class ProductsModel {
+class ProductsService {
+  static final ProductsRepository _productsRepository = ProductsRepositoryCloudFirestore();
+
   static List<Product> products = [];
 
   static Product getProduct(String productId) => products.singleWhere((product) => product.id == productId);
@@ -15,7 +17,7 @@ class ProductsModel {
   /// Streams
 
   static Stream<List<Product>> get productsStream =>
-      ProductsRepository.productsStream(GroupsService.currentGroup.id, ShoppingListsService.currentShoppingList.id);
+      _productsRepository.productsStream(GroupsService.currentGroup.id, ShoppingListsService.currentShoppingList.id);
 
   static final StreamController<void> _customProductsStreamController = StreamController.broadcast();
   static void sinkCustomProductsStream() => _customProductsStreamController.sink.add(null);

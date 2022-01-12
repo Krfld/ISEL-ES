@@ -5,7 +5,7 @@ import '../repositories/shopping_lists_repository.dart';
 import '../services/groups_service.dart';
 
 class ShoppingListsService {
-  static final ShoppingListsRepository _shoppingListsRepository = ShoppingListsRepository();
+  static final ShoppingListsRepository _shoppingListsRepository = ShoppingListsRepositoryCloudFirestore();
 
   static List<ShoppingList> shoppingLists = [];
 

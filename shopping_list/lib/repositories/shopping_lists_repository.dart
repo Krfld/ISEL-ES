@@ -3,7 +3,14 @@ import '../modules/firebase.dart';
 
 import '../entities/shopping_list.dart';
 
-class ShoppingListsRepository {
+abstract class ShoppingListsRepository {
+  Stream<List<ShoppingList>> listsStream(String groupId);
+  Future<void> createList(String groupId, String listName);
+  Future<bool> updateList(String groupId, String listId, String listName);
+}
+
+class ShoppingListsRepositoryCloudFirestore implements ShoppingListsRepository {
+  @override
   Stream<List<ShoppingList>> listsStream(String groupId) => CF.firestoreInstance
       .collection('groups')
       .doc(groupId)
@@ -11,10 +18,12 @@ class ShoppingListsRepository {
       .snapshots()
       .map((snapshot) => snapshot.docs.map((doc) => ShoppingList.fromMap(doc.id, doc.data())).toList()..sort());
 
+  @override
   Future<void> createList(String groupId, String listName) async => await CF.addDocument('groups/$groupId/lists', {
         'name': listName,
       });
 
+  @override
   Future<bool> updateList(String groupId, String listId, String listName) async =>
       await CF.updateDocument('groups/$groupId/lists/$listId', {
         'name': listName,

@@ -3,8 +3,13 @@ import '../modules/firebase.dart';
 
 import '../entities/product.dart';
 
-class ProductsRepository {
-  static Stream<List<Product>> productsStream(String currentGroupId, String currentListId) => CF.firestoreInstance
+abstract class ProductsRepository {
+  Stream<List<Product>> productsStream(String currentGroupId, String currentListId);
+}
+
+class ProductsRepositoryCloudFirestore implements ProductsRepository {
+  @override
+  Stream<List<Product>> productsStream(String currentGroupId, String currentListId) => CF.firestoreInstance
       .collection('groups')
       .doc(currentGroupId)
       .collection('lists')

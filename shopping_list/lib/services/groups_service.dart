@@ -3,7 +3,7 @@ import '../entities/group.dart';
 import '../repositories/groups_repository.dart';
 
 class GroupsService {
-  static final GroupsRepository _groupsRepository = GroupsRepository();
+  static final GroupsRepository _groupsRepository = GroupsRepositoryCloudFirestore();
 
   static List<Group> groups = [];
 
