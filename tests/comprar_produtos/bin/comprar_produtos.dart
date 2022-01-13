@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 import './services/products_service.dart';
@@ -42,10 +43,9 @@ class BuyViewModel {
   }
 
   void view() {
-    String input = '';
-    int productIndex = 0;
-    do {
-      // ProductsService.customProductsStream.listen((_) {
+    StreamSubscription streamSubscription = ProductsService.customProductsStream.listen((_) {
+      if (ProductsService.products.isEmpty) print('No products to buy');
+
       for (int i = 0; i < ProductsService.products.length; i++) {
         Product product = ProductsService.products.elementAt(i);
         print('---');
@@ -54,21 +54,27 @@ class BuyViewModel {
         print('Added by ' + product.added.user);
         print('---');
       }
-      print('Buy product (press INDEX) or back (press 0)');
-      // });
+      // print('Buy product (press INDEX) or back (press 0)');
+    });
+    ProductsService.setupTest();
 
+    String input = '';
+    int productIndex = 0;
+    do {
+      print('Buy product (press INDEX) or back (press 0)');
       input = readInput();
-      if (input == '0') return;
+      if (input == '0') break;
 
       try {
         productIndex = int.parse(input) - 1;
-        ProductsService.buyProduct(ProductsService.products.elementAt(productIndex)); // Error
+        ProductsService.buyProduct(ProductsService.products.elementAt(productIndex)); //! Error
       } catch (e) {
         print('Not int');
       }
 
       print('Selected product $productIndex');
     } while (input != '0');
+    streamSubscription.cancel();
   }
 }
 

@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'dart:math';
 import '../entities/product.dart';
 import '../entities/signature.dart';
 
 abstract class ProductsRepository {
+  void setupTest();
   Stream<List<Product>> productsStream(String currentGroupId, String currentListId);
   Future<void> addProduct(Product product);
   Future<bool> updateProduct(Product product);
@@ -51,9 +51,8 @@ class ProductsRepositoryTest implements ProductsRepository {
 
   final StreamController<void> _productsStreamController = StreamController.broadcast();
 
-  ProductsRepositoryTest() {
-    _productsStreamController.sink.add(null);
-  }
+  @override
+  void setupTest() => _productsStreamController.sink.add(null);
 
   @override
   Stream<List<Product>> productsStream(String currentGroupId, String currentListId) =>

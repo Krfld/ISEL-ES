@@ -5,6 +5,7 @@ import '../repositories/products_repository.dart';
 
 class ProductsService {
   static final ProductsRepository _productsRepository = ProductsRepositoryTest();
+  static void setupTest() => _productsRepository.setupTest();
 
   static List<Product> products = [];
 
