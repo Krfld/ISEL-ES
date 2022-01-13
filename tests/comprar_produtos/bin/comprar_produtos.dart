@@ -11,12 +11,14 @@ class TestBuyProducts {
   bool _buying = false;
 
   void mostrar() {
-    if (!_buying) {
-      _productsViewModel.view();
-      _buying = true;
-    } else {
-      _buyViewModel.view();
-      _buying = false;
+    while (true) {
+      if (!_buying) {
+        _productsViewModel.view();
+        _buying = true;
+      } else {
+        _buyViewModel.view();
+        _buying = false;
+      }
     }
   }
 }
@@ -32,27 +34,40 @@ class ProductsViewModel {
 }
 
 class BuyViewModel {
-  List<Product> _products = [];
-
   BuyViewModel() {
-    ProductsService.productsStream.listen((event) => _products = event);
+    ProductsService.productsStream.listen((event) {
+      print(event);
+      ProductsService.products = event;
+    });
   }
 
   void view() {
     String input = '';
+    int productIndex = 0;
     do {
-      ProductsService.customProductsStream.listen((_) {
-        for (int i = 0; i < _products.length; i++) {
-          Product product = _products.elementAt(i);
-          print('---');
-          print('Product ${i + 1}');
-          print(product.name);
-          print('Added by ' + product.added.user);
-          print('---');
-        }
-        print('Buy product (press INDEX) or back (press 0)');
-        input = readInput();
-      });
+      // ProductsService.customProductsStream.listen((_) {
+      for (int i = 0; i < ProductsService.products.length; i++) {
+        Product product = ProductsService.products.elementAt(i);
+        print('---');
+        print('Product ${i + 1}');
+        print(product.name);
+        print('Added by ' + product.added.user);
+        print('---');
+      }
+      print('Buy product (press INDEX) or back (press 0)');
+      // });
+
+      input = readInput();
+      if (input == '0') return;
+
+      try {
+        productIndex = int.parse(input) - 1;
+        ProductsService.buyProduct(ProductsService.products.elementAt(productIndex)); // Error
+      } catch (e) {
+        print('Not int');
+      }
+
+      print('Selected product $productIndex');
     } while (input != '0');
   }
 }

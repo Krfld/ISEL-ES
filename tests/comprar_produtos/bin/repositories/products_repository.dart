@@ -51,6 +51,10 @@ class ProductsRepositoryTest implements ProductsRepository {
 
   final StreamController<void> _productsStreamController = StreamController.broadcast();
 
+  ProductsRepositoryTest() {
+    _productsStreamController.sink.add(null);
+  }
+
   @override
   Stream<List<Product>> productsStream(String currentGroupId, String currentListId) =>
       _productsStreamController.stream.map((_) => _products..sort());
