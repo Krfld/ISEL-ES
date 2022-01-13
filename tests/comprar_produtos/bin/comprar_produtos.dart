@@ -1,3 +1,5 @@
+// ignore_for_file: curly_braces_in_flow_control_structures
+
 import 'dart:async';
 import 'dart:io';
 import 'dart:math';
@@ -43,23 +45,27 @@ class BuyViewModel {
   }
 
   void view() {
-    StreamSubscription streamSubscription = ProductsService.customProductsStream.listen((_) {
-      if (ProductsService.products.isEmpty) print('No products to buy');
+    StreamSubscription streamSubscription = ProductsService.productsStream.listen((products) {
+      ProductsService.products = products;
 
-      for (int i = 0; i < ProductsService.products.length; i++) {
-        Product product = ProductsService.products.elementAt(i);
-        print('---');
-        print('Product ${i + 1}');
-        print(product.name);
-        print('Added by ' + product.added.user);
-        print('---');
-      }
+      if (products.isEmpty)
+        print('Not products to buy');
+      else
+        for (int i = 0; i < ProductsService.products.length; i++) {
+          Product product = ProductsService.products.elementAt(i);
+          print('---');
+          print('Product ${i + 1}');
+          print(product.name);
+          print('Added by ' + product.added.user);
+          print('---');
+        }
+
       // print('Buy product (press INDEX) or back (press 0)');
     });
     ProductsService.setupTest();
 
     String input = '';
-    int productIndex = 0;
+    int productIndex = -1;
     do {
       print('Buy product (press INDEX) or back (press 0)');
       input = readInput();
