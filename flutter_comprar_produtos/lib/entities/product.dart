@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import './signature.dart';
 
 class Product implements Comparable<Product> {
@@ -47,22 +49,15 @@ class Product implements Comparable<Product> {
   Map<String, dynamic> toMap() {
     Map<String, dynamic> product = {
       'name': name,
-      //'brand': brand,
-      //'store': store,
-      //'details': details,
-      //'amount': amount,
+      'brand': brand ?? FieldValue.delete(),
+      'store': store ?? FieldValue.delete(),
+      'details': details ?? FieldValue.delete(),
+      'amount': amount ?? FieldValue.delete(),
       'tag': tag,
       'added': added.toMap(),
-      //'bought': bought?.toMap(),
-      //'removed': removed?.toMap(),
+      'bought': bought?.toMap() ?? FieldValue.delete(),
+      'removed': removed?.toMap() ?? FieldValue.delete(),
     };
-
-    if (brand != null) product['brand'] = brand;
-    if (store != null) product['store'] = store;
-    if (details != null) product['details'] = details;
-    if (amount != null) product['amount'] = amount;
-    if (bought != null) product['bought'] = bought!.toMap();
-    if (removed != null) product['removed'] = removed!.toMap();
 
     return product;
   }

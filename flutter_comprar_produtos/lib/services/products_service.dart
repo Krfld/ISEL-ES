@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../entities/product.dart';
 import '../entities/signature.dart';
 import '../repositories/products_repository.dart';
@@ -15,8 +13,13 @@ class ProductsService {
 
   /// Operations
 
-  void buyProduct(Product product) {
+  static void buyProduct(Product product) {
     product.bought = Signature(user: 'user', timestamp: DateTime.now().millisecondsSinceEpoch);
+    _productsRepository.updateProduct('g1', 'l1', product);
+  }
+
+  static void unbuyProduct(Product product) {
+    product.bought = null;
     _productsRepository.updateProduct('g1', 'l1', product);
   }
 

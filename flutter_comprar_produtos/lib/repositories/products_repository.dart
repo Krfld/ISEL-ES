@@ -12,11 +12,11 @@ class ProductsRepositoryCloudFirestore implements ProductsRepository {
 
   @override
   Stream<List<Product>> productsStream(String currentGroupId, String currentListId) => _instance
-      .collection('groups')
+      .collection('test_groups')
       .doc(currentGroupId)
-      .collection('lists')
+      .collection('test_lists')
       .doc(currentListId)
-      .collection('products')
+      .collection('test_products')
       .snapshots()
       .map((snapshot) => snapshot.docs.map((doc) => Product.fromMap(doc.id, doc.data())).toList()..sort());
 
@@ -24,11 +24,11 @@ class ProductsRepositoryCloudFirestore implements ProductsRepository {
   Future<bool> updateProduct(String currentGroupId, String currentListId, Product product) async {
     try {
       _instance
-          .collection('groups')
+          .collection('test_groups')
           .doc(currentGroupId)
-          .collection('lists')
+          .collection('test_lists')
           .doc(currentListId)
-          .collection('products')
+          .collection('test_products')
           .doc(product.id)
           .update(product.toMap());
       return true;
