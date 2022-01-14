@@ -15,7 +15,10 @@ class Products extends StatelessWidget {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(title: Text('List Name', style: TextStyle(fontSize: 24))),
+        appBar: AppBar(
+          elevation: 4,
+          title: Text('List Name', style: TextStyle(fontSize: 24)),
+        ),
         body: Center(
           child: Button(
             'Buy\nproducts',
