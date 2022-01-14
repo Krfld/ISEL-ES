@@ -79,11 +79,11 @@ class _BuyingState extends State<Buying> {
                               title: Name(product.name, fontSize: 24, alignment: Alignment.centerLeft),
                               leading: Checkbox(
                                 value: product.bought != null,
-                                onChanged: (value) {
+                                onChanged: (value) async {
                                   if (value!)
-                                    ProductsService.buyProduct(product);
+                                    await ProductsService.buyProduct(product);
                                   else
-                                    ProductsService.unbuyProduct(product);
+                                    await ProductsService.unbuyProduct(product);
                                 },
                               ),
                             ),

@@ -13,14 +13,14 @@ class ProductsService {
 
   /// Operations
 
-  static void buyProduct(Product product) {
+  static Future<bool> buyProduct(Product product) async {
     product.bought = Signature(user: 'user', timestamp: DateTime.now().millisecondsSinceEpoch);
-    _productsRepository.updateProduct('g1', 'l1', product);
+    return _productsRepository.updateProduct('g1', 'l1', product);
   }
 
-  static void unbuyProduct(Product product) {
+  static Future<bool> unbuyProduct(Product product) async {
     product.bought = null;
-    _productsRepository.updateProduct('g1', 'l1', product);
+    return _productsRepository.updateProduct('g1', 'l1', product);
   }
 
   /// Streams
