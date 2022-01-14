@@ -5,9 +5,6 @@ import '../entities/group.dart';
 abstract class GroupsRepository {
   Stream<List<Group>> groupsStream();
   Future<void> createGroup(String groupName);
-  Future<bool> joinGroup(Group group);
-  Future<bool> updateGroup(Group group);
-  Future<void> leaveGroup(Group group);
 }
 
 class GroupsRepositoryCloudFirestore implements GroupsRepository {
@@ -26,18 +23,4 @@ class GroupsRepositoryCloudFirestore implements GroupsRepository {
         'users': ['u1'],
       });
 
-  @override
-  Future<bool> joinGroup(Group group) {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> updateGroup(Group group) {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> leaveGroup(Group group) {
-    throw UnimplementedError();
-  }
 }

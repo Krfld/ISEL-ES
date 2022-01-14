@@ -14,7 +14,7 @@ class ProductsService {
   /// Operations
 
   static Future<bool> buyProduct(Product product) async {
-    product.bought = Signature(user: 'user', timestamp: DateTime.now().millisecondsSinceEpoch);
+    product.bought = Signature(user: 'user');
     return _productsRepository.updateProduct('g1', 'l1', product);
   }
 

@@ -15,7 +15,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Shopping List',
+      title: 'Use case - Create group',
       theme: ThemeData(primarySwatch: Colors.teal),
       routes: {
         'Groups': (context) => Groups(),

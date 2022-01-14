@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.krfld.shopping_list">
    <application
-        android:label="Buy Products"
+        android:label="Use case - Buy products"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

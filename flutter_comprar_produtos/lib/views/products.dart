@@ -17,7 +17,7 @@ class Products extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 4,
-          title: Text('List Name', style: TextStyle(fontSize: 24)),
+          title: Text('Use case - Buy products', style: TextStyle(fontSize: 24)),
         ),
         body: Center(
           child: Button(

@@ -41,7 +41,7 @@ class _GroupsState extends State<Groups> {
         appBar: AppBar(
           elevation: 4,
           centerTitle: false,
-          title: Text('Shopping List', style: TextStyle(fontSize: 24)),
+          title: Text('Use case - Create group', style: TextStyle(fontSize: 24)),
         ),
         body: Column(
           children: [

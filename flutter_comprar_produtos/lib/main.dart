@@ -15,7 +15,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Shopping List',
+      title: 'Use case - Buy products',
       theme: ThemeData(primarySwatch: Colors.teal),
       routes: {
         'Products': (context) => Products(),
