@@ -1,8 +1,8 @@
 class Group implements Comparable<Group> {
   final String id;
 
-  final String name;
-  final List users;
+  String name;
+  List users;
 
   Group({
     required this.id,
