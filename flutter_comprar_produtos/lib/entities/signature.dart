@@ -11,7 +11,7 @@ class Signature implements Comparable<Signature> {
 
   Signature.fromMap(Map signature)
       : user = signature['user'],
-        timestamp = signature['timestamp'];
+        timestamp = signature['timestamp'] ?? Timestamp.now();
 
   Map toMap() => {'user': user, 'timestamp': timestamp ?? FieldValue.serverTimestamp()};
 

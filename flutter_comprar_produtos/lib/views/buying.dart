@@ -1,38 +1,11 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 
 import '../imports.dart';
 
 export '../services/products_service.dart';
 
-class Buying extends StatefulWidget {
+class Buying extends StatelessWidget {
   const Buying({Key? key}) : super(key: key);
-
-  @override
-  State<Buying> createState() => _BuyingState();
-}
-
-class _BuyingState extends State<Buying> {
-  late StreamSubscription streamSubscription;
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Subscreve às atualizacoes dos produtos e atualiza-os
-    streamSubscription = ProductsService.productsStream.listen((event) {
-      ProductsService.products = event;
-      ProductsService.sinkCustomProductsStream();
-    });
-  }
-
-  @override
-  void dispose() {
-    streamSubscription
-        .cancel(); // Cancelar substricao para deixar de atualizar os valores quando volta para a janela anterior
-
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +27,25 @@ class _BuyingState extends State<Buying> {
             child: StreamBuilder<void>(
               stream: ProductsService.customProductsStream,
               builder: (context, snapshot) {
-                if (snapshot.connectionState != ConnectionState.active) return SpinKitChasingDots(color: Colors.teal);
+                if (snapshot.connectionState != ConnectionState.active) {
+                  ProductsService.sinkCustomProductsStream();
+                  return SpinKitChasingDots(color: Colors.teal);
+                }
 
-                return ProductsService.products.isEmpty
+                List<Product> products = ProductsService.products
+                    .where((product) =>
+                        // Se foi comprado pelo próprio utilizador
+                        (product.bought?.user ?? 'u1') == 'u1' &&
+                        // Se foi comprado há menos de 24 horas
+                        (!(product.bought?.timestamp!
+                                .toDate()
+                                .add(Duration(hours: 24))
+                                .difference(DateTime.now())
+                                .isNegative ??
+                            false)))
+                    .toList();
+
+                return products.isEmpty
                     ? Center(
                         child: Text(
                           'You\'re not in any shopping list group\nCreate or join one',
@@ -67,9 +56,9 @@ class _BuyingState extends State<Buying> {
                     : ListView.builder(
                         padding: EdgeInsets.all(24),
                         physics: BouncingScrollPhysics(),
-                        itemCount: ProductsService.products.length,
+                        itemCount: products.length,
                         itemBuilder: (context, index) {
-                          Product product = ProductsService.products.elementAt(index);
+                          Product product = products.elementAt(index);
                           return Card(
                             elevation: 4,
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),

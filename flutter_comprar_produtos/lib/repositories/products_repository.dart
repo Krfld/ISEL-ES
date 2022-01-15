@@ -18,13 +18,7 @@ class ProductsRepositoryCloudFirestore implements ProductsRepository {
       .doc(currentListId)
       .collection('test_products')
       .snapshots()
-      .map((snapshot) => snapshot.docs.map((doc) => Product.fromMap(doc.id, doc.data())).toList()..sort())
-      .map((products) => products
-        ..where((product) =>
-            //Se foi comprado pelo próprio utilizador
-            (product.bought?.user ?? 'u1') == 'u1' &&
-            // Se foi comprado há menos de 24 horas
-            (product.bought?.timestamp!.toDate().subtract(Duration(hours: 24)).millisecondsSinceEpoch ?? 1) > 0));
+      .map((snapshot) => snapshot.docs.map((doc) => Product.fromMap(doc.id, doc.data())).toList()..sort());
 
   @override
   Future<bool> updateProduct(String currentGroupId, String currentListId, Product product) async {

@@ -54,10 +54,14 @@ class _GroupsState extends State<Groups> {
                 child: StreamBuilder<void>(
                   stream: GroupsService.customGroupsStream,
                   builder: (context, snapshot) {
-                    if (snapshot.connectionState != ConnectionState.active)
+                    if (snapshot.connectionState != ConnectionState.active) {
+                      GroupsService.sinkCustomGroupsStream();
                       return SpinKitChasingDots(color: Colors.teal);
+                    }
 
-                    return GroupsService.groups.isEmpty
+                    List<Group> groups = GroupsService.groups;
+
+                    return groups.isEmpty
                         ? Center(
                             child: Text(
                               'You\'re not in any shopping list group\nCreate or join one',
@@ -68,9 +72,9 @@ class _GroupsState extends State<Groups> {
                         : ListView.builder(
                             padding: EdgeInsets.all(24),
                             physics: BouncingScrollPhysics(),
-                            itemCount: GroupsService.groups.length,
+                            itemCount: groups.length,
                             itemBuilder: (context, index) {
-                              Group group = GroupsService.groups.elementAt(index);
+                              Group group = groups.elementAt(index);
                               return Card(
                                 elevation: 4,
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
