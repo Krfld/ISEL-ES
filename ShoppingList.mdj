@@ -6892,53 +6892,6 @@
 							"name": "Mecanismo de compra de produtos",
 							"ownedViews": [
 								{
-									"_type": "UMLFrameView",
-									"_id": "AAAAAAF+SwzhGguf3P4=",
-									"_parent": {
-										"$ref": "AAAAAAF+SwvWXguM1d4="
-									},
-									"model": {
-										"$ref": "AAAAAAF+SwvWXguM1d4="
-									},
-									"subViews": [
-										{
-											"_type": "LabelView",
-											"_id": "AAAAAAF+SwzhGgugnsg=",
-											"_parent": {
-												"$ref": "AAAAAAF+SwzhGguf3P4="
-											},
-											"font": "Arial;13;0",
-											"left": 40.6181640625,
-											"top": 5,
-											"width": 204.7724609375,
-											"height": 13,
-											"text": "Mecanismo de compra de produtos"
-										},
-										{
-											"_type": "LabelView",
-											"_id": "AAAAAAF+SwzhGguhQMs=",
-											"_parent": {
-												"$ref": "AAAAAAF+SwzhGguf3P4="
-											},
-											"font": "Arial;13;1",
-											"left": 5,
-											"top": 5,
-											"width": 30.6181640625,
-											"height": 13,
-											"text": "class"
-										}
-									],
-									"font": "Arial;13;0",
-									"width": 1657,
-									"height": 633,
-									"nameLabel": {
-										"$ref": "AAAAAAF+SwzhGgugnsg="
-									},
-									"frameTypeLabel": {
-										"$ref": "AAAAAAF+SwzhGguhQMs="
-									}
-								},
-								{
 									"_type": "UMLClassView",
 									"_id": "AAAAAAF+Sw/AxgwMd6M=",
 									"_parent": {
