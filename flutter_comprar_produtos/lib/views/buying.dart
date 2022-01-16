@@ -37,11 +37,7 @@ class Buying extends StatelessWidget {
                         // Se foi comprado pelo próprio utilizador
                         (product.bought?.user ?? 'u1') == 'u1' &&
                         // Se foi comprado há menos de 24 horas
-                        (!(product.bought?.timestamp!
-                                .toDate()
-                                .add(Duration(hours: 24))
-                                .difference(DateTime.now())
-                                .isNegative ??
+                        (!(product.bought?.timestamp!.add(Duration(hours: 24)).difference(DateTime.now()).isNegative ??
                             false)))
                     .toList();
 
