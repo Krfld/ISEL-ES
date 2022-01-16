@@ -7,8 +7,10 @@ import '../repositories/products_repository.dart';
 class ProductsService {
   static final ProductsRepository _productsRepository = ProductsRepositoryCloudFirestore();
 
+  // Lista de produtos que está sempre atualizada
   static List<Product> products = [];
 
+  // Obter um produto da lista de produtos que está sempre atualizada
   static Product getProduct(String productId) => products.singleWhere((product) => product.id == productId);
 
   /// Operations
@@ -25,8 +27,10 @@ class ProductsService {
 
   /// Streams
 
+  // Stream dos produtos que atualiza a lista de produtos sempre que houver uma alteração
   static Stream<List<Product>> get productsStream => _productsRepository.productsStream('g1', 'l1');
 
+  // Stream para atualizar as vistas sempre que houver uma alteração
   static final StreamController<void> _customProductsStreamController = StreamController.broadcast();
   static void sinkCustomProductsStream() => _customProductsStreamController.sink.add(null);
   static Stream<void> get customProductsStream => _customProductsStreamController.stream;
