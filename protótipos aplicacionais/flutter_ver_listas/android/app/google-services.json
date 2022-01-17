@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "148856380288",
+    "project_id": "shopping-list-krfld",
+    "storage_bucket": "shopping-list-krfld.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:148856380288:android:dda53613b0d463076ebf65",
+        "android_client_info": {
+          "package_name": "com.krfld.shopping_list"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "148856380288-glao0o5ngc4o0hlj5rp06v1rk62aua1e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_LW6jDGEFZnmRiZDs5YR5H5zAo1MlXlU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "148856380288-glao0o5ngc4o0hlj5rp06v1rk62aua1e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
