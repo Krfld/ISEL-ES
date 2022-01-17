@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Signature implements Comparable<Signature> {
   final String user;
-  final Timestamp? timestamp;
+  final DateTime? timestamp;
 
   Signature({
     required this.user,
@@ -11,7 +11,7 @@ class Signature implements Comparable<Signature> {
 
   Signature.fromMap(Map signature)
       : user = signature['user'],
-        timestamp = signature['timestamp'];
+        timestamp = signature['timestamp']?.toDate() ?? DateTime.now();
 
   Map toMap() => {'user': user, 'timestamp': timestamp ?? FieldValue.serverTimestamp()};
 

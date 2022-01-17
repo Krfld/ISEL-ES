@@ -1,15 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import './signature.dart';
 
 class ShoppingList implements Comparable<ShoppingList> {
   final String id;
 
-  final String name;
-  final Signature? deleted;
+  String name;
+  Signature? deleted;
 
   ShoppingList({
     required this.id,
     required this.name,
-    required this.deleted,
+    this.deleted,
   });
 
   factory ShoppingList.fromMap(String listId, Map listData) {
@@ -23,8 +25,7 @@ class ShoppingList implements Comparable<ShoppingList> {
   }
 
   Map toMap() {
-    Map shoppingList = {'name': name};
-    if (deleted != null) shoppingList['deleted'] = deleted!.toMap();
+    Map shoppingList = {'name': name, 'deleted': deleted ?? FieldValue.delete()};
     return shoppingList;
   }
 
