@@ -4,7 +4,7 @@ class Signature implements Comparable<Signature> {
 
   Signature({
     required this.user,
-    this.timestamp,
+    required this.timestamp,
   });
 
   Signature.fromMap(Map signature)

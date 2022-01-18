@@ -8,70 +8,37 @@ abstract class ProductsRepository {
 }
 
 class ProductsRepositoryTest implements ProductsRepository {
-  static final DateTime dateAdded = DateTime.utc(2021, 1, 1, 12).subtract(Duration(days: 2));
-  static final DateTime currentTime = DateTime.utc(2021, 1, 1, 12);
+  static final DateTime currentTime = DateTime.utc(2021, 6, 15, 13);
+  static final DateTime dateAdded = currentTime.subtract(Duration(days: 2));
 
   final List<Product> _products = [
     Product(
       id: 'p1',
       name: 'a',
-      brand: null,
-      store: null,
-      details: null,
-      amount: null,
       tag: 0,
       added: Signature(user: 'u1', timestamp: dateAdded),
-      bought: null,
-      removed: null,
     ),
     Product(
       id: 'p2',
       name: 'b',
-      brand: null,
-      store: null,
-      details: null,
-      amount: null,
       tag: 0,
       added: Signature(user: 'u1', timestamp: dateAdded),
-      bought: Signature(user: 'u1', timestamp: currentTime.subtract(Duration(hours: 1))),
-      removed: null,
+      bought: Signature(user: 'u1', timestamp: currentTime.subtract(Duration(hours: 2))),
     ),
     Product(
       id: 'p3',
       name: 'c',
-      brand: null,
-      store: null,
-      details: null,
-      amount: null,
       tag: 0,
       added: Signature(user: 'u1', timestamp: dateAdded),
-      bought: null,
-      removed: null,
+      bought: Signature(user: 'u2', timestamp: currentTime.subtract(Duration(hours: 2))), // Comprado por outra pessoa
     ),
     Product(
       id: 'p4',
       name: 'd',
-      brand: null,
-      store: null,
-      details: null,
-      amount: null,
-      tag: 0,
-      added: Signature(user: 'u1', timestamp: dateAdded),
-      bought: Signature(user: 'u2', timestamp: currentTime.subtract(Duration(hours: 1))), // Comprado por outra pessoa
-      removed: null,
-    ),
-    Product(
-      id: 'p5',
-      name: 'e',
-      brand: null,
-      store: null,
-      details: null,
-      amount: null,
       tag: 0,
       added: Signature(user: 'u1', timestamp: dateAdded),
       bought:
           Signature(user: 'u1', timestamp: currentTime.subtract(Duration(hours: 25))), // Comprado há mais de 24 horas
-      removed: null,
     ),
   ];
 

@@ -1,4 +1,3 @@
-import 'dart:io';
 import './services/products_service.dart';
 import './entities/product.dart';
 import './entities/signature.dart';
@@ -8,67 +7,96 @@ void main(List<String> arguments) {
   testBuyProducts.executar();
 }
 
-String readInput() => stdin.readLineSync() ?? '';
-
 class TestBuyProducts {
-  final List<Product> expectedProductsUserCanSee = [
+  final List<Product> expectedBuyingProducts = [
     Product(
       id: 'p1',
       name: 'a',
-      brand: null,
-      store: null,
-      details: null,
-      amount: null,
       tag: 0,
       added: Signature(user: 'u1', timestamp: dateAdded),
-      bought: null,
-      removed: null,
     ),
     Product(
       id: 'p2',
       name: 'b',
-      brand: null,
-      store: null,
-      details: null,
-      amount: null,
       tag: 0,
       added: Signature(user: 'u1', timestamp: dateAdded),
-      bought: Signature(user: 'u1', timestamp: currentTime.subtract(Duration(hours: 1))),
-      removed: null,
-    ),
-    Product(
-      id: 'p3',
-      name: 'c',
-      brand: null,
-      store: null,
-      details: null,
-      amount: null,
-      tag: 0,
-      added: Signature(user: 'u1', timestamp: dateAdded),
-      bought: null,
-      removed: null,
+      bought: Signature(user: 'u1', timestamp: currentTime.subtract(Duration(hours: 2))),
     ),
   ];
 
-  static final DateTime dateAdded = DateTime.utc(2021, 1, 1, 12).subtract(Duration(days: 2));
-  static final DateTime currentTime = DateTime.utc(2021, 1, 1, 12);
+  final List<Product> expectedBuyingProductsAfterBuyingP1 = [
+    Product(
+      id: 'p1',
+      name: 'a',
+      tag: 0,
+      added: Signature(user: 'u1', timestamp: dateAdded),
+      bought: Signature(user: 'u1', timestamp: currentTime),
+    ),
+    Product(
+      id: 'p2',
+      name: 'b',
+      tag: 0,
+      added: Signature(user: 'u1', timestamp: dateAdded),
+      bought: Signature(user: 'u1', timestamp: currentTime.subtract(Duration(hours: 2))),
+    ),
+  ];
 
-  void executar() {
+  final List<Product> expectedBuyingProductsAfterUnbuyingP2 = [
+    Product(
+      id: 'p1',
+      name: 'a',
+      tag: 0,
+      added: Signature(user: 'u1', timestamp: dateAdded),
+      bought: Signature(user: 'u1', timestamp: currentTime),
+    ),
+    Product(
+      id: 'p2',
+      name: 'b',
+      tag: 0,
+      added: Signature(user: 'u1', timestamp: dateAdded),
+    ),
+  ];
+
+  static final DateTime currentTime = DateTime.utc(2021, 6, 15, 13); // For testing
+  static final DateTime dateAdded = currentTime.subtract(Duration(days: 2)); // For testing
+
+  void executar() async {
+    // Assumir um tempo atual
     print('Current time: $currentTime\n');
 
-    ProductsService.productsStream.listen((event) => print('Produtos atuais na base de dados:\n$event\n'));
+    // Atualizar a lista de produtos
+    await ProductsService.productsStream.listen((event) => ProductsService.products = event).asFuture();
+    // await garante ter terminado a receção da base de dados de teste e atualização dos produtos
 
-    ProductsService.productsStream.listen((event) {
-      List<Product> productsUserSees = event
-          .where((product) =>
-              // Se foi comprado pelo próprio utilizador
-              (product.bought?.user ?? 'u1') == 'u1' &&
-              // Se foi comprado há menos de 24 horas
-              (!(product.bought?.timestamp!.add(Duration(hours: 24)).difference(currentTime).isNegative ?? false)))
-          .toList();
+    // Produtos lidos
+    print('Produtos atuais na base de dados:\n${ProductsService.products}\n');
 
-      print('Produtos que o utilizador devia ver:\n$expectedProductsUserCanSee\n');
-      print('Produtos que o utilizador vê:\n$productsUserSees\n');
-    });
+    // Produtos que o utilizador devia ver
+    print('Produtos que o utilizador devia ver:\n$expectedBuyingProducts\n');
+    // Produtos que o utilizador vê
+    print('Produtos que o utilizador vê:\n${ProductsService.buyingProducts}\n');
+
+    // --------------------------------------------------
+
+    ProductsService.buyProduct(ProductsService.getProduct('p1'));
+
+    // Atualizar a lista de produtos
+    await ProductsService.productsStream.listen((event) => ProductsService.products = event).asFuture();
+
+    print('Produtos que o utilizador devia ver após comprar p1:\n$expectedBuyingProductsAfterBuyingP1\n');
+
+    print('Produtos que o utilizador vê após comprar p1:\n${ProductsService.buyingProducts}\n');
+
+    // --------------------------------------------------
+
+    ProductsService.unbuyProduct(ProductsService.getProduct('p2'));
+
+    // Atualizar a lista de produtos
+    await ProductsService.productsStream.listen((event) => ProductsService.products = event).asFuture();
+
+    print(
+        'Produtos que o utilizador devia ver após cancelar a compra de p2:\n$expectedBuyingProductsAfterUnbuyingP2\n');
+
+    print('Produtos que o utilizador vê após cancelar a compra de p2:\n${ProductsService.buyingProducts}\n');
   }
 }

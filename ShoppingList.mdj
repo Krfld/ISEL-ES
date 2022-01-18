@@ -1245,7 +1245,7 @@
 																"$ref": "AAAAAAF+SZnSNaek208="
 															},
 															"edgePosition": 1,
-															"text": "4 : buyingProductsStream"
+															"text": "4 : productsStream"
 														},
 														{
 															"_type": "EdgeLabelView",
@@ -1356,7 +1356,7 @@
 																"$ref": "AAAAAAF+SZqXuKe9zr4="
 															},
 															"edgePosition": 1,
-															"text": "5 : buyingProductsStream"
+															"text": "5 : productsStream"
 														},
 														{
 															"_type": "EdgeLabelView",
@@ -1592,11 +1592,11 @@
 														"$ref": "AAAAAAF+Rial9q91TyM="
 													},
 													"font": "Arial;13;0",
-													"left": 1320,
-													"top": 464,
+													"left": 696,
+													"top": 544,
 													"width": 225,
 													"height": 65,
-													"text": "Recebe a stream dos produtos que precisam de ser comprados e que foram comprados nas últimas 24h pelo mesmo utilizador"
+													"text": "Filtra a stream dos produtos pelos que precisam de ser comprados e que foram comprados nas últimas 24h pelo mesmo utilizador"
 												},
 												{
 													"_type": "FreelineEdgeView",
@@ -1606,7 +1606,7 @@
 													},
 													"font": "Arial;13;0",
 													"lineStyle": 1,
-													"points": "1360:464;1280:416"
+													"points": "936:480;880:544"
 												},
 												{
 													"_type": "FreelineEdgeView",
@@ -1638,9 +1638,9 @@
 																"$ref": "AAAAAAF+SZs1Maftgds="
 															},
 															"font": "Arial;13;0",
-															"left": 730,
+															"left": 693,
 															"top": 484,
-															"width": 143.7998046875,
+															"width": 217.48974609375,
 															"height": 13,
 															"alpha": 1.5707963267948966,
 															"distance": 10,
@@ -1648,7 +1648,7 @@
 																"$ref": "AAAAAAF+SZs1Mafux2I="
 															},
 															"edgePosition": 1,
-															"text": "7 : stream dos produtos"
+															"text": "7 : stream dos produtos para comprar"
 														},
 														{
 															"_type": "EdgeLabelView",
@@ -1750,9 +1750,9 @@
 																"$ref": "AAAAAAF+SZuPhqgEgLc="
 															},
 															"font": "Arial;13;0",
-															"left": 433,
+															"left": 407,
 															"top": 508,
-															"width": 143.7998046875,
+															"width": 194.3779296875,
 															"height": 13,
 															"alpha": 1.5707963267948966,
 															"distance": 10,
@@ -1760,7 +1760,7 @@
 																"$ref": "AAAAAAF+SZuPhqgFmRM="
 															},
 															"edgePosition": 1,
-															"text": "8 : lista de produtos"
+															"text": "8 : lista de produtos para comprar"
 														},
 														{
 															"_type": "EdgeLabelView",
@@ -1885,9 +1885,9 @@
 																"$ref": "AAAAAAF+SZzWVqgd9Lo="
 															},
 															"font": "Arial;13;0",
-															"left": 182,
+															"left": 141,
 															"top": 532,
-															"width": 129.33984375,
+															"width": 210.259765625,
 															"height": 13,
 															"alpha": 1.5707963267948966,
 															"distance": 10,
@@ -1895,7 +1895,7 @@
 																"$ref": "AAAAAAF+SZzWVqge1us="
 															},
 															"edgePosition": 1,
-															"text": "9 : mostra os produtos"
+															"text": "9 : mostra os produtos para comprar"
 														},
 														{
 															"_type": "EdgeLabelView",
@@ -2924,7 +2924,7 @@
 											"_parent": {
 												"$ref": "AAAAAAF+Rial9q90tto="
 											},
-											"name": "buyingProductsStream",
+											"name": "productsStream",
 											"source": {
 												"$ref": "AAAAAAF+Rjo32K/88UY="
 											},
@@ -2938,7 +2938,7 @@
 											"_parent": {
 												"$ref": "AAAAAAF+Rial9q90tto="
 											},
-											"name": "buyingProductsStream",
+											"name": "productsStream",
 											"source": {
 												"$ref": "AAAAAAF+Rj1c+bBb3zQ="
 											},
@@ -2967,7 +2967,7 @@
 											"_parent": {
 												"$ref": "AAAAAAF+Rial9q90tto="
 											},
-											"name": "stream dos produtos",
+											"name": "stream dos produtos para comprar",
 											"source": {
 												"$ref": "AAAAAAF+Rj1c+bBb3zQ="
 											},
@@ -2982,7 +2982,7 @@
 											"_parent": {
 												"$ref": "AAAAAAF+Rial9q90tto="
 											},
-											"name": "lista de produtos",
+											"name": "lista de produtos para comprar",
 											"source": {
 												"$ref": "AAAAAAF+Rjo32K/88UY="
 											},
@@ -2997,7 +2997,7 @@
 											"_parent": {
 												"$ref": "AAAAAAF+Rial9q90tto="
 											},
-											"name": "mostra os produtos",
+											"name": "mostra os produtos para comprar",
 											"source": {
 												"$ref": "AAAAAAF+Rje6hK/ZzX4="
 											},

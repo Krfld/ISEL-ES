@@ -16,14 +16,14 @@ class Product implements Comparable<Product> {
   Product({
     required this.id,
     required this.name,
-    required this.brand,
-    required this.store,
-    required this.details,
-    required this.amount,
+    this.brand,
+    this.store,
+    this.details,
+    this.amount,
     required this.tag,
     required this.added,
-    required this.bought,
-    required this.removed,
+    this.bought,
+    this.removed,
   });
 
   factory Product.fromMap(String productId, Map productData) {
