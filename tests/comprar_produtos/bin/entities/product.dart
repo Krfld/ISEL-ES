@@ -68,6 +68,10 @@ class Product implements Comparable<Product> {
   }
 
   @override
-  int compareTo(other) => added.compareTo(other.added); //TODO Check if comparison matches (recent first)
+  String toString() {
+    return 'Produto -> ID: $id | Name: $name | Comprado: ${bought != null ? 'Sim, por ${bought!.user}, em ${bought!.timestamp}' : 'Não'}\n';
+  }
 
+  @override
+  int compareTo(other) => added.compareTo(other.added); //TODO Check if comparison matches (recent first)
 }

@@ -3,13 +3,14 @@ import '../entities/product.dart';
 import '../entities/signature.dart';
 
 abstract class ProductsRepository {
-  void setupTest();
   Stream<List<Product>> productsStream(String currentGroupId, String currentListId);
-  Future<void> addProduct(Product product);
-  Future<bool> updateProduct(Product product);
+  Future<bool> updateProduct(String currentGroupId, String currentListId, Product product);
 }
 
 class ProductsRepositoryTest implements ProductsRepository {
+  static final DateTime dateAdded = DateTime.utc(2021, 1, 1, 12).subtract(Duration(days: 2));
+  static final DateTime currentTime = DateTime.utc(2021, 1, 1, 12);
+
   final List<Product> _products = [
     Product(
       id: 'p1',
@@ -19,7 +20,7 @@ class ProductsRepositoryTest implements ProductsRepository {
       details: null,
       amount: null,
       tag: 0,
-      added: Signature(user: 'u1', timestamp: 0),
+      added: Signature(user: 'u1', timestamp: dateAdded),
       bought: null,
       removed: null,
     ),
@@ -31,8 +32,8 @@ class ProductsRepositoryTest implements ProductsRepository {
       details: null,
       amount: null,
       tag: 0,
-      added: Signature(user: 'u1', timestamp: 1),
-      bought: null,
+      added: Signature(user: 'u1', timestamp: dateAdded),
+      bought: Signature(user: 'u1', timestamp: currentTime.subtract(Duration(hours: 1))),
       removed: null,
     ),
     Product(
@@ -43,32 +44,45 @@ class ProductsRepositoryTest implements ProductsRepository {
       details: null,
       amount: null,
       tag: 0,
-      added: Signature(user: 'u1', timestamp: 2),
+      added: Signature(user: 'u1', timestamp: dateAdded),
       bought: null,
+      removed: null,
+    ),
+    Product(
+      id: 'p4',
+      name: 'd',
+      brand: null,
+      store: null,
+      details: null,
+      amount: null,
+      tag: 0,
+      added: Signature(user: 'u1', timestamp: dateAdded),
+      bought: Signature(user: 'u2', timestamp: currentTime.subtract(Duration(hours: 1))), // Comprado por outra pessoa
+      removed: null,
+    ),
+    Product(
+      id: 'p5',
+      name: 'e',
+      brand: null,
+      store: null,
+      details: null,
+      amount: null,
+      tag: 0,
+      added: Signature(user: 'u1', timestamp: dateAdded),
+      bought:
+          Signature(user: 'u1', timestamp: currentTime.subtract(Duration(hours: 25))), // Comprado há mais de 24 horas
       removed: null,
     ),
   ];
 
-  final StreamController<void> _productsStreamController = StreamController.broadcast();
+  @override
+  Stream<List<Product>> productsStream(String currentGroupId, String currentListId) => Stream.value(_products);
 
   @override
-  void setupTest() => _productsStreamController.sink.add(null);
-
-  @override
-  Stream<List<Product>> productsStream(String currentGroupId, String currentListId) =>
-      _productsStreamController.stream.map((_) => _products..sort());
-
-  @override
-  Future<void> addProduct(Product product) {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> updateProduct(Product product) async {
+  Future<bool> updateProduct(String currentGroupId, String currentListId, Product product) async {
     if (!_products.any((element) => element.id == product.id)) return false; // Check if product exists
     _products.removeWhere((element) => element.id == product.id); // Remove product
     _products.add(product); // Add product
-    _productsStreamController.sink.add(null);
     return true;
   }
 }
