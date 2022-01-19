@@ -32,13 +32,7 @@ class Buying extends StatelessWidget {
                   return SpinKitChasingDots(color: Colors.teal);
                 }
 
-                List<Product> products = ProductsService.products
-                    .where((product) =>
-                        // Se foi comprado pelo próprio utilizador
-                        (product.bought?.user ?? 'u1') == 'u1' &&
-                        // Se foi comprado há menos de 24 horas
-                        (!(product.bought?.timestamp!.add(Duration(hours: 24)).difference(currentTime).isNegative ?? false)))
-                    .toList();
+                List<Product> products = ProductsService.buyingProducts;
 
                 return products.isEmpty
                     ? Center(

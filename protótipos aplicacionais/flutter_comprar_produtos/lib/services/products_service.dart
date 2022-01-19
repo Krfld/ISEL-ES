@@ -9,6 +9,14 @@ class ProductsService {
 
   // Lista de produtos que está sempre atualizada
   static List<Product> products = [];
+  // Lista de produtos para comprar
+  static List<Product> buyingProducts = products
+      .where((product) =>
+          // Se foi comprado pelo próprio utilizador
+          (product.bought?.user ?? 'u1') == 'u1' &&
+          // Se foi comprado há menos de 24 horas
+          (!(product.bought?.timestamp!.add(Duration(hours: 24)).difference(DateTime.now()).isNegative ?? false)))
+      .toList();
 
   // Obter um produto da lista de produtos que está sempre atualizada
   static Product getProduct(String productId) => products.singleWhere((product) => product.id == productId);
