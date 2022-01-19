@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../imports.dart';
+import '../../imports.dart';
 
-export '../services/products_service.dart';
-
-class Buying extends StatelessWidget {
-  const Buying({Key? key}) : super(key: key);
+class ComprarProdutos_Buying extends StatelessWidget {
+  const ComprarProdutos_Buying({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

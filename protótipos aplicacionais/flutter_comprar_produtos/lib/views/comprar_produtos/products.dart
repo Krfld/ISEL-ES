@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import '../imports.dart';
+import '../../imports.dart';
 
-export '../services/products_service.dart';
-
-class Products extends StatefulWidget {
-  const Products({Key? key}) : super(key: key);
+class ComprarProdutos_Products extends StatefulWidget {
+  const ComprarProdutos_Products({Key? key}) : super(key: key);
 
   @override
-  State<Products> createState() => _ProductsState();
+  State<ComprarProdutos_Products> createState() => _ComprarProdutos_ProductsState();
 }
 
-class _ProductsState extends State<Products> {
+class _ComprarProdutos_ProductsState extends State<ComprarProdutos_Products> {
   late StreamSubscription streamSubscription;
 
   @override
@@ -50,7 +48,7 @@ class _ProductsState extends State<Products> {
           child: Button(
             'Buy\nproducts',
             icon: MdiIcons.playlistPlus,
-            onPressed: () => Navigator.pushNamed(context, 'Buying'),
+            onPressed: () => Navigator.pushNamed(context, 'ComprarProdutos_Buying'),
           ),
         ),
       ),

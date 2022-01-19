@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart' show Firebase;
 
-import './imports.dart';
+import './views/home.dart';
+
+import './views/comprar_produtos/products.dart';
+import './views/comprar_produtos/buying.dart';
+
+import './views/criar_grupo/groups.dart';
+
+import './views/ver_listas/groups.dart';
+import './views/ver_listas/lists.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,13 +23,19 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Use case - Buy products',
+      title: 'Shopping List - Protótipo aplicacional',
       theme: ThemeData(primarySwatch: Colors.teal),
       routes: {
-        'Products': (context) => Products(),
-        'Buying': (context) => Buying(),
+        // Comprar produtos
+        'ComprarProdutos_Products': (context) => ComprarProdutos_Products(),
+        'ComprarProdutos_Buying': (context) => ComprarProdutos_Buying(),
+        // Criar grupo
+        'CriarGrupo_Groups': (context) => CriarGrupo_Groups(),
+        // Ver listas
+        'VerListas_Groups': (context) => VerListas_Groups(),
+        'VerListas_Lists': (context) => VerListas_Lists(),
       },
-      home: Products(),
+      home: Home(),
     );
   }
 }
