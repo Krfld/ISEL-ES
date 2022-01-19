@@ -42,7 +42,7 @@ class _ComprarProdutos_ProductsState extends State<ComprarProdutos_Products> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 4,
-          title: Text('Use case - Buy products', style: TextStyle(fontSize: 24)),
+          title: Text('Use case - Comprar produtos', style: TextStyle(fontSize: 24)),
         ),
         body: Center(
           child: Button(

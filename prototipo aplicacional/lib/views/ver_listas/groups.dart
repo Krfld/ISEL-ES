@@ -34,7 +34,7 @@ class _VerListas_GroupsState extends State<VerListas_Groups> {
 
   Future<void> push(BuildContext context, Group group) async {
     GroupsService.currentGroup = group; // Set current group
-    await Navigator.pushNamed(context, 'Lists');
+    await Navigator.pushNamed(context, 'VerListas_Lists');
   }
 
   @override
@@ -48,7 +48,7 @@ class _VerListas_GroupsState extends State<VerListas_Groups> {
         appBar: AppBar(
           elevation: 4,
           centerTitle: false,
-          title: Text('Shopping List', style: TextStyle(fontSize: 24)),
+          title: Text('Use case - Ver listas', style: TextStyle(fontSize: 24)),
         ),
         body: Column(
           children: [
