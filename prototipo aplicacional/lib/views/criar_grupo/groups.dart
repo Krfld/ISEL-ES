@@ -93,8 +93,7 @@ class _CriarGrupo_GroupsState extends State<CriarGrupo_Groups> {
             // if(!GroupsLogic.user.isGuest)
             Expanded(
               flex: 1,
-              child: Padding(
-                padding: EdgeInsets.only(bottom: 24),
+              child: Center(
                 child: Button(
                   'Create\nGroup',
                   icon: MdiIcons.accountMultiplePlus,
