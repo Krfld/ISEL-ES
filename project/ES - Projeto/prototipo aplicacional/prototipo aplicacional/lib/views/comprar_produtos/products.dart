@@ -47,7 +47,7 @@ class _ComprarProdutos_ProductsState extends State<ComprarProdutos_Products> {
         body: Center(
           child: Button(
             'Buy\nproducts',
-            icon: MdiIcons.playlistPlus,
+            icon: Icons.add,
             onPressed: () => Navigator.pushNamed(context, 'ComprarProdutos_Buying'),
           ),
         ),

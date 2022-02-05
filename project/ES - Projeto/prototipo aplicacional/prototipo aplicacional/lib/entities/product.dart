@@ -63,6 +63,5 @@ class Product implements Comparable<Product> {
   }
 
   @override
-  int compareTo(other) => added.compareTo(other.added); //TODO Check if comparison matches (recent first)
-
+  int compareTo(other) => added.compareTo(other.added);
 }
