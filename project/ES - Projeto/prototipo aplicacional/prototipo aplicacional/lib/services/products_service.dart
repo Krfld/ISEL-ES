@@ -10,7 +10,7 @@ class ProductsService {
   // Lista de produtos que está sempre atualizada
   static List<Product> products = [];
   // Lista de produtos para comprar
-  static List<Product> buyingProducts = products
+  static List<Product> get buyingProducts => products
       .where((product) =>
           // Se foi comprado pelo próprio utilizador
           (product.bought?.user ?? 'u1') == 'u1' &&

@@ -80,7 +80,7 @@ class TestBuyProducts {
   static final DateTime dateAdded = currentTime.subtract(Duration(days: 2)); // For testing
 
   Future execute() async {
-    print('-' * 100);
+    print('_' * 100);
     print('Executing use case - Buy Products\n');
 
     // Assumir um tempo atual
@@ -146,8 +146,8 @@ class TestCreateGroup {
   ];
 
   Future execute() async {
-    print('-' * 100);
-    print('Executing use case - Create group\n');
+    print('_' * 100);
+    print('Executing use case - Create Group\n');
 
     print('-' * 100);
     await verifyGroups();
@@ -162,11 +162,11 @@ class TestCreateGroup {
     // Grupos na base de dados
     print('Grupos atuais na base de dados:\n${GroupsRepositoryTest().groups}\n');
 
-    // Grupos a que o utilizador pertence
-    print('Grupos a que o utilizador pertence:\n${GroupsService.groups}\n');
-
     // Grupos a que o utilizador devia pertencer
     print('Grupos a que o utilizador devia pertencer:\n$_expectedGroups\n');
+
+    // Grupos a que o utilizador pertence
+    print('Grupos a que o utilizador pertence:\n${GroupsService.groups}\n');
   }
 
   Future verifyCreateGroup() async {

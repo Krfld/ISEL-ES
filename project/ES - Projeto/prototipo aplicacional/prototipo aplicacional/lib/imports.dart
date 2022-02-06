@@ -15,4 +15,4 @@ export './modules/widgets.dart';
 
 /// Packages
 export 'package:flutter_spinkit/flutter_spinkit.dart';
-export 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+// export 'package:material_design_icons_flutter/material_design_icons_flutter.dart';

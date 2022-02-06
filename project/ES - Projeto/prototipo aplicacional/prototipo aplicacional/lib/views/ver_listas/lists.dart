@@ -57,7 +57,7 @@ class _VerListas_ListsState extends State<VerListas_Lists> {
                   stream: ShoppingListsService.customListsStream,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState != ConnectionState.active) {
-                      ShoppingListsService.sinkCustomListsStream();
+                      // ShoppingListsService.sinkCustomListsStream();
                       return SpinKitChasingDots(color: Colors.teal);
                     }
 

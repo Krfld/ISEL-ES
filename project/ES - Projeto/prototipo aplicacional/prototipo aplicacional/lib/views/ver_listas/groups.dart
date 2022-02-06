@@ -62,7 +62,7 @@ class _VerListas_GroupsState extends State<VerListas_Groups> {
                   stream: GroupsService.customGroupsStream,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState != ConnectionState.active) {
-                      GroupsService.sinkCustomGroupsStream();
+                      // GroupsService.sinkCustomGroupsStream();
                       return SpinKitChasingDots(color: Colors.teal);
                     }
 

@@ -35,7 +35,7 @@ class ComprarProdutos_Buying extends StatelessWidget {
                 return products.isEmpty
                     ? Center(
                         child: Text(
-                          'You\'re not in any shopping list group\nCreate or join one',
+                          'There are no products to buy',
                           style: TextStyle(fontSize: 14, color: Colors.black38),
                           textAlign: TextAlign.center,
                         ),

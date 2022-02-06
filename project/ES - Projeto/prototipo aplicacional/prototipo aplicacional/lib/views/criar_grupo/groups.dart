@@ -55,7 +55,7 @@ class _CriarGrupo_GroupsState extends State<CriarGrupo_Groups> {
                   stream: GroupsService.customGroupsStream,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState != ConnectionState.active) {
-                      GroupsService.sinkCustomGroupsStream();
+                      // GroupsService.sinkCustomGroupsStream();
                       return SpinKitChasingDots(color: Colors.teal);
                     }
 
@@ -96,7 +96,7 @@ class _CriarGrupo_GroupsState extends State<CriarGrupo_Groups> {
               child: Center(
                 child: Button(
                   'Create\nGroup',
-                  icon: MdiIcons.accountMultiplePlus,
+                  icon: Icons.add,
                   onPressed: () => showDialog(
                     context: context,
                     builder: (context) => CreateGroup(),
