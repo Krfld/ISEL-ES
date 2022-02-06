@@ -1,7 +1,7 @@
 Para testar o protótipo aplicacional é possível usar o ficheiro apk já criado.
 Basta instalar o aplicativo num dispositivo Android ou num emulador.
 
-Para poder correr o código do protótipo aplicacional, é necessário fazer download do SDK do Flutter
+Para poder correr o código do protótipo aplicacional sem o apk, é necessário fazer download do SDK do Flutter
 Aconselha-se a usar o VScode e instalar a extensão do Flutter (que instala também a linguagem Dart)
 
 Para correr, é preciso ligar um dispositivo Android ao PC e correr o projeto.

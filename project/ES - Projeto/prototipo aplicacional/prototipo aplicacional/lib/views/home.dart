@@ -22,7 +22,8 @@ class Home extends StatelessWidget {
               contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
               title: Text('Comprar produtos'),
-              onTap: () => Navigator.pushNamed(context, 'ComprarProdutos_Products'),
+              onTap: () =>
+                  Navigator.pushNamed(context, 'ComprarProdutos_Products'), // Trasnsitar para a tela de produtos
             ),
           ),
           Card(
@@ -33,7 +34,7 @@ class Home extends StatelessWidget {
               contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
               title: Text('Ver listas'),
-              onTap: () => Navigator.pushNamed(context, 'VerListas_Groups'),
+              onTap: () => Navigator.pushNamed(context, 'VerListas_Groups'), // Trasnsitar para a tela de listas
             ),
           ),
           Card(
@@ -44,7 +45,7 @@ class Home extends StatelessWidget {
               contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
               title: Text('Criar grupo'),
-              onTap: () => Navigator.pushNamed(context, 'CriarGrupo_Groups'),
+              onTap: () => Navigator.pushNamed(context, 'CriarGrupo_Groups'), // Trasnsitar para a tela de criar grupo
             ),
           ),
         ],
